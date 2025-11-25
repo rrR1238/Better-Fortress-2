@@ -35,6 +35,14 @@ public:
 	virtual float GetInitialAfterburnDuration() const OVERRIDE;
 #endif
 
+	virtual void Precache( void ) OVERRIDE;
+	virtual bool Holster( CBaseCombatWeapon *pSwitchingTo ) OVERRIDE;
+	virtual bool Deploy( void ) OVERRIDE;
+#ifdef CLIENT_DLL
+	void ClientEffectsThink( void );
+	bool m_bEffectsThinking;
+	HPARTICLEFFECT		m_ParticleEffect;
+#endif
 private:
 
 	CTFFireAxe( const CTFFireAxe & ) {}

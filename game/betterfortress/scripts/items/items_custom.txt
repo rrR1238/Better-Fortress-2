@@ -886,6 +886,14 @@
 			"effect_type"    "positive"
 			"stored_as_integer"    "1"
 		}
+		"4021"
+		{
+        	"name"    "lit candle"
+			"attribute_class"    "lit_candle"
+			"description_format"    "value_is_additive"
+			"hidden"    "0"
+			"stored_as_integer"    "1"
+		}
 	}
 	"items"
 	{
@@ -1894,11 +1902,11 @@
 			"image_inventory"	"backpack/weapons/custommade/c_baleful_beacon"
 			"attributes"
 			{
-				//"attach particle effect"
-				//{
-				//	"attribute_class"	"set_attached_particle"
-				//	"value"	"705"
-				//}
+				"lit candle"
+				{
+					"attribute_class"	"lit_candle"
+					"value"	"1"
+				}
 				"is community contributed item"
 				{
 					"attribute_class"  "is_community_contributed_item"
