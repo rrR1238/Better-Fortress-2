@@ -3774,7 +3774,7 @@ void CTFCreateServerDialog::OnThink()
 					}
 					else
 					{ 
-						pImagePanel->SetImage(CFmtStr("maps/menu_thumb_default", szMapName));
+						pImagePanel->SetImage("maps/menu_thumb_default");
 					}
 				}
 			}

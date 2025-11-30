@@ -132,7 +132,7 @@ void CExtraMapEntity::SpawnExtraModel( void )
 	if ( !pszMapName || !pszMapName[0] )
 		return;
 
-	// Better Fortress 2 - i loved these teasers, and i am sure everyone did back in the day...
+	// Custom Fortress 2 - i loved these teasers, and i am sure everyone did back in the day...
 	KeyValues *pFileKV = new KeyValues( "models" );
 	/*
 	if ( !pFileKV->LoadFromFile( g_pFullFileSystem, "scripts/extra_models.txt", "MOD" ) )

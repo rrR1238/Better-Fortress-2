@@ -1,6 +1,6 @@
 "GameInfo"
 {
-	game					"Better Fortress 2"
+	game					"Custom Fortress 2"
 	type 					multiplayer_only
 	nomodels				1
 	nohimodel 				1

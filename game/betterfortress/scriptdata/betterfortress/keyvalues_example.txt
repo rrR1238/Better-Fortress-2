@@ -1,6 +1,6 @@
 // hopefully these descriptions age well.
 // if they don't, please don't crucify me.
-"Better Fortress 2 Team"
+"Custom Fortress 2 Team"
 {
 	"main_thing"
 	{
@@ -10,7 +10,7 @@
 		"likes"
 		{
 			"game" "Team Fortress 2"
-			"game" "Better Fortress 2"
+			"game" "Custom Fortress 2"
 		}
 	}
 	
@@ -22,7 +22,7 @@
 		"likes"
 		{
 			"game" "Team Fortress 2"
-			"game" "Better Fortress 2"
+			"game" "Custom Fortress 2"
 		}
 	}
 	
@@ -34,7 +34,7 @@
 		"likes"
 		{
 			"game" "Team Fortress 2"
-			"game" "Better Fortress 2"
+			"game" "Custom Fortress 2"
 		}
 	}
 	
@@ -46,7 +46,7 @@
 		"likes"
 		{
 			"game" "Team Fortress 2"
-			"game" "Better Fortress 2"
+			"game" "Custom Fortress 2"
 		}
 	}
 	
@@ -59,7 +59,7 @@
 		{
 			"game" "Half-Life 2"
 			"game" "Team Fortress 2"
-			"game" "Better Fortress 2"
+			"game" "Custom Fortress 2"
 		}
 	}
 	
@@ -73,7 +73,7 @@
 			"game" "Half-Life 2"
 			"game" "Left 4 Dead"
 			"game" "Team Fortress 2"
-			"game" "Better Fortress 2"
+			"game" "Custom Fortress 2"
 		}
 	}
 	
@@ -85,7 +85,7 @@
 		"likes"
 		{
 			"game" "Team Fortress 2"
-			"game" "Better Fortress 2"
+			"game" "Custom Fortress 2"
 		}
 	}
 }

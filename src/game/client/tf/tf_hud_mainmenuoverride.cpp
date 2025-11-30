@@ -1881,7 +1881,7 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 		}
 		return;
 	}
-	//Better Fortress 2 - MOTD 2nd Button
+	//Custom Fortress 2 - MOTD 2nd Button
 	else if ( !Q_stricmp( command, "motd_viewurl_secondary" ) )
 	{
 		CMOTDEntryDefinition *pMOTD = GetMOTDManager().GetMOTDByIndex( m_iCurrentMOTD );

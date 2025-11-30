@@ -956,7 +956,7 @@ void CTFPlayerInventory::UpdateCachedServerLoadoutItems()
 }
 	
 //-----------------------------------------------------------------------------
-// Purpose: Maps Better Fortress 2 slot indices to original TF2 slot indices
+// Purpose: Maps Custom Fortress 2 slot indices to original TF2 slot indices
 //-----------------------------------------------------------------------------
 static int MapBF2SlotToTF2Slot( int iBF2Slot )
 {
@@ -973,7 +973,7 @@ static int MapBF2SlotToTF2Slot( int iBF2Slot )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Maps original TF2 slot indices to Better Fortress 2 slot indices
+// Purpose: Maps original TF2 slot indices to Custom Fortress 2 slot indices
 //-----------------------------------------------------------------------------
 static int MapTF2SlotToBF2Slot( int iTF2Slot )
 {

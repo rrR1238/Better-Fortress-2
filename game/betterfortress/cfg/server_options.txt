@@ -11,7 +11,7 @@
 		{
 			"label"		"#GameUI_ServerName"
 			"type"		"STRING"
-			"val"		"Better Fortress 2"
+			"val"		"Custom Fortress 2"
 		}
 		"sv_tags"
 		{
@@ -723,31 +723,6 @@
 			"type"		"BOOL"
 			"val"		"0"
 			"prefix"		"mvm_"
-		}
-	}
-	"#GameUI_ItemSettings"
-	{
-		"category1"
-		{
-			"label"		"SCOUT ITEMS"
-			"type"		"CATEGORY"
-		}
-		"cf_scout_stunball_old_stun"
-		{
-			"label"		"OLD SANDMAN STUN"
-			"type"		"BOOL"
-			"val"		"0"
-		}
-		"category4"
-		{
-			"label"		"DEMOMAN ITEMS"
-			"type"		"CATEGORY"
-		}
-		"cf_demoman_wall_bounce_directs"
-		{
-			"label"		"GRENADES STILL DIRECT HIT AFTER BOUNCE"
-			"type"		"BOOL"
-			"val"		"0"
 		}
 	}
 }
