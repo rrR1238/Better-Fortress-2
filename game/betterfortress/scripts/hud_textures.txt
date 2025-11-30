@@ -78,6 +78,15 @@
 				"width"		"76"
 				"height"	"30"
 		}
+		"deflect_scrapball"
+		{
+				"dfile"	"HUD/d_images_mod"
+				"dnegfile"	"HUD/dneg_images_mod"
+				"x"		"146"
+				"y"		"36"
+				"width"		"64"
+				"height"	"32"
+		}
 		"bab_hammer"
 		{
 				"dfile"	"HUD/d_images_mod"

@@ -12569,7 +12569,7 @@ const char *CTFGameRules::GetKillingWeaponName( const CTakeDamageInfo &info, CTF
 					}
 					else if ( *iWeaponID == TF_WEAPON_DISPENSER_GUN )
 					{
-						killer_weapon_name = "dispenser_gun_reflect";
+						killer_weapon_name = "deflect_scrapball";
 					}
 				}
 				else if ( *iWeaponID == TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT )
