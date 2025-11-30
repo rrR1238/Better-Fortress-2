@@ -42,7 +42,7 @@ public:
 	void	SetCritical( bool bCritical ) { m_bCritical = bCritical; }
 	bool	IsCritical() { return m_bCritical; }
 
-	virtual float	GetDamage()	{ return 30.0f; }
+	virtual float	GetDamage()	{ return m_flDamage; }
 	virtual int		GetDamageType();
 
 	virtual bool	IsDeflectable() { return true; }

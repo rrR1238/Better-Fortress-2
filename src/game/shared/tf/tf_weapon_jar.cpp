@@ -82,7 +82,7 @@ LINK_ENTITY_TO_CLASS( tf_projectile_cleaver, CTFProjectile_Cleaver );
 PRECACHE_WEAPON_REGISTER( tf_projectile_cleaver );
 
 #define TF_JAR_LAUNCH_SPEED		1000.f
-#define TF_CLEAVER_LAUNCH_SPEED		7000.f
+#define TF_CLEAVER_LAUNCH_SPEED		3000.f	//7000.f Unused??
 #define TF_WEAPON_PEEJAR_MODEL	"models/weapons/c_models/urinejar.mdl"
 #define TF_WEAPON_FESTIVE_PEEJAR_MODEL	"models/weapons/c_models/c_xms_urinejar.mdl"
 #define TF_WEAPON_MILKJAR_MODEL	"models/workshop/weapons/c_models/c_madmilk/c_madmilk.mdl"
@@ -105,7 +105,10 @@ CTFJar::CTFJar()
 
 float CTFJar::GetProjectileSpeed( void )
 {
-	return TF_JAR_LAUNCH_SPEED;
+	float flLaunchSpeed = TF_JAR_LAUNCH_SPEED;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetOwner(), flLaunchSpeed, mult_projectile_speed );
+	return flLaunchSpeed;
+	//return TF_JAR_LAUNCH_SPEED;
 }
 
 //-----------------------------------------------------------------------------
@@ -913,7 +916,8 @@ Vector CTFCleaver::GetVelocityVector( const Vector &vecForward, const Vector &ve
 	// Calculate the initial impulse on the item.
 	vecVelocity = vecForward * 10 + vecUp;
 	VectorNormalize( vecVelocity );
-	vecVelocity *= 3000;
+	//vecVelocity *= 3000;
+	vecVelocity *= GetProjectileSpeed();
 
 	return vecVelocity;
 }
@@ -933,7 +937,10 @@ CTFProjectile_Jar *CTFCleaver::CreateJarProjectile( const Vector &position, cons
 //-----------------------------------------------------------------------------
 float CTFCleaver::GetProjectileSpeed( void )
 {
-	return TF_CLEAVER_LAUNCH_SPEED;
+	float flLaunchSpeed = TF_CLEAVER_LAUNCH_SPEED;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetOwner(), flLaunchSpeed, mult_projectile_speed );
+	return flLaunchSpeed;
+	//return TF_CLEAVER_LAUNCH_SPEED;
 }
 
 //-----------------------------------------------------------------------------

@@ -268,6 +268,9 @@ void CTFMechanicalArm::SecondaryAttack( void )
 		Vector vecEye = pOwner->EyePosition();
 		CTraceFilterSimple traceFilter( this, COLLISION_GROUP_PROJECTILE );
 		UTIL_TraceHull( vecEye, vecSrc, -Vector( 8.f, 8.f, 8.f ), Vector( 8.f, 8.f, 8.f ), MASK_SOLID_BRUSHONLY, &traceFilter, &trace );
+
+		float flLaunchSpeed = tf_mecharm_orb_speed;
+		CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( GetOwner(), flLaunchSpeed, mult_projectile_speed );
 		if ( !trace.DidHit() )
 		{
 			CTFProjectile_MechanicalArmOrb *pOrb = static_cast< CTFProjectile_MechanicalArmOrb* >( CBaseEntity::CreateNoSpawn( "tf_projectile_mechanicalarmorb", vecSrc, angForward, pOwner ) );
@@ -279,7 +282,7 @@ void CTFMechanicalArm::SecondaryAttack( void )
 				Vector vForward;
 				AngleVectors( angForward, &vForward, NULL, NULL );
 
-				pOrb->SetAbsVelocity( vForward * tf_mecharm_orb_speed );
+				pOrb->SetAbsVelocity( vForward * flLaunchSpeed );
 
 				pOrb->ChangeTeam( pOwner->GetTeamNumber() );
 				pOrb->SetCritical( false );
@@ -733,17 +736,23 @@ void CTFProjectile_MechanicalArmOrb::CheckForPlayers( int nNumToZap )
 	if ( !pTFOwner )
 		return;
 
+	float flDamage = tf_mecharm_orb_zap_damage;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pTFOwner, flDamage, mult_dmg );
+
+	float flRadius = tf_mecharm_orb_size;
+	CALL_ATTRIB_HOOK_FLOAT_ON_OTHER( pTFOwner, flRadius, mult_explosion_radius );
+
 	CTakeDamageInfo info;
 	info.SetAttacker( pTFOwner );
 	info.SetInflictor( this );
 	info.SetWeapon( GetLauncher() );
-	info.SetDamage( tf_mecharm_orb_zap_damage );
+	info.SetDamage( flDamage );
 	info.SetDamageCustom( TF_DMG_CUSTOM_PLASMA );
 	info.SetDamagePosition( GetAbsOrigin() );
 	info.SetDamageType( DMG_SHOCK );
 
 	CBaseEntity *pListOfEntities[5];
-	int iEntities = UTIL_EntitiesInSphere( pListOfEntities, 5, GetAbsOrigin(), tf_mecharm_orb_size, FL_CLIENT | FL_FAKECLIENT | FL_NPC );
+	int iEntities = UTIL_EntitiesInSphere( pListOfEntities, 5, GetAbsOrigin(), flRadius, FL_CLIENT | FL_FAKECLIENT | FL_NPC );
 
 	// Shuffle the list
 	for ( int i = iEntities - 1; i > 0; --i )
