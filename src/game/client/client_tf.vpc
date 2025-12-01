@@ -43,6 +43,11 @@ $Project "Client (TF)"
 
 	$Folder	"Source Files"
 	{
+		$Folder "FC"
+		{
+				$file	"fc\vgui\radialmenu.cpp"
+				$file	"fc\vgui\radialmenu.h"
+		}
 		$File	"$SRCDIR\game\shared\basecombatweapon_shared.h"
 		$File	"$SRCDIR\game\client\abuse_report.cpp"
 		$File	"$SRCDIR\game\client\abuse_report.h"
