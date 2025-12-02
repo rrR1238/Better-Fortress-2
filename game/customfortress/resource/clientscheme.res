@@ -215,6 +215,18 @@ Scheme
 	// controls use these to determine their settings
 	BaseSettings
 	{
+		// Radial menu changes 
+		////// Fortress connected custom colors //////////
+		"Rosetta.DefaultFgColor"		"White"
+		"Rosetta.DefaultBgColor"			"Blank"
+		"Rosetta.ArmedBgColor"			"Blank"
+		"Rosetta.DisabledBgColor"			"Blank"
+		"Rosetta.DisabledBorderColor"		"Blank"
+		"Rosetta.LineColor"			"192 192 192 128"
+		"Rosetta.DrawBorder"				"0"
+		"Rosetta.DefaultFont"				RosettaSmall
+		"Rosetta.ArmedFont"				RosettaLarge
+		
 		// vgui_controls color specifications
 		ReplayBrowser.BgColor								"DarkBrown"
 		ReplayBrowser.Details.TitleEdit.Carat.FgColor		"LightRed"
@@ -1139,6 +1151,30 @@ Scheme
 				"weight"	"500"
 				"additive"	"0"
 				"antialias" "1"
+			}
+		}
+		//RADIAL MENU CHANGES
+		// Uses TF2 fonts. use your own if you'd like
+		"RosettaSmall"
+		{
+			"1"
+			{
+				"Name"			"TF2 Secondary"
+				"tall"			"14"
+				"weight"	"100"
+				"antialias" "1"
+				//"dropshadow"	"1"
+			}
+		}
+		"RosettaLarge"
+		{
+			"1"
+			{
+				"Name"			"TF2 Secondary"
+				"tall"			"18"
+				"weight"	"100"
+				"antialias" "1"
+				//"dropshadow"	"1"
 			}
 		}
 		GameUIButtons
