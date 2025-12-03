@@ -11,7 +11,12 @@
 #endif
 
 // Set to 1 to enable Sentry integration (requires Sentry Native SDK)
+// Only enable on Windows for now - Linux would need the sentry-native library to be linked
+#ifdef _WIN32
 #define USE_SENTRY 1
+#else
+#define USE_SENTRY 0
+#endif
 
 #if USE_SENTRY
 
