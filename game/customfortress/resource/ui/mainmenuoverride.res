@@ -2631,7 +2631,7 @@
 		"dulltext"		"0"
 		"brighttext"	"0"
 		"default"		"1"
-		"Command"		"engine OpenSteamWorkshopDialog"
+		"Command"		"workshop"
 
 		"navUp"			"VRModeButton"
 		"navLeft"		"AchievementsButton"

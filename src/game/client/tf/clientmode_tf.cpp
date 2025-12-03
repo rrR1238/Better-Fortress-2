@@ -93,6 +93,7 @@
 
 #include "hud_vote.h"
 #include "c_tf_notification.h"
+#include "cf_workshop_manager.h"
 
 #if !defined( _X360 ) && !defined( NO_STEAM )
 #include "steam/isteamtimeline.h"
@@ -549,6 +550,12 @@ void ClientModeTFNormal::LevelInit( const char *newmap )
 	BaseClass::LevelInit( newmap );
 
 	m_bInfoPanelShown = false;
+	
+	// Initialize workshop manager on first level load
+	if ( CFWorkshop() )
+	{
+		CFWorkshop()->OnMapLoad( newmap );
+	}
 }
 
 IClientMode *GetClientModeNormal()

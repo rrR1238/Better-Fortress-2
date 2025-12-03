@@ -1,0 +1,15 @@
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/bin/sentry.pdb
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/bin/crashpad_handler.exe
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/bin/crashpad_wer.dll
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/lib/cmake/sentry/sentry_crashpad-targets.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/lib/cmake/sentry/sentry_crashpad-targets-relwithdebinfo.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/bin/crashpad_handler.pdb
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/bin/crashpad_wer.pdb
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/lib/sentry.lib
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/bin/sentry.dll
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/include/sentry.h
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/lib/cmake/sentry/sentry-targets.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/lib/cmake/sentry/sentry-targets-relwithdebinfo.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/lib/cmake/sentry/sentry-config.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/lib/cmake/sentry/sentry-config-version.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/thirdparty/sentry-native/install/bin/sentry.pdb

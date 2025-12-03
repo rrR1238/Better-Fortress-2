@@ -107,7 +107,9 @@ jobs:
         shell: bash
 
       - name: Build (Linux)
-        run: ${{ matrix.build_script }}
+        run: |
+          chmod +x ${{ matrix.build_script }}
+          ${{ matrix.build_script }}
         working-directory: src
         shell: bash
         if: runner.os == 'Linux'

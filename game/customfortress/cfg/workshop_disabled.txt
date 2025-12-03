@@ -1,0 +1,4 @@
+"DisabledWorkshopItems"
+{
+	"0"		"0x00000000D795098C"
+}

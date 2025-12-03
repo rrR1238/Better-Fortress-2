@@ -29,6 +29,11 @@
 #include "quest_log_panel.h"
 #include "local_steam_shared_object_listener.h"
 
+namespace vgui
+{
+	class CCFWorkshopBrowserPanel;
+}
+
 
 #include "mute_player_dialog.h"
 
@@ -264,6 +269,8 @@ private:
 	CPvPRankPanel*	m_pRankPanel = NULL;
 	CPvPRankPanel*	m_pRankModelPanel = NULL;
 	vgui::Menu*		m_pRankTypeMenu = NULL;
+
+	vgui::DHANDLE<vgui::CCFWorkshopBrowserPanel> m_pWorkshopPanel;
 
 	CPanelAnimationVarAliasType( int, m_iButtonXOffset, "button_x_offset", "0", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iButtonY, "button_y", "0", "proportional_int" );

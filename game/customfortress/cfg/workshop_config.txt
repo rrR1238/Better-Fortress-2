@@ -1,0 +1,90 @@
+//============================================================================
+// Custom Fortress 2 Workshop Configuration
+// 
+// This file allows server administrators to configure workshop settings
+// for their dedicated servers.
+//============================================================================
+
+"WorkshopConfig"
+{
+	// Steam Workshop Collection ID
+	// Create a collection on Steam Workshop and paste its ID here
+	// The server will automatically download all items in the collection
+	"collection_id"		"0"
+	
+	// Auto-download workshop content
+	// When enabled, server will automatically download subscribed workshop items
+	"auto_download"		"1"
+	
+	// Workshop maps to always keep synced
+	// Add map file IDs here (one per line)
+	"maps"
+	{
+		// Example:
+		// "1"		"1234567890"		// cp_custom_map
+		// "2"		"0987654321"		// koth_workshop_test
+	}
+	
+	// Workshop item/skin collections
+	// These will be downloaded but not automatically applied
+	"items"
+	{
+		// Example:
+		// "1"		"1111111111"		// Custom weapon skin pack
+		// "2"		"2222222222"		// Particle effects collection
+	}
+	
+	// Download priority
+	// "high" - Download workshop items with high priority
+	// "normal" - Standard download priority
+	"download_priority"		"high"
+	
+	// Update checking
+	// How often to check for workshop item updates (in seconds)
+	// 0 = only check on server start
+	"update_check_interval"		"3600"		// Check every hour
+	
+	// Workshop content storage
+	// Where to store downloaded workshop content
+	// Relative to game directory
+	"content_path"		"workshop_content"
+	
+	// Map rotation with workshop maps
+	// Enable this to allow workshop maps in map rotation
+	"allow_workshop_in_rotation"		"1"
+	
+	// Workshop item restrictions
+	"restrictions"
+	{
+		// Maximum file size for auto-download (in MB)
+		"max_file_size"			"100"
+		
+		// Allow custom skins
+		"allow_skins"			"1"
+		
+		// Allow custom particles
+		"allow_particles"		"1"
+		
+		// Allow custom sounds
+		"allow_sounds"			"0"
+		
+		// Allow custom HUDs (affects all players)
+		"allow_huds"			"0"
+	}
+	
+	// sv_pure settings override for workshop content
+	// When using workshop content, you may need to adjust sv_pure
+	// 0 = allow all custom files (required for most workshop content)
+	// 1 = allow some custom files (may work with skins)
+	// 2 = no custom files (workshop content won't work)
+	"sv_pure_override"		"0"
+	
+	// Logging
+	"logging"
+	{
+		"enabled"				"1"
+		"verbose"				"0"		// Extra debug information
+		"log_downloads"			"1"
+		"log_updates"			"1"
+	}
+}

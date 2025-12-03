@@ -1,0 +1,5 @@
+# CMake generation dependency list for this directory.
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/handler/crashpad_handler.rc.in
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/handler/crashpad_wer.rc.in
+E:/Better-Fortress-2/src/thirdparty/sentry-native/external/crashpad/handler/CMakeLists.txt
+E:/Better-Fortress-2/src/thirdparty/sentry-native/sentry.rc.in

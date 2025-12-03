@@ -1,0 +1,20 @@
+{
+	"InstallScripts" : 
+	[
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/src/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/compat/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/minidump/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/snapshot/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/util/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/third_party/mini_chromium/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/client/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/third_party/zlib/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/third_party/getopt/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/third_party/mpack/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/tools/cmake_install.cmake",
+		"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/crashpad_build/handler/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

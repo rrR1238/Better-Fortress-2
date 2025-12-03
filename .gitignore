@@ -626,3 +626,7 @@ game/customfortress/stats.txt
 game/customfortress/tf2_playerstats.dmx
 game/customfortress/trainingprogress.txt
 game/customfortress/voice_ban.dt
+steamworks
+/game/customfortress/crashes
+/game/customfortress/.sentry-native
+/test_workshop

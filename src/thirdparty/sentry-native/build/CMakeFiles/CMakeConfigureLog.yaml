@@ -1,0 +1,865 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:47 (project)"
+    message: |
+      The system is: Windows - 10.0.26100 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:47 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.23+b0019275e for .NET Framework
+      Build started 01/12/2025 19:13:21.
+      
+      Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\4.0.2\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdC.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\4.0.2\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
+      Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\4.0.2\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:00.60
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/4.0.2/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:47 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.23+b0019275e for .NET Framework
+      Build started 01/12/2025 19:13:21.
+      
+      Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\4.0.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\4.0.2\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\4.0.2\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:00.61
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/4.0.2/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:47 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4ozv0v"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4ozv0v"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4ozv0v'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_045f8.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:23.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4ozv0v\\cmTC_045f8.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_045f8.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4ozv0v\\Debug\\".
+          Creating directory "cmTC_045f8.dir\\Debug\\cmTC_045f8.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_045f8.dir\\Debug\\cmTC_045f8.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_045f8.dir\\Debug\\cmTC_045f8.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_045f8.dir\\Debug\\\\" /Fd"cmTC_045f8.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_045f8.dir\\Debug\\\\" /Fd"cmTC_045f8.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          CMakeCCompilerABI.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4ozv0v\\Debug\\cmTC_045f8.exe" /INCREMENTAL /ILK:"cmTC_045f8.dir\\Debug\\cmTC_045f8.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4ozv0v/Debug/cmTC_045f8.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4ozv0v/Debug/cmTC_045f8.lib" /MACHINE:X64  /machine:x64 cmTC_045f8.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_045f8.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4ozv0v\\Debug\\cmTC_045f8.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_045f8.dir\\Debug\\cmTC_045f8.tlog\\unsuccessfulbuild".
+          Touching "cmTC_045f8.dir\\Debug\\cmTC_045f8.tlog\\cmTC_045f8.lastbuildstate".
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4ozv0v\\cmTC_045f8.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.63
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:47 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:47 (project)"
+    message: |
+      Running the C compiler's linker: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:47 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-zgd98a"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-zgd98a"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-zgd98a'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_94848.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:24.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zgd98a\\cmTC_94848.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_94848.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zgd98a\\Debug\\".
+          Creating directory "cmTC_94848.dir\\Debug\\cmTC_94848.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_94848.dir\\Debug\\cmTC_94848.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_94848.dir\\Debug\\cmTC_94848.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_94848.dir\\Debug\\\\" /Fd"cmTC_94848.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_94848.dir\\Debug\\\\" /Fd"cmTC_94848.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zgd98a\\Debug\\cmTC_94848.exe" /INCREMENTAL /ILK:"cmTC_94848.dir\\Debug\\cmTC_94848.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-zgd98a/Debug/cmTC_94848.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-zgd98a/Debug/cmTC_94848.lib" /MACHINE:X64  /machine:x64 cmTC_94848.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_94848.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zgd98a\\Debug\\cmTC_94848.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_94848.dir\\Debug\\cmTC_94848.tlog\\unsuccessfulbuild".
+          Touching "cmTC_94848.dir\\Debug\\cmTC_94848.tlog\\cmTC_94848.lastbuildstate".
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-zgd98a\\cmTC_94848.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.62
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:47 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:47 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckCSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/FindThreads.cmake:97 (check_c_source_compiles)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "CMakeLists.txt:128 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ld7m4e"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ld7m4e"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ld7m4e'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_a91ec.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:25.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\cmTC_a91ec.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_a91ec.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\Debug\\".
+          Creating directory "cmTC_a91ec.dir\\Debug\\cmTC_a91ec.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_a91ec.dir\\Debug\\cmTC_a91ec.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_a91ec.dir\\Debug\\cmTC_a91ec.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a91ec.dir\\Debug\\\\" /Fd"cmTC_a91ec.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_a91ec.dir\\Debug\\\\" /Fd"cmTC_a91ec.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\src.c"
+          src.c
+        E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\cmTC_a91ec.vcxproj]
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\cmTC_a91ec.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\cmTC_a91ec.vcxproj" (default target) (1) ->
+        (ClCompile target) -> 
+          E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ld7m4e\\cmTC_a91ec.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.43
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckLibraryExists.cmake:112 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/FindThreads.cmake:112 (check_library_exists)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "CMakeLists.txt:128 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-3df2h6"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-3df2h6"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-3df2h6'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3ece5.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:26.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\cmTC_3ece5.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_3ece5.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\Debug\\".
+          Creating directory "cmTC_3ece5.dir\\Debug\\cmTC_3ece5.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_3ece5.dir\\Debug\\cmTC_3ece5.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_3ece5.dir\\Debug\\cmTC_3ece5.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3ece5.dir\\Debug\\\\" /Fd"cmTC_3ece5.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3ece5.dir\\Debug\\\\" /Fd"cmTC_3ece5.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\CheckFunctionExists.c"
+          CheckFunctionExists.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\Debug\\cmTC_3ece5.exe" /INCREMENTAL /ILK:"cmTC_3ece5.dir\\Debug\\cmTC_3ece5.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-3df2h6/Debug/cmTC_3ece5.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-3df2h6/Debug/cmTC_3ece5.lib" /MACHINE:X64  /machine:x64 cmTC_3ece5.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\cmTC_3ece5.vcxproj]
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\cmTC_3ece5.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\cmTC_3ece5.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3df2h6\\cmTC_3ece5.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.65
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckLibraryExists.cmake:112 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/FindThreads.cmake:112 (check_library_exists)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "CMakeLists.txt:128 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-q60ix7"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-q60ix7"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-q60ix7'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_b789e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:27.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\cmTC_b789e.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_b789e.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\Debug\\".
+          Creating directory "cmTC_b789e.dir\\Debug\\cmTC_b789e.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_b789e.dir\\Debug\\cmTC_b789e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_b789e.dir\\Debug\\cmTC_b789e.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b789e.dir\\Debug\\\\" /Fd"cmTC_b789e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_b789e.dir\\Debug\\\\" /Fd"cmTC_b789e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\CheckFunctionExists.c"
+          CheckFunctionExists.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\Debug\\cmTC_b789e.exe" /INCREMENTAL /ILK:"cmTC_b789e.dir\\Debug\\cmTC_b789e.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-q60ix7/Debug/cmTC_b789e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-q60ix7/Debug/cmTC_b789e.lib" /MACHINE:X64  /machine:x64 cmTC_b789e.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\cmTC_b789e.vcxproj]
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\cmTC_b789e.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\cmTC_b789e.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-q60ix7\\cmTC_b789e.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.66
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckTypeSize.cmake:318 (check_include_file)"
+      - "CMakeLists.txt:414 (check_type_size)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4s3des"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4s3des"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /utf-8"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4s3des'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_f36d2.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:28.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4s3des\\cmTC_f36d2.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_f36d2.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4s3des\\Debug\\".
+          Creating directory "cmTC_f36d2.dir\\Debug\\cmTC_f36d2.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_f36d2.dir\\Debug\\cmTC_f36d2.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_f36d2.dir\\Debug\\cmTC_f36d2.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f36d2.dir\\Debug\\\\" /Fd"cmTC_f36d2.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4s3des\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_f36d2.dir\\Debug\\\\" /Fd"cmTC_f36d2.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4s3des\\CheckIncludeFile.c"
+          CheckIncludeFile.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4s3des\\Debug\\cmTC_f36d2.exe" /INCREMENTAL /ILK:"cmTC_f36d2.dir\\Debug\\cmTC_f36d2.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4s3des/Debug/cmTC_f36d2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-4s3des/Debug/cmTC_f36d2.lib" /MACHINE:X64  /machine:x64 cmTC_f36d2.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_f36d2.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4s3des\\Debug\\cmTC_f36d2.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_f36d2.dir\\Debug\\cmTC_f36d2.tlog\\unsuccessfulbuild".
+          Touching "cmTC_f36d2.dir\\Debug\\cmTC_f36d2.tlog\\cmTC_f36d2.lastbuildstate".
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-4s3des\\cmTC_f36d2.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.74
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckTypeSize.cmake:319 (check_include_file)"
+      - "CMakeLists.txt:414 (check_type_size)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-osqkz5"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-osqkz5"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /utf-8"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-osqkz5'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3610c.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:29.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-osqkz5\\cmTC_3610c.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_3610c.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-osqkz5\\Debug\\".
+          Creating directory "cmTC_3610c.dir\\Debug\\cmTC_3610c.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_3610c.dir\\Debug\\cmTC_3610c.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_3610c.dir\\Debug\\cmTC_3610c.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3610c.dir\\Debug\\\\" /Fd"cmTC_3610c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-osqkz5\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3610c.dir\\Debug\\\\" /Fd"cmTC_3610c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-osqkz5\\CheckIncludeFile.c"
+          CheckIncludeFile.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-osqkz5\\Debug\\cmTC_3610c.exe" /INCREMENTAL /ILK:"cmTC_3610c.dir\\Debug\\cmTC_3610c.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-osqkz5/Debug/cmTC_3610c.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-osqkz5/Debug/cmTC_3610c.lib" /MACHINE:X64  /machine:x64 cmTC_3610c.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_3610c.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-osqkz5\\Debug\\cmTC_3610c.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_3610c.dir\\Debug\\cmTC_3610c.tlog\\unsuccessfulbuild".
+          Touching "cmTC_3610c.dir\\Debug\\cmTC_3610c.tlog\\cmTC_3610c.lastbuildstate".
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-osqkz5\\cmTC_3610c.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.75
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckIncludeFile.cmake:99 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckTypeSize.cmake:320 (check_include_file)"
+      - "CMakeLists.txt:414 (check_type_size)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-5fl5nj"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-5fl5nj"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /utf-8"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-5fl5nj'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_c6bd1.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:31.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5fl5nj\\cmTC_c6bd1.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_c6bd1.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5fl5nj\\Debug\\".
+          Creating directory "cmTC_c6bd1.dir\\Debug\\cmTC_c6bd1.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_c6bd1.dir\\Debug\\cmTC_c6bd1.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_c6bd1.dir\\Debug\\cmTC_c6bd1.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c6bd1.dir\\Debug\\\\" /Fd"cmTC_c6bd1.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5fl5nj\\CheckIncludeFile.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_c6bd1.dir\\Debug\\\\" /Fd"cmTC_c6bd1.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5fl5nj\\CheckIncludeFile.c"
+          CheckIncludeFile.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5fl5nj\\Debug\\cmTC_c6bd1.exe" /INCREMENTAL /ILK:"cmTC_c6bd1.dir\\Debug\\cmTC_c6bd1.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-5fl5nj/Debug/cmTC_c6bd1.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-5fl5nj/Debug/cmTC_c6bd1.lib" /MACHINE:X64  /machine:x64 cmTC_c6bd1.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_c6bd1.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5fl5nj\\Debug\\cmTC_c6bd1.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_c6bd1.dir\\Debug\\cmTC_c6bd1.tlog\\unsuccessfulbuild".
+          Touching "cmTC_c6bd1.dir\\Debug\\cmTC_c6bd1.tlog\\cmTC_c6bd1.lastbuildstate".
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5fl5nj\\cmTC_c6bd1.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.75
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckTypeSize.cmake:212 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CheckTypeSize.cmake:339 (__check_type_size_impl)"
+      - "CMakeLists.txt:414 (check_type_size)"
+    checks:
+      - "Check size of long"
+    directories:
+      source: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ag29fn"
+      binary: "E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ag29fn"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /utf-8"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_POSITION_INDEPENDENT_CODE: "ON"
+    buildResult:
+      variable: "HAVE_CMAKE_SIZEOF_LONG"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ag29fn'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_2e56b.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.23+b0019275e for .NET Framework
+        Build started 01/12/2025 19:13:32.
+        
+        Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ag29fn\\cmTC_2e56b.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_2e56b.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ag29fn\\Debug\\".
+          Creating directory "cmTC_2e56b.dir\\Debug\\cmTC_2e56b.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_2e56b.dir\\Debug\\cmTC_2e56b.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_2e56b.dir\\Debug\\cmTC_2e56b.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_2e56b.dir\\Debug\\\\" /Fd"cmTC_2e56b.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ag29fn\\CMAKE_SIZEOF_LONG.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35217 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_2e56b.dir\\Debug\\\\" /Fd"cmTC_2e56b.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue  /utf-8 "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ag29fn\\CMAKE_SIZEOF_LONG.c"
+          CMAKE_SIZEOF_LONG.c
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ag29fn\\Debug\\cmTC_2e56b.exe" /INCREMENTAL /ILK:"cmTC_2e56b.dir\\Debug\\cmTC_2e56b.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ag29fn/Debug/cmTC_2e56b.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/CMakeScratch/TryCompile-ag29fn/Debug/cmTC_2e56b.lib" /MACHINE:X64  /machine:x64 cmTC_2e56b.dir\\Debug\\CMAKE_SIZEOF_LONG.obj
+          cmTC_2e56b.vcxproj -> E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ag29fn\\Debug\\cmTC_2e56b.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_2e56b.dir\\Debug\\cmTC_2e56b.tlog\\unsuccessfulbuild".
+          Touching "cmTC_2e56b.dir\\Debug\\cmTC_2e56b.tlog\\cmTC_2e56b.lastbuildstate".
+        Done Building Project "E:\\Better-Fortress-2\\src\\thirdparty\\sentry-native\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ag29fn\\cmTC_2e56b.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:00.81
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is GNU using "--version" did not match "(GNU assembler)|(GCC)|(Free Software Foundation)":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : --version
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is AppleClang using "--version" did not match "(Apple (clang|LLVM) version)":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : --version
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is Clang using "--version" did not match "(clang version)":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : --version
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is ARMClang using "--version" did not match "armclang":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : --version
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is OrangeC using "--version" did not match "occ \\(OrangeC\\) Version":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : --version
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is HP using "-V" did not match "HP C":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : -V
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is Intel using "--version" did not match "(ICC)":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : --version
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is IntelLLVM using "--version" did not match "(Intel[^
+      ]+oneAPI)":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : --version
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is SunPro using "-V" did not match "Sun C":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : -V
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1284 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is XL using "-qversion" did not match "XL C":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+      MASM : warning A4018:invalid command-line option : -qversion
+      MASM : fatal error A1017:missing source filename
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:1271 (message)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake:139 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake:17 (include)"
+      - "external/crashpad/CMakeLists.txt:56 (enable_language)"
+    message: |
+      Checking whether the ASM_MASM compiler is MSVC using "-?" matched "Microsoft":
+      Microsoft (R) Macro Assembler (x64) Version 14.44.35217.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+      
+              ML64 [ /options ] filelist [ /link linkoptions ]
+      
+      /Bl<linker> Use alternate linker          /Sf Generate first pass listing
+      /c Assemble without linking               /Sl<width> Set line width
+      /Cp Preserve case of user identifiers     /Sn Suppress symbol-table listing
+      /Cx Preserve case in publics, externs     /Sp<length> Set page length
+      /D<name>[=text] Define text macro         /Ss<string> Set subtitle
+      /EP Output preprocessed listing to stdout /St<string> Set title
+      /F <hex> Set stack size (bytes)           /Sx List false conditionals
+      /Fe<file> Name executable                 /Ta<file> Assemble non-.ASM file
+      /Fl[file] Generate listing                /w Same as /W0 /WX
+      /Fm[file] Generate map                    /WX Treat warnings as errors
+      /Fo<file> Name object file                /W<number> Set warning level
+      /Fr[file] Generate limited browser info   /X Ignore INCLUDE environment path
+      /FR[file] Generate full browser info      /Zd Add line number debug info
+      /I<name> Add include path                 /Zf Make all symbols public
+      /link <linker options and libraries>      /Zi Add symbolic debug info
+      /nologo Suppress copyright message        /Zp[n] Set structure alignment
+      /Sa Maximize source listing               /Zs Perform syntax check only
+      /ZH:MD5 Use MD5 for checksum in debug info
+      /ZH:SHA_256 Use SHA256 for checksum in debug info (default)
+      /Gy[-] separate functions for linker      /quiet Suppress 'Assembling' message
+      /errorReport:<option> Deprecated. Report internal assembler errors to Microsoft
+          none - do not send report
+          prompt - prompt to immediately send report
+          queue - at next admin logon, prompt to send report
+          send - send report automatically
+...

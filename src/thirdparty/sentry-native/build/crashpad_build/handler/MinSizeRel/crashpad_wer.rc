@@ -1,0 +1,22 @@
+1 VERSIONINFO
+FILEVERSION    0,12,2,0
+PRODUCTVERSION 0,12,2,0
+BEGIN
+BLOCK "StringFileInfo"
+BEGIN
+    BLOCK "040904E4"
+    BEGIN
+        VALUE "FileDescription", "Crashpad WER Module"
+        VALUE "FileVersion", "0.12.2"
+        VALUE "InternalName", "sentry-native"
+        VALUE "LegalCopyright", "https://sentry.io"
+        VALUE "OriginalFilename", "crashpad_wer.dll"
+        VALUE "ProductName", "Sentry Native SDK"
+        VALUE "ProductVersion", "0.12.2"
+    END
+END
+BLOCK "VarFileInfo"
+BEGIN
+    VALUE "Translation", 0x409, 1252
+END
+END

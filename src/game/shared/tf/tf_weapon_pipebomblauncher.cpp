@@ -389,7 +389,18 @@ CBaseEntity *CTFPipebombLauncher::FireProjectile( CTFPlayer *pPlayer )
 				if ( FClassnameIs( pTemp, "tf_projectile_pipe" ) || 
 					 FClassnameIs( pTemp, "tf_projectile_pipe_remote" ) )
 				{
-					pTemp->SetTimer( gpGlobals->curtime ); // explode NOW
+					// Check for fizzle stickies attribute - fizzle instead of detonating
+					int iFizzleStickies = 0;
+					CALL_ATTRIB_HOOK_INT( iFizzleStickies, mod_fizzle_stickies );
+					if ( iFizzleStickies )
+					{
+						pTemp->Fizzle();
+						pTemp->Detonate();
+					}
+					else
+					{
+						pTemp->SetTimer( gpGlobals->curtime ); // explode NOW
+					}
 				}
 			}
 

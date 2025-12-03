@@ -58,6 +58,8 @@
 #include "tf_quest_map_utils.h"
 #include "tf_matchmaking_dashboard.h"
 #include "tf_pvp_rank_panel.h"
+#include "cf_workshop_manager.h"
+#include "cf_workshop_panel.h"
 
 #include "econ_paintkit.h"
 #include "ienginevgui.h"
@@ -192,6 +194,8 @@ CHudMainMenuOverride::CHudMainMenuOverride( IViewPort *pViewPort ) : BaseClass( 
 
 	m_flCheckTrainingAt = 0;
 	m_bWasInTraining = false;
+
+	m_pWorkshopPanel = NULL;
 
 	ScheduleItemCheck();
 
@@ -1974,6 +1978,26 @@ void CHudMainMenuOverride::OnCommand( const char *command )
 	else if ( !Q_stricmp( command, "armory_open" ) )
 	{
 		GetClientModeTFNormal()->GameUI()->SendMainMenuCommand( "engine open_charinfo_armory" );
+	}
+	else if ( !Q_stricmp( command, "workshop" ) || !Q_stricmp( command, "engine workshop" ) )
+	{
+		// Create workshop panel if it doesn't exist (DHANDLE auto-nulls when panel is deleted)
+		if ( m_pWorkshopPanel.Get() == NULL )
+		{
+			m_pWorkshopPanel = new vgui::CCFWorkshopBrowserPanel( NULL, "WorkshopBrowserPanel" );
+		}
+		
+		// Show the workshop browser panel
+		if ( m_pWorkshopPanel.Get() )
+		{
+			m_pWorkshopPanel->ShowPanel( true );
+		}
+		
+		// Also show workshop status in console
+		if ( CFWorkshop() )
+		{
+			CFWorkshop()->PrintStatus();
+		}
 	}
 	else if ( !Q_stricmp( command, "engine disconnect" ) && engine->IsInGame() && TFGameRules() && ( TFGameRules()->IsMannVsMachineMode() || TFGameRules()->IsCompetitiveMode() ) )
 	{

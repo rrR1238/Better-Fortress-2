@@ -110,6 +110,9 @@ $Project "Server (TF)"
 			$File	"$SRCDIR\game\shared\workshop\ugc_utils.cpp"
 			$File	"$SRCDIR\game\server\tf\workshop\maps_workshop.h"
 			$File	"$SRCDIR\game\server\tf\workshop\maps_workshop.cpp"
+			$File	"$SRCDIR\game\shared\tf\cf_workshop_manager.h"
+			$File	"$SRCDIR\game\shared\tf\cf_workshop_manager.cpp"
+			$File	"$SRCDIR\game\shared\tf\cf_workshop_integration.cpp"
 		}
 
 		$Folder	"TF"

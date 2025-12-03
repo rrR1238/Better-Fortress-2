@@ -17,7 +17,7 @@
 ## Player
 - GiveItem (I/O and Command)
 - Penetration kill sound toggle cvar | ```cf_snd_penetrationkill```
-- Voice spam and delay restore | ```cf_voicespam | (1 normal, 2 no text)``` ```tf_max_voice_speak_delay 1.5```
+- Voice spam and delay restore | ```cf_voicespam | (1 normal, 2 no text)``` ```cf_max_voice_speak_delay 1.5```
 - Custom Responses | Sniper!
 ## NPC's
 ### Horseless Headless Horsemann

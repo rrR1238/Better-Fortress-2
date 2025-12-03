@@ -1,0 +1,19 @@
+# CMake generation dependency list for this directory.
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeASMCompiler.cmake.in
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeASMInformation.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeASM_MASMInformation.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeCompilerIdDetection.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASMCompiler.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineASM_MASMCompiler.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompiler.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeFindBinUtils.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestASMCompiler.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/CMakeTestASM_MASMCompiler.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/GNUInstallDirs.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/Internal/CMakeASMLinkerInformation.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/Internal/CMakeASM_MASMLinkerInformation.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/Internal/CMakeInspectASMLinker.cmake
+C:/Program Files/CMake/share/cmake-4.0/Modules/Internal/CMakeInspectASM_MASMLinker.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/build/CMakeFiles/4.0.2/CMakeASM_MASMCompiler.cmake
+E:/Better-Fortress-2/src/thirdparty/sentry-native/external/crashpad/CMakeLists.txt

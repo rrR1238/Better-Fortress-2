@@ -31,6 +31,7 @@
 #include "tf_ammo_pack.h"
 #include "takedamageinfo.h"
 #include "tf_team.h"
+#include "tf_obj.h"
 #include "physics_collisionevent.h"
 #ifdef TF_RAID_MODE
 #include "player_vs_environment/boss_alpha/boss_alpha.h"
@@ -1209,7 +1210,7 @@ void CTFGrenadePipebombProjectile::ArmThink( void )
 	CALL_ATTRIB_HOOK_INT_ON_OTHER( GetLauncher(), iProximityStickies, mod_proximity_stickies );
 	if ( iProximityStickies && HasStickyEffects() && m_bTouched )
 	{
-		// Check for nearby enemies
+		// Check for nearby enemies, owner, and enemy buildings
 		CTFPlayer *pOwner = ToTFPlayer( GetThrower() );
 		if ( pOwner )
 		{
@@ -1217,16 +1218,34 @@ void CTFGrenadePipebombProjectile::ArmThink( void )
 			CBaseEntity *pEntity = NULL;
 			for ( CEntitySphereQuery sphere( GetAbsOrigin(), flProximityRadius ); ( pEntity = sphere.GetCurrentEntity() ) != NULL; sphere.NextEntity() )
 			{
-				if ( !pEntity || !pEntity->IsPlayer() || !pEntity->IsAlive() )
+				if ( !pEntity || !pEntity->IsAlive() )
 					continue;
 
-				CTFPlayer *pPlayer = ToTFPlayer( pEntity );
-				if ( !pPlayer || pPlayer == pOwner || pPlayer->GetTeamNumber() == pOwner->GetTeamNumber() )
-					continue;
+				// Check for players
+				if ( pEntity->IsPlayer() )
+				{
+					CTFPlayer *pPlayer = ToTFPlayer( pEntity );
+					if ( !pPlayer )
+						continue;
 
-				// Enemy is in range, detonate!
-				Detonate();
-				return;
+					// Detonate if owner gets near or if enemy is in range
+					if ( pPlayer == pOwner || pPlayer->GetTeamNumber() != pOwner->GetTeamNumber() )
+					{
+						Detonate();
+						return;
+					}
+				}
+				// Check for enemy buildings (Sentry Guns, Dispensers, Teleporters)
+				else if ( pEntity->IsBaseObject() )
+				{
+					CBaseObject *pObject = dynamic_cast<CBaseObject*>( pEntity );
+					if ( pObject && pObject->GetTeamNumber() != pOwner->GetTeamNumber() )
+					{
+						// Detonate if enemy building is in range
+						Detonate();
+						return;
+					}
+				}
 			}
 		}
 

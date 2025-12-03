@@ -376,6 +376,12 @@ bool CTFWearable::ShouldDraw()
 		// Check if this is a cosmetic item (not a weapon-associated wearable)
 		if ( !GetWeaponAssociatedWith() )
 		{
+			// Also hide disguise wearables when cosmetics are disabled
+			if ( m_bDisguiseWearable )
+			{
+				return false;
+			}
+
 			const CEconItemView *pItem = GetAttributeContainer()->GetItem();
 			if ( pItem && pItem->IsValid() )
 			{
