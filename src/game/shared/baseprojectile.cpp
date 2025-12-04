@@ -265,7 +265,7 @@ void CBaseProjectile::RecordEnemyPlayerHit( const CBaseEntity* pHitPlayer, bool 
 		{
 			item_definition_index_t ownerWeaponDefIndex = INVALID_ITEM_DEF_INDEX;
 			CBaseCombatWeapon *pWeapon = dynamic_cast<CBaseCombatWeapon *>(GetOriginalLauncher());
-			if (pWeapon)
+			if ( pWeapon && pWeapon->GetAttributeContainer() && pWeapon->GetAttributeContainer()->GetItem() )
 			{
 				ownerWeaponDefIndex = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
 			}
