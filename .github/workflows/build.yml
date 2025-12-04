@@ -49,18 +49,27 @@ jobs:
       - name: ~/.ccache stuff (Linux)
         if: runner.os == 'Linux'
         run: |
-          if [ ! -d ~/.ccache ]; then
-            mkdir ~/.ccache
-          fi
+          mkdir -p ~/.ccache
+          echo "max_size = 2G" > ~/.ccache/ccache.conf
+          echo "compression = true" >> ~/.ccache/ccache.conf
 
       - name: Restore ccache cache (Linux)
         if: runner.os == 'Linux'
         uses: actions/cache@v4
         with:
           path: ~/.ccache
-          key: ${{ runner.os }}-ccache-${{ github.sha }}
+          key: ${{ runner.os }}-ccache-${{ hashFiles('src/**/*.cpp', 'src/**/*.h') }}
           restore-keys: |
             ${{ runner.os }}-ccache-
+
+      - name: Restore VPC/Ninja cache (Linux)
+        if: runner.os == 'Linux'
+        uses: actions/cache@v4
+        with:
+          path: src/_vpc_
+          key: ${{ runner.os }}-vpc-${{ hashFiles('src/**/*.vpc', 'src/**/vpc_scripts/**') }}
+          restore-keys: |
+            ${{ runner.os }}-vpc-
 
       - name: Restore Windows build cache
         if: runner.os == 'Windows'
@@ -93,17 +102,10 @@ jobs:
       - name: Set 64-bit build environment (Linux)
         if: runner.os == 'Linux'
         run: |
-          echo 'export CFLAGS="-m64"' >> $GITHUB_ENV
-          echo 'export CXXFLAGS="-m64"' >> $GITHUB_ENV
-          echo 'export LDFLAGS="-m64"' >> $GITHUB_ENV
-        shell: bash
-
-      # Clean previous builds to avoid architecture conflicts
-      - name: Clean previous builds (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          cd src
-          rm -rf _vpc_/
+          echo "CFLAGS=-m64" >> $GITHUB_ENV
+          echo "CXXFLAGS=-m64" >> $GITHUB_ENV
+          echo "LDFLAGS=-m64" >> $GITHUB_ENV
+          echo "CCACHE_DIR=$HOME/.ccache" >> $GITHUB_ENV
         shell: bash
 
       - name: Build (Linux)
@@ -180,10 +182,17 @@ jobs:
 
       - name: Save ccache (Linux)
         if: runner.os == 'Linux'
-        uses: actions/cache@v4
+        uses: actions/cache/save@v4
         with:
           path: ~/.ccache
-          key: ${{ runner.os }}-ccache-${{ github.sha }}
+          key: ${{ runner.os }}-ccache-${{ hashFiles('src/**/*.cpp', 'src/**/*.h') }}
+
+      - name: Save VPC/Ninja cache (Linux)
+        if: runner.os == 'Linux'
+        uses: actions/cache/save@v4
+        with:
+          path: src/_vpc_
+          key: ${{ runner.os }}-vpc-${{ hashFiles('src/**/*.vpc', 'src/**/vpc_scripts/**') }}
 
       - name: Save Windows build cache
         if: runner.os == 'Windows'

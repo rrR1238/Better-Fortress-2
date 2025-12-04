@@ -26,11 +26,12 @@ function run_in_sniper() {
         echo "Running script inside $image"
         exec podman run \
             --env "$check_env=$script_file" \
-            --env "CCACHE_DIR=${CCACHE_DIR:-$HOME/.ccache}" \
+            --env "CCACHE_DIR=/ccache" \
+            --env "PATH=/usr/lib/ccache:/usr/local/bin:/usr/bin:/bin" \
             --userns=keep-id \
             --rm -it \
-            --mount type=bind,\"source="${CCACHE_DIR:-$HOME/.ccache}"\",\"target="${CCACHE_DIR:-$HOME/.ccache}"\" \
-            --mount type=bind,\"source="$mod_base_dir"\",target=/my_mod/ \
+            --mount type=bind,source="${CCACHE_DIR:-$HOME/.ccache}",target=/ccache \
+            --mount type=bind,source="$mod_base_dir",target=/my_mod/ \
             "$image" \
             /my_mod/"$mod_src_dir_name"/"$script_file" \
             "$@"

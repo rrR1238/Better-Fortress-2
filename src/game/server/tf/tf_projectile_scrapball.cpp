@@ -105,28 +105,8 @@ int	CTFProjectile_ScrapBall::GetDamageType()
 //-----------------------------------------------------------------------------
 void CTFProjectile_ScrapBall::RocketTouch( CBaseEntity *pOther )
 {
+	// Call base class - this will handle the explosion
 	BaseClass::RocketTouch( pOther );
-
-	Vector vecOrigin = GetAbsOrigin();
-	float flRadius = GetRadius(); 
-
-
-	//Scan for Players
-	/*CUtlVector<CTFPlayer*> playerVector;
-	for ( int i = 0; i < IBaseObjectAutoList::AutoList().Count(); ++i )
-	{
-		CTFPlayer* pPlayer = static_cast<CTFPlayer*>( IBaseObjectAutoList::AutoList()[i] );
-		CTFPlayer *pPlayer = ToTFPlayer( C_BasePlayer::GetLocalPlayer() );
-		if ( !pObj || pObj->GetTeamNumber() != GetTeamNumber() )
-			continue;
-
-		float flDist = (pObj->GetAbsOrigin() - vecOrigin).Length();
-		if ( flDist <= flRadius )
-		{
-			playerVector.AddToTail( pObj );
-		}
-	}*/
-
 }
 
 int CTFProjectile_ScrapBall::GiveMetal( CTFPlayer *pPlayer )
@@ -182,6 +162,13 @@ void CTFProjectile_ScrapBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 		return;
 	}
 
+	// Validate trace
+	if ( !pTrace )
+	{
+		UTIL_Remove( this );
+		return;
+	}
+
 	// Save this entity as enemy, they will take 100% damage.
 	m_hEnemy = pOther;
 
@@ -216,10 +203,8 @@ void CTFProjectile_ScrapBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 		}
 	}
 
-	int iNoSelfBlastDamage = 0;
-	int nDefID = -1;
 	CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( GetOriginalLauncher() );
-	if ( pWeapon )
+	if ( pWeapon && pWeapon->GetAttributeContainer() && pWeapon->GetAttributeContainer()->GetItem() )
 	{
 		ownerWeaponDefIndex = pWeapon->GetAttributeContainer()->GetItem()->GetItemDefIndex();
 	}
@@ -232,7 +217,8 @@ void CTFProjectile_ScrapBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 		DispatchParticleEffect( "fluidSmokeExpl_ring_mvm", GetAbsOrigin(), GetAbsAngles() );
 	}
 
-	TE_TFExplosion( filter, 0.0f, vecOrigin, pTrace->plane.normal, TF_WEAPON_BMMH, pOther->entindex(), ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
+	int iOtherEntIndex = pOther ? pOther->entindex() : -1;
+	TE_TFExplosion( filter, 0.0f, vecOrigin, pTrace->plane.normal, TF_WEAPON_BMMH, iOtherEntIndex, ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
 
 	CSoundEnt::InsertSound ( SOUND_COMBAT, vecOrigin, 1024, 3.0 );
 
@@ -361,11 +347,13 @@ void CTFProjectile_ScrapBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 	}
 	
 	int iValidObjCount = objVector.Count();
-	if ( iValidObjCount > 0 && iMetalCost > 0 )
+	if ( iValidObjCount > 0 && iMetalCost > 0 && pScorer )
 	{
 		FOR_EACH_VEC( objVector, i )
 		{
 			CBaseObject *pObj = objVector[i];
+			if ( !pObj )
+				continue;
 
 			bool bRepairHit = false;
 			bool bUpgradeHit = false;

@@ -141,20 +141,26 @@ void CTFBMMH::LaunchGrenade( void )
 
 //-----------------------------------------------------------------------------
 // Purpose: Fire projectile and store the metal cost
+// NOTE: We override completely because base class tries to add to pipebomb list
 //-----------------------------------------------------------------------------
 CBaseEntity *CTFBMMH::FireProjectile( CTFPlayer *pPlayer )
 {
 	// Calculate and store the metal cost before firing
 	int iMetalCost = GetAmmoPerShot();
 	
-	CBaseEntity *pProjectile = BaseClass::FireProjectile( pPlayer );
+	// Call the gun base class, NOT the pipebomb launcher base class
+	// This avoids the pipebomb tracking code which doesn't apply to scrapballs
+	CBaseEntity *pProjectile = CTFWeaponBaseGun::FireProjectile( pPlayer );
 	
 #ifndef CLIENT_DLL
 	// Store the metal cost in the projectile
-	CTFProjectile_ScrapBall *pScrapBall = dynamic_cast<CTFProjectile_ScrapBall*>( pProjectile );
-	if ( pScrapBall )
+	if ( pProjectile )
 	{
-		pScrapBall->SetMetalCost( iMetalCost );
+		CTFProjectile_ScrapBall *pScrapBall = dynamic_cast<CTFProjectile_ScrapBall*>( pProjectile );
+		if ( pScrapBall )
+		{
+			pScrapBall->SetMetalCost( iMetalCost );
+		}
 	}
 #endif
 	
