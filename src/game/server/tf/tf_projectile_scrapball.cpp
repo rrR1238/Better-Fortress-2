@@ -216,8 +216,6 @@ void CTFProjectile_ScrapBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 		}
 	}
 
-	int iNoSelfBlastDamage = 0;
-	int nDefID = -1;
 	CTFWeaponBase *pWeapon = dynamic_cast< CTFWeaponBase * >( GetOriginalLauncher() );
 	if ( pWeapon )
 	{
@@ -232,7 +230,8 @@ void CTFProjectile_ScrapBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 		DispatchParticleEffect( "fluidSmokeExpl_ring_mvm", GetAbsOrigin(), GetAbsAngles() );
 	}
 
-	TE_TFExplosion( filter, 0.0f, vecOrigin, pTrace->plane.normal, TF_WEAPON_BMMH, pOther->entindex(), ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
+	int iOtherEntIndex = pOther ? pOther->entindex() : -1;
+	TE_TFExplosion( filter, 0.0f, vecOrigin, pTrace->plane.normal, TF_WEAPON_BMMH, iOtherEntIndex, ownerWeaponDefIndex, SPECIAL1, iCustomParticleIndex );
 
 	CSoundEnt::InsertSound ( SOUND_COMBAT, vecOrigin, 1024, 3.0 );
 
