@@ -456,11 +456,12 @@ bool CServerCrashHandler::WriteCrashReport( const char *pszSignal, void *pFaultA
 	
 	return true;
 #else
-	// Windows: Basic crash logging (full implementation would use SEH)
+	// Windows: Use Win32 API instead of fopen (which is blocked by Source Engine)
 	(void)pszSignal;
 	(void)pFaultAddress;
 	
 	// Create crashes directory
+	CreateDirectoryA( "customfortress", NULL );
 	CreateDirectoryA( CRASH_LOG_DIR, NULL );
 	
 	// Generate filename with timestamp
@@ -475,25 +476,40 @@ bool CServerCrashHandler::WriteCrashReport( const char *pszSignal, void *pFaultA
 		timeinfo.tm_year + 1900, timeinfo.tm_mon + 1, timeinfo.tm_mday,
 		timeinfo.tm_hour, timeinfo.tm_min, timeinfo.tm_sec );
 
-	FILE* pFile = fopen( szFilename, "w" );
-	if ( !pFile )
+	// Use CreateFile instead of fopen
+	HANDLE hFile = CreateFileA( szFilename, GENERIC_WRITE, 0, NULL, 
+		CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL );
+	if ( hFile == INVALID_HANDLE_VALUE )
 		return false;
 
-	fprintf( pFile, "=============================================================\n" );
-	fprintf( pFile, "Custom Fortress 2 - Windows Server Crash Report\n" );
-	fprintf( pFile, "=============================================================\n\n" );
-	fprintf( pFile, "Crash ID: %s\n", s_Metadata.szCrashID );
-	fprintf( pFile, "Version: %s\n", s_Metadata.szVersion );
-	fprintf( pFile, "Timestamp: %s\n", s_Metadata.szTimestamp );
-	fprintf( pFile, "Map: %s\n", s_Metadata.szMap[0] ? s_Metadata.szMap : "(none)" );
-	fprintf( pFile, "Players: %d\n", s_Metadata.nPlayerCount );
-	fprintf( pFile, "Uptime: %d seconds\n", s_Metadata.nUptime );
-	fprintf( pFile, "OS: %s\n", s_Metadata.szOS );
-	fprintf( pFile, "\nNote: Full stack traces require Windows-specific implementation.\n" );
-	fprintf( pFile, "=============================================================\n" );
+	// Build the crash report as a string
+	char szBuffer[4096];
+	DWORD dwWritten;
 	
-	fflush( pFile );
-	fclose( pFile );
+	V_snprintf( szBuffer, sizeof(szBuffer),
+		"=============================================================\r\n"
+		"Custom Fortress 2 - Windows Server Crash Report\r\n"
+		"=============================================================\r\n\r\n"
+		"Crash ID: %s\r\n"
+		"Version: %s\r\n"
+		"Timestamp: %s\r\n"
+		"Map: %s\r\n"
+		"Players: %d\r\n"
+		"Uptime: %d seconds\r\n"
+		"OS: %s\r\n"
+		"\r\nNote: Full stack traces require Windows-specific implementation.\r\n"
+		"=============================================================\r\n",
+		s_Metadata.szCrashID,
+		s_Metadata.szVersion,
+		s_Metadata.szTimestamp,
+		s_Metadata.szMap[0] ? s_Metadata.szMap : "(none)",
+		s_Metadata.nPlayerCount,
+		s_Metadata.nUptime,
+		s_Metadata.szOS );
+	
+	WriteFile( hFile, szBuffer, (DWORD)V_strlen(szBuffer), &dwWritten, NULL );
+	FlushFileBuffers( hFile );
+	CloseHandle( hFile );
 	
 	return true;
 #endif
