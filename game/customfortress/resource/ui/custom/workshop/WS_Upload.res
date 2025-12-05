@@ -910,12 +910,25 @@
 		"fgcolor_override"	"200 187 161 255"
 	}
 	
+	"TagCheck_Summer"
+	{
+		"ControlName"	"CheckButton"
+		"fieldName"		"TagCheck_Summer"
+		"xpos"			"640"
+		"ypos"			"576"
+		"wide"			"110"
+		"tall"			"24"
+		"labelText"		"Summer"
+		"font"			"HudFontSmall"
+		"fgcolor_override"	"200 187 161 255"
+	}
+	
 	"TagCheck_Unusual"
 	{
 		"ControlName"	"CheckButton"
 		"fieldName"		"TagCheck_Unusual"
-		"xpos"			"640"
-		"ypos"			"576"
+		"xpos"			"420"
+		"ypos"			"600"
 		"wide"			"130"
 		"tall"			"24"
 		"labelText"		"Unusual Effect"
@@ -927,7 +940,7 @@
 	{
 		"ControlName"	"CheckButton"
 		"fieldName"		"TagCheck_WarPaint"
-		"xpos"			"420"
+		"xpos"			"530"
 		"ypos"			"600"
 		"wide"			"110"
 		"tall"			"24"
@@ -940,7 +953,7 @@
 	{
 		"ControlName"	"CheckButton"
 		"fieldName"		"TagCheck_Killstreak"
-		"xpos"			"530"
+		"xpos"			"640"
 		"ypos"			"600"
 		"wide"			"130"
 		"tall"			"24"
@@ -953,8 +966,8 @@
 	{
 		"ControlName"	"CheckButton"
 		"fieldName"		"TagCheck_CommunityFix"
-		"xpos"			"660"
-		"ypos"			"600"
+		"xpos"			"420"
+		"ypos"			"625"
 		"wide"			"130"
 		"tall"			"24"
 		"labelText"		"Community Fix"

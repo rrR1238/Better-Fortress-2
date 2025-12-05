@@ -9,6 +9,7 @@
 
 #include <vgui_controls/EditablePanel.h>
 
+#define RES_RADIAL_MENU             "resource/UI/custom/RadialMenu.res"
 #define PANEL_RADIAL_MENU			"RadialMenu"
 
 class CRadialButton;
@@ -57,7 +58,7 @@ public:
 			g_pAllRadialMenus->deleteThis();
 
 		g_pAllRadialMenus = new KeyValues("RadialMenu");
-		g_pAllRadialMenus->LoadFromFile(filesystem,"resource/UI/RadialMenu.res");
+		g_pAllRadialMenus->LoadFromFile(filesystem, RES_RADIAL_MENU );
 	}
 
 	enum ButtonDir

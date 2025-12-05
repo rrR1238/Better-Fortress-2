@@ -672,7 +672,7 @@ void CCFWorkshopBrowserPanel::ApplySchemeSettings(IScheme* pScheme)
 	BaseClass::ApplySchemeSettings(pScheme);
 	
 	// Load the TF2-style resource file - this creates controls
-	LoadControlSettings("resource/UI/WorkshopBrowser.res");
+	LoadControlSettings( RES_BROWSER );
 	
 	// Find controls created by .res file
 	m_pItemList = dynamic_cast<ListPanel*>(FindChildByName("ItemList"));
@@ -1025,7 +1025,7 @@ void CCFWorkshopUploadDialog::ApplySchemeSettings(IScheme* pScheme)
 	BaseClass::ApplySchemeSettings(pScheme);
 	
 	// Load the TF2-style resource file - creates all controls
-	LoadControlSettings("resource/UI/WorkshopUpload.res");
+	LoadControlSettings( RES_UPLOAD );
 	
 	// Force size since .res might not be applying correctly
 	SetSize(900, 760);
@@ -1543,7 +1543,7 @@ void CCFWorkshopUpdateDialog::ApplySchemeSettings(IScheme* pScheme)
 	BaseClass::ApplySchemeSettings(pScheme);
 	
 	// Load the resource file for the update dialog
-	LoadControlSettings("resource/UI/WorkshopUpdate.res");
+	LoadControlSettings( RES_UPDATE );
 	
 	// Find controls
 	m_pTitleEntry = dynamic_cast<TextEntry*>(FindChildByName("TitleEntry"));
@@ -1821,7 +1821,7 @@ void CCFWorkshopDeleteConfirmDialog::ApplySchemeSettings(IScheme* pScheme)
 	BaseClass::ApplySchemeSettings(pScheme);
 	
 	// Load the TF2-style resource file
-	LoadControlSettings("resource/UI/WorkshopDeleteConfirm.res");
+	LoadControlSettings( RES_DELETECONFIRM );
 	
 	// Find controls from .res file
 	m_pMessageLabel = dynamic_cast<Label*>(FindChildByName("MessageLabel"));

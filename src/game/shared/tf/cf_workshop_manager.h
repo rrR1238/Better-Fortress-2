@@ -25,6 +25,13 @@
 // These must match the Steam Workshop configuration
 //-----------------------------------------------------------------------------
 
+// RES Files
+#define RES_BROWSER				"resource/UI/custom/workshop/WS_Browser.res"
+#define RES_UPDATE				"resource/UI/custom/workshop/WS_Update.res"
+#define RES_UPLOAD				"resource/UI/custom/workshop/WS_Upload.res"
+#define RES_WEAPONTOOL			"resource/UI/custom/workshop/WS_WeaponTool.res"
+#define RES_DELETECONFIRM		"resource/UI/custom/workshop/WS_DeleteConfirm.res"
+
 // CLASS category tags
 #define CF_WORKSHOP_TAG_SCOUT		"Scout"
 #define CF_WORKSHOP_TAG_SOLDIER		"Soldier"
@@ -77,6 +84,7 @@
 // OTHER category tags
 #define CF_WORKSHOP_TAG_HALLOWEEN		"Halloween"
 #define CF_WORKSHOP_TAG_CHRISTMAS		"Christmas"
+#define CF_WORKSHOP_TAG_SUMMER			"Summer"
 #define CF_WORKSHOP_TAG_UNUSUAL			"Unusual Effect"
 #define CF_WORKSHOP_TAG_WARPAINT		"War Paint"
 #define CF_WORKSHOP_TAG_KILLSTREAK		"Killstreak Effect"
@@ -140,6 +148,7 @@ enum CFWorkshopTagIndex_t
 	// OTHER category
 	CF_WORKSHOP_TAGIDX_HALLOWEEN,
 	CF_WORKSHOP_TAGIDX_CHRISTMAS,
+	CF_WORKSHOP_TAGIDX_SUMMER,
 	CF_WORKSHOP_TAGIDX_UNUSUAL,
 	CF_WORKSHOP_TAGIDX_WARPAINT,
 	CF_WORKSHOP_TAGIDX_KILLSTREAK,

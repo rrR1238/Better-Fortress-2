@@ -384,7 +384,7 @@ CCFWorkshopWeaponTool::~CCFWorkshopWeaponTool() {}
 void CCFWorkshopWeaponTool::ApplySchemeSettings(IScheme* pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-	LoadControlSettings("resource/UI/WorkshopWeaponTool.res");
+	LoadControlSettings( RES_WEAPONTOOL );
 	
 	// Find controls
 	m_pModelPathEntry = dynamic_cast<TextEntry*>(FindChildByName("ModelPathEntry"));

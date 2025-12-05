@@ -2544,7 +2544,7 @@ void CTFModCreditsDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
 
-	LoadControlSettings("resource/ui/TFModCreditsDialog.res");
+	LoadControlSettings( RES_CREDITSMENU );
 	m_pListPanel->SetFirstColumnWidth(0);
 
 	CreateControls();
@@ -3083,7 +3083,7 @@ void CTFCreateServerDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 	BaseClass::ApplySchemeSettings(pScheme);
 
 	CreateControls();
-	LoadControlSettings("resource/ui/TFModServerDialog.res");
+	LoadControlSettings( RES_SERVERMENU );
 
 	FOR_EACH_VEC(m_pPages, i)
 	{

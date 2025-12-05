@@ -65,6 +65,10 @@ void PositionTooltip( const tooltippos_t ePreferredTooltipPosition,
 					  vgui::Panel* pMouseOverPanel,
 					  vgui::Panel *pToolTipPanel );
 
+//Custom Fortress Res
+#define RES_SERVERMENU	"resource/ui/custom/createserver/Menu.res"
+#define RES_CREDITSMENU "resource/ui/custom/AuthorCredits.res"
+
 //-----------------------------------------------------------------------------
 // Purpose: Xbox-specific panel that displays button icons text labels
 //-----------------------------------------------------------------------------
