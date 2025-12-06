@@ -579,7 +579,7 @@ src/lib/public/x64/matsys_controls.lib
 src/lib/public/x64/raytrace.lib
 src/lib/public/x64/tier1.lib
 src/lib/public/x64/vgui_controls.lib
-game/bin/x64/*
+game/bin/*
 .ninja_deps
 .ninja_log
 compile_commands.json
@@ -630,3 +630,11 @@ steamworks
 /game/customfortress/crashes
 /game/customfortress/.sentry-native
 /test_workshop
+tf/
+hl2/
+/game/platform
+game/srcds_linux
+game/srcds_linux64
+game/srcds_run
+game/srcds_run_64
+game/steamapps/appmanifest_232250.acf
