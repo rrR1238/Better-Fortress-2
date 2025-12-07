@@ -219,8 +219,30 @@ void CTFProjectile_ScrapBall::Explode( trace_t *pTrace, CBaseEntity *pOther )
 		}
 
 		CTakeDamageInfo info( this, pAttacker, GetOriginalLauncher(), vec3_origin, vecOrigin, GetDamage(), GetDamageType(), GetDamageCustom() );
-		CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, TF_ROCKET_RADIUS_FOR_RJS );
+		CTFRadiusDamageInfo radiusinfo( &info, vecOrigin, flRadius, NULL, 0.0f );
 		TFGameRules()->RadiusDamage( radiusinfo );
+		
+		// Apply blast jump velocity to the attacker (for Quick Fix mirroring)
+		CTFPlayer *pTFAttacker = ToTFPlayer( pAttacker );
+		if ( pTFAttacker && pTFAttacker == GetEnemy() )
+		{
+			// Calculate blast force similar to other explosive weapons
+			Vector vecForce = pTFAttacker->GetAbsOrigin() - vecOrigin;
+			float flDistance = vecForce.NormalizeInPlace();
+			
+			if ( flDistance > flRadius )
+				flDistance = flRadius;
+			
+			// Calculate falloff
+			float flFalloff = 1.0f - ( flDistance / flRadius );
+			
+			// Apply vertical and horizontal blast force
+			vecForce.z = 0.4f; // Lift component
+			vecForce.NormalizeInPlace();
+			
+			float flForce = GetDamage() * 16.0f * flFalloff; // Base blast force
+			pTFAttacker->ApplyAbsVelocityImpulse( vecForce * flForce );
+		}
 	}
 
 	// Remove the rocket

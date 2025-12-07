@@ -85,6 +85,51 @@ void CWorkshopPreviewImage::Clear()
 	m_nImageHeight = 0;
 }
 
+bool CWorkshopPreviewImage::SetTextureFromFile(const char* pszFilePath)
+{
+	if (!pszFilePath || !pszFilePath[0])
+		return false;
+	
+	// Load the image using imageutils
+	int width = 0;
+	int height = 0;
+	ConversionErrorType errcode = CE_SUCCESS;
+	unsigned char* pRGBA = NULL;
+	
+	// Determine format from extension
+	const char* pszExt = V_GetFileExtension(pszFilePath);
+	
+	if (pszExt && (V_stricmp(pszExt, "jpg") == 0 || V_stricmp(pszExt, "jpeg") == 0))
+	{
+		pRGBA = ImgUtl_ReadJPEGAsRGBA(pszFilePath, width, height, errcode);
+	}
+	else if (pszExt && V_stricmp(pszExt, "png") == 0)
+	{
+		pRGBA = ImgUtl_ReadPNGAsRGBA(pszFilePath, width, height, errcode);
+	}
+	else
+	{
+		Warning("Unsupported image format: %s\n", pszExt ? pszExt : "unknown");
+		return false;
+	}
+	
+	if (!pRGBA || errcode != CE_SUCCESS)
+	{
+		Warning("Failed to load image: %s (error code: %d)\n", pszFilePath, errcode);
+		if (pRGBA)
+			delete[] pRGBA;
+		return false;
+	}
+	
+	// Set the texture from RGBA data
+	SetTextureRGBA(pRGBA, width, height);
+	
+	// Free the temporary buffer
+	delete[] pRGBA;
+	
+	return true;
+}
+
 void CWorkshopPreviewImage::Paint()
 {
 	if (!m_bValid || m_nTextureID == -1)
@@ -633,6 +678,8 @@ CCFWorkshopBrowserPanel::CCFWorkshopBrowserPanel(Panel* parent, const char* pane
 	, m_pRefreshButton(NULL)
 	, m_pMyItemsButton(NULL)
 	, m_pUploadButton(NULL)
+	, m_pCosmeticToolButton(NULL)
+	, m_pWeaponToolButton(NULL)
 	, m_pCloseButton(NULL)
 	, m_pDetailsPanel(NULL)
 	, m_nContextMenuFileID(0)
@@ -682,6 +729,8 @@ void CCFWorkshopBrowserPanel::ApplySchemeSettings(IScheme* pScheme)
 	m_pRefreshButton = dynamic_cast<Button*>(FindChildByName("RefreshButton"));
 	m_pMyItemsButton = dynamic_cast<Button*>(FindChildByName("MyItemsButton"));
 	m_pUploadButton = dynamic_cast<Button*>(FindChildByName("UploadButton"));
+	m_pCosmeticToolButton = dynamic_cast<Button*>(FindChildByName("CosmeticToolButton"));
+	m_pWeaponToolButton = dynamic_cast<Button*>(FindChildByName("WeaponToolButton"));
 	m_pCloseButton = dynamic_cast<Button*>(FindChildByName("CloseButton"));
 	
 	// Find or create the details panel
@@ -697,16 +746,12 @@ void CCFWorkshopBrowserPanel::ApplySchemeSettings(IScheme* pScheme)
 		m_pDetailsPanel->SetParentContainer(pDetailsContainer);
 	}
 	
-	// Setup filter combo if found
+	// Setup filter combo - will be populated dynamically when items are loaded
 	if (m_pFilterCombo)
 	{
 		m_pFilterCombo->RemoveAll();
 		m_pFilterCombo->AddItem("All Items", NULL);
-		m_pFilterCombo->AddItem("Maps", NULL);
-		m_pFilterCombo->AddItem("Weapon Skins", NULL);
-		m_pFilterCombo->AddItem("Character Skins", NULL);
-		m_pFilterCombo->AddItem("Particles", NULL);
-		m_pFilterCombo->AddItem("Sounds", NULL);
+		PopulateFilterTags();
 		m_pFilterCombo->ActivateItemByRow(0);
 	}
 	
@@ -715,7 +760,7 @@ void CCFWorkshopBrowserPanel::ApplySchemeSettings(IScheme* pScheme)
 	{
 		m_pItemList->RemoveAll();
 		m_pItemList->AddColumnHeader(0, "name", "Name", 250);
-		m_pItemList->AddColumnHeader(1, "type", "Type", 100);
+		m_pItemList->AddColumnHeader(1, "tags", "Tags", 150);
 		m_pItemList->AddColumnHeader(2, "status", "Status", 100);
 		m_pItemList->AddColumnHeader(3, "size", "Size", 100);
 		m_pItemList->SetAllowUserModificationOfColumns(true);
@@ -768,6 +813,16 @@ void CCFWorkshopBrowserPanel::OnCommand(const char* command)
 		CCFWorkshopUploadDialog* pDialog = new CCFWorkshopUploadDialog(this, "WorkshopUploadDialog");
 		pDialog->SetupForNewItem(CF_WORKSHOP_TYPE_MAP);
 		pDialog->DoModal();
+	}
+	else if (Q_stricmp(command, "cosmetic_tool") == 0)
+	{
+		// Open the cosmetic tool
+		engine->ClientCmd_Unrestricted("cf_workshop_cosmetic_tool");
+	}
+	else if (Q_stricmp(command, "weapon_tool") == 0)
+	{
+		// Open the weapon tool
+		engine->ClientCmd_Unrestricted("cf_workshop_weapon_tool");
 	}
 	else if (Q_stricmp(command, "ctx_update") == 0)
 	{
@@ -826,10 +881,109 @@ void CCFWorkshopBrowserPanel::ShowPanel(bool bShow)
 	}
 }
 
+void CCFWorkshopBrowserPanel::PopulateFilterTags()
+{
+	if (!CFWorkshop() || !m_pFilterCombo)
+		return;
+	
+	// Collect all unique tags from browseable items
+	CUtlVector<CUtlString> uniqueTags;
+	uint32 numItems = CFWorkshop()->GetBrowseableItemCount();
+	
+	for (uint32 i = 0; i < numItems; i++)
+	{
+		CCFWorkshopItem* pItem = CFWorkshop()->GetBrowseableItem(i);
+		if (!pItem)
+			continue;
+		
+		const char* pszTags = pItem->GetTags();
+		if (!pszTags || !pszTags[0])
+			continue;
+		
+		// Split tags by comma and add unique ones
+		char szTagsCopy[256];
+		V_strncpy(szTagsCopy, pszTags, sizeof(szTagsCopy));
+		
+		char* token = strtok(szTagsCopy, ",");
+		while (token != NULL)
+		{
+			// Trim whitespace
+			while (*token == ' ') token++;
+			char* end = token + strlen(token) - 1;
+			while (end > token && *end == ' ') *end-- = '\0';
+			
+			// Check if we already have this tag
+			bool bFound = false;
+			for (int j = 0; j < uniqueTags.Count(); j++)
+			{
+				if (V_stricmp(uniqueTags[j].Get(), token) == 0)
+				{
+					bFound = true;
+					break;
+				}
+			}
+			
+			if (!bFound && token[0] != '\0')
+			{
+				uniqueTags.AddToTail(token);
+			}
+			
+			token = strtok(NULL, ",");
+		}
+	}
+	
+	// Sort tags alphabetically
+	uniqueTags.Sort([](const CUtlString* a, const CUtlString* b) -> int {
+		return V_stricmp(a->Get(), b->Get());
+	});
+	
+	// Add sorted tags to combo box
+	for (int i = 0; i < uniqueTags.Count(); i++)
+	{
+		m_pFilterCombo->AddItem(uniqueTags[i].Get(), NULL);
+	}
+}
+
 void CCFWorkshopBrowserPanel::RefreshList()
 {
 	if (!CFWorkshop() || !m_pItemList)
 		return;
+	
+	// Update filter tags whenever we refresh the list
+	if (m_pFilterCombo)
+	{
+		int currentSelection = m_pFilterCombo->GetActiveItem();
+		char szCurrentText[256] = {0};
+		if (currentSelection >= 0)
+		{
+			m_pFilterCombo->GetItemText(currentSelection, szCurrentText, sizeof(szCurrentText));
+		}
+		
+		// Rebuild the filter list
+		m_pFilterCombo->RemoveAll();
+		m_pFilterCombo->AddItem("All Items", NULL);
+		PopulateFilterTags();
+		
+		// Try to restore previous selection
+		if (szCurrentText[0] != '\0')
+		{
+			for (int i = 0; i < m_pFilterCombo->GetItemCount(); i++)
+			{
+				char szItemText[256];
+				m_pFilterCombo->GetItemText(i, szItemText, sizeof(szItemText));
+				if (V_stricmp(szItemText, szCurrentText) == 0)
+				{
+					m_pFilterCombo->ActivateItemByRow(i);
+					break;
+				}
+			}
+		}
+		
+		if (m_pFilterCombo->GetActiveItem() < 0)
+		{
+			m_pFilterCombo->ActivateItemByRow(0);
+		}
+	}
 		
 	m_pItemList->RemoveAll();
 	
@@ -844,20 +998,11 @@ void CCFWorkshopBrowserPanel::RefreshList()
 			KeyValues* kv = new KeyValues("item");
 			kv->SetString("name", pItem->GetTitle());
 			
-			// Convert type enum to readable string
-			const char* pszType = "Other";
-			switch (pItem->GetType())
-			{
-				case CF_WORKSHOP_TYPE_MAP: pszType = "Map"; break;
-				case CF_WORKSHOP_TYPE_WEAPON_SKIN: pszType = "Weapon Skin"; break;
-				case CF_WORKSHOP_TYPE_WEAPON_MOD: pszType = "Weapon Mod"; break;
-				case CF_WORKSHOP_TYPE_CHARACTER_SKIN: pszType = "Character Mod"; break;
-				case CF_WORKSHOP_TYPE_PARTICLE_EFFECT: pszType = "Particle"; break;
-				case CF_WORKSHOP_TYPE_SOUND_MOD: pszType = "Sound"; break;
-				case CF_WORKSHOP_TYPE_HUD: pszType = "HUD"; break;
-				default: pszType = "Other"; break;
-			}
-			kv->SetString("type", pszType);
+			// Show tags instead of type
+			const char* pszTags = pItem->GetTags();
+			if (!pszTags || !pszTags[0])
+				pszTags = "-";
+			kv->SetString("tags", pszTags);
 			
 			// Show subscription status instead of download state
 			const char* pszState = pItem->IsSubscribed() ? "Subscribed" : "Not Subscribed";
@@ -992,7 +1137,12 @@ CCFWorkshopUploadDialog::CCFWorkshopUploadDialog(Panel* parent, const char* pane
 	, m_pVisibilityCombo(NULL)
 	, m_pStatusLabel(NULL)
 	, m_pProgressBar(NULL)
+	, m_pPreviewImagePanel(NULL)
+	, m_pPreviewImage(NULL)
 {
+	// Create preview image object
+	m_pPreviewImage = new CWorkshopPreviewImage();
+	
 	// Initialize tag checkboxes array
 	for (int i = 0; i < CF_WORKSHOP_TAG_COUNT; i++)
 	{
@@ -1018,6 +1168,11 @@ CCFWorkshopUploadDialog::CCFWorkshopUploadDialog(Panel* parent, const char* pane
 
 CCFWorkshopUploadDialog::~CCFWorkshopUploadDialog()
 {
+	if (m_pPreviewImage)
+	{
+		delete m_pPreviewImage;
+		m_pPreviewImage = NULL;
+	}
 }
 
 void CCFWorkshopUploadDialog::ApplySchemeSettings(IScheme* pScheme)
@@ -1043,6 +1198,7 @@ void CCFWorkshopUploadDialog::ApplySchemeSettings(IScheme* pScheme)
 	m_pVisibilityCombo = dynamic_cast<ComboBox*>(FindChildByName("VisibilityCombo"));
 	m_pStatusLabel = dynamic_cast<Label*>(FindChildByName("StatusLabel"));
 	m_pProgressBar = dynamic_cast<ProgressBar*>(FindChildByName("ProgressBar"));
+	m_pPreviewImagePanel = dynamic_cast<ImagePanel*>(FindChildByName("PreviewImagePanel"));
 	
 	// Initialize tag checkboxes array to NULL
 	for (int i = 0; i < CF_WORKSHOP_TAG_COUNT; i++)
@@ -1478,6 +1634,24 @@ void CCFWorkshopUploadDialog::OnFileSelected(KeyValues* params)
 				m_pPreviewImageEntry->SetText(pszFullPath);
 			if (m_pStatusLabel)
 				m_pStatusLabel->SetText("Preview image selected");
+			
+			// Load and display the preview image
+			if (m_pPreviewImagePanel && m_pPreviewImage)
+			{
+				if (m_pPreviewImage->SetTextureFromFile(pszFullPath))
+				{
+					// Size the image to fit the panel
+					int panelWide, panelTall;
+					m_pPreviewImagePanel->GetSize(panelWide, panelTall);
+					m_pPreviewImage->SetSize(panelWide, panelTall);
+					m_pPreviewImagePanel->SetImage(m_pPreviewImage);
+				}
+				else
+				{
+					if (m_pStatusLabel)
+						m_pStatusLabel->SetText("Failed to load preview image");
+				}
+			}
 		}
 	}
 }

@@ -637,7 +637,7 @@ void CCFWorkshopCosmeticTool::ApplySchemeSettings(IScheme* pScheme)
 	// Default states
 	if (m_pAutoRotateCheck)
 	{
-		m_pAutoRotateCheck->SetSelected(true);
+		m_pAutoRotateCheck->SetSelected(false);
 	}
 	
 	// Setup speed slider

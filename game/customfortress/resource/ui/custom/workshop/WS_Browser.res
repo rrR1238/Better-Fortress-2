@@ -184,6 +184,48 @@
 		"border_armed"		"TFFatLineBorder"
 	}
 	
+	"CosmeticToolButton"
+	{
+		"ControlName"	"CExButton"
+		"fieldName"		"CosmeticToolButton"
+		"xpos"			"675"
+		"ypos"			"50"
+		"wide"			"115"
+		"tall"			"24"
+		"visible"		"1"
+		"enabled"		"1"
+		"labelText"		"Cosmetic Tool"
+		"font"			"HudFontSmallBold"
+		"textAlignment"	"center"
+		"Command"		"cosmetic_tool"
+		"default"		"0"
+		"sound_depressed"	"UI/buttonclick.wav"
+		"sound_released"	"UI/buttonclickrelease.wav"
+		"border_default"	"TFFatLineBorderOpaque"
+		"border_armed"		"TFFatLineBorder"
+	}
+	
+	"WeaponToolButton"
+	{
+		"ControlName"	"CExButton"
+		"fieldName"		"WeaponToolButton"
+		"xpos"			"800"
+		"ypos"			"50"
+		"wide"			"110"
+		"tall"			"24"
+		"visible"		"1"
+		"enabled"		"1"
+		"labelText"		"Weapon Tool"
+		"font"			"HudFontSmallBold"
+		"textAlignment"	"center"
+		"Command"		"weapon_tool"
+		"default"		"0"
+		"sound_depressed"	"UI/buttonclick.wav"
+		"sound_released"	"UI/buttonclickrelease.wav"
+		"border_default"	"TFFatLineBorderOpaque"
+		"border_armed"		"TFFatLineBorder"
+	}
+	
 	"ItemList"
 	{
 		"ControlName"	"ListPanel"

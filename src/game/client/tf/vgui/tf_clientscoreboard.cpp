@@ -359,10 +359,6 @@ void CTFClientScoreBoardDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 			m_iImagePingDead[i] = m_pImageList->AddImage( scheme()->GetImage( pszPingIconsDead[i], true ) );
 		}
 
-		// Add server host images
-		m_iImageServerHost = m_pImageList->AddImage( scheme()->GetImage( "../hud/scoreboard_serverhost", true ) );
-		m_iImageServerHostDead = m_pImageList->AddImage( scheme()->GetImage( "../hud/scoreboard_serverhost_d", true ) );
-
 		// resize the images to our resolution
 		for (int i = 1 ; i < m_pImageList->GetImageCount(); i++ )
 		{

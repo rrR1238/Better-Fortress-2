@@ -265,10 +265,6 @@ void CTFHudMannVsMachineScoreboard::InitPlayerList ( IScheme *pScheme )
 	m_iImageDead = m_pImageList->AddImage( scheme()->GetImage( "../hud/leaderboard_dead", true ) );
 	m_iSquadSurplusTexture = m_pImageList->AddImage( scheme()->GetImage( "pve/mvm_squad_surplus_small", true ) );
 
-	// Add server host images
-	m_iImageServerHost = m_pImageList->AddImage( scheme()->GetImage( "../hud/scoreboard_serverhost", true ) );
-	m_iImageServerHostDead = m_pImageList->AddImage( scheme()->GetImage( "../hud/scoreboard_serverhost_d", true ) );
-
 	for(int i = 1 ; i < SCOREBOARD_CLASS_ICONS ; i++)
 	{
 		m_iImageClass[i] = m_pImageList->AddImage( scheme()->GetImage( g_pszClassIcons[i], true ) );

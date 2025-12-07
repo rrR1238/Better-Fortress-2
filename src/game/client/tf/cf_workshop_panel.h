@@ -41,6 +41,8 @@ public:
 	
 	// Set the texture from RGBA data
 	void SetTextureRGBA(const byte* rgba, int width, int height);
+	// Load texture from file path
+	bool SetTextureFromFile(const char* pszFilePath);
 	void Clear();
 	bool IsValid() const { return m_nTextureID != -1 && m_bValid; }
 	
@@ -153,6 +155,8 @@ private:
 	Button* m_pRefreshButton;
 	Button* m_pMyItemsButton;
 	Button* m_pUploadButton;
+	Button* m_pCosmeticToolButton;
+	Button* m_pWeaponToolButton;
 	Button* m_pCloseButton;
 	CCFWorkshopItemDetails* m_pDetailsPanel;
 
@@ -171,6 +175,7 @@ private:
 	void PopulateItemList();
 	void ApplyFilters();
 	void UpdateItemRow(int itemID, CCFWorkshopItem* pItem);
+	void PopulateFilterTags();
 };
 
 //-----------------------------------------------------------------------------
@@ -222,6 +227,8 @@ private:
 	ComboBox* m_pVisibilityCombo;
 	Label* m_pStatusLabel;
 	ProgressBar* m_pProgressBar;
+	ImagePanel* m_pPreviewImagePanel;
+	CWorkshopPreviewImage* m_pPreviewImage;
 	
 	// Tag checkboxes - indexed by CFWorkshopTag_t enum
 	CheckButton* m_pTagChecks[CF_WORKSHOP_TAG_COUNT];

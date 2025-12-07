@@ -48,6 +48,9 @@ static void PerformContentReload()
 {
 	// Flush model cache to force reload from new search paths
 	engine->ExecuteClientCmd("r_flushlod");
+
+	// Reload all materials
+	engine->ExecuteClientCmd( "mat_reloadallmaterials" );
 	
 	// Restart sound system to reload sounds
 	engine->ExecuteClientCmd("snd_restart");
@@ -1967,18 +1970,37 @@ bool CCFWorkshopManager::StartUpload(
 		return false;
 	}
 
+	// Convert content path to absolute path
+	char szAbsContentPath[MAX_PATH];
+	V_MakeAbsolutePath(szAbsContentPath, sizeof(szAbsContentPath), pszContentPath, NULL);
+	
 	// Check if content path exists
-	if (!g_pFullFileSystem->IsDirectory(pszContentPath))
+	if (!g_pFullFileSystem->IsDirectory(szAbsContentPath))
 	{
-		CFWorkshopWarning("Content path does not exist: %s\n", pszContentPath);
+		CFWorkshopWarning("Content path does not exist: %s\n", szAbsContentPath);
 		return false;
 	}
 
-	// Store pending upload info
+	// Convert preview path to absolute if provided
+	char szAbsPreviewPath[MAX_PATH] = {0};
+	if (pszPreviewImagePath && pszPreviewImagePath[0])
+	{
+		V_MakeAbsolutePath(szAbsPreviewPath, sizeof(szAbsPreviewPath), pszPreviewImagePath, NULL);
+		
+		// Check if preview image exists
+		if (!g_pFullFileSystem->FileExists(szAbsPreviewPath))
+		{
+			CFWorkshopWarning("Preview image does not exist: %s\n", szAbsPreviewPath);
+			// Don't fail, just warn and proceed without preview
+			szAbsPreviewPath[0] = '\0';
+		}
+	}
+
+	// Store pending upload info with absolute paths
 	m_strPendingTitle = pszTitle;
 	m_strPendingDescription = pszDescription ? pszDescription : "";
-	m_strPendingContentPath = pszContentPath;
-	m_strPendingPreviewPath = pszPreviewImagePath ? pszPreviewImagePath : "";
+	m_strPendingContentPath = szAbsContentPath;
+	m_strPendingPreviewPath = szAbsPreviewPath;
 	m_strPendingTags = pszTags ? pszTags : "";
 	m_ePendingType = type;
 	m_ePendingVisibility = visibility;

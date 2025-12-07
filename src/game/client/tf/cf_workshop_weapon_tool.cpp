@@ -496,7 +496,7 @@ void CCFWorkshopWeaponTool::ApplySchemeSettings(IScheme* pScheme)
 	// Default checkboxes
 	if (m_pReplaceViewModelCheck) m_pReplaceViewModelCheck->SetSelected(true);
 	if (m_pReplaceWorldModelCheck) m_pReplaceWorldModelCheck->SetSelected(true);
-	if (m_pAutoRotateCheck) m_pAutoRotateCheck->SetSelected(true);
+	if (m_pAutoRotateCheck) m_pAutoRotateCheck->SetSelected(false);
 	
 	PopulateWeaponDropdown();
 }

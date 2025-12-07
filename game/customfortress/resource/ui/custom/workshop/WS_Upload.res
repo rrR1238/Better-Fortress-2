@@ -260,6 +260,35 @@
 		"multiline"		"1"
 	}
 	
+	"PreviewImageLabel"
+	{
+		"ControlName"	"CExLabel"
+		"fieldName"		"PreviewImageLabel"
+		"xpos"			"20"
+		"ypos"			"306"
+		"wide"			"80"
+		"tall"			"24"
+		"font"			"HudFontSmallBold"
+		"textAlignment"	"east"
+		"fgcolor_override"	"200 187 161 255"
+		"labelText"		"Preview:"
+	}
+	
+	"PreviewImagePanel"
+	{
+		"ControlName"	"ImagePanel"
+		"fieldName"		"PreviewImagePanel"
+		"xpos"			"110"
+		"ypos"			"306"
+		"wide"			"280"
+		"tall"			"210"
+		"visible"		"1"
+		"enabled"		"1"
+		"scaleImage"	"1"
+		"bgcolor_override"	"30 28 26 255"
+		"border"		"TFFatLineBorder"
+	}
+	
 	// Right Column - Tags
 	"TagsHeaderLabel"
 	{
