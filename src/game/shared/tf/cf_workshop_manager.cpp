@@ -3599,3 +3599,109 @@ bool CCFWorkshopManager::GetWorkshopMapDesc(uint32 uIndex, void* pDesc)
 	// For now, return false (not implemented yet)
 	return false;
 }
+
+//-----------------------------------------------------------------------------
+// Console command to host a Workshop map
+//-----------------------------------------------------------------------------
+CON_COMMAND(host_workshop_map, "Load a Workshop map by its file ID")
+{
+	if (args.ArgC() < 2)
+	{
+		Msg("Usage: host_workshop_map <fileID>\n");
+		Msg("Example: host_workshop_map 1234567890\n");
+		return;
+	}
+
+	PublishedFileId_t fileID = 0;
+	sscanf(args[1], "%llu", &fileID);
+	
+	if (fileID == 0)
+	{
+		Warning("Invalid Workshop file ID\n");
+		return;
+	}
+
+	// Find or create the Workshop item
+	CCFWorkshopItem* pItem = CFWorkshop()->GetItem(fileID);
+	if (!pItem)
+	{
+		Msg("Workshop item %llu not found, adding to tracking...\n", fileID);
+		pItem = new CCFWorkshopItem(fileID, CF_WORKSHOP_TYPE_MAP);
+		CFWorkshop()->AddItem(pItem);
+	}
+
+	// Make sure it's downloaded
+	if (pItem->GetState() != CF_WORKSHOP_STATE_DOWNLOADED && pItem->GetState() != CF_WORKSHOP_STATE_INSTALLED)
+	{
+		Msg("Workshop map %llu is not downloaded yet. Current state: %d\n", fileID, pItem->GetState());
+		Msg("Initiating download...\n");
+		pItem->Download(true); // High priority
+		return;
+	}
+
+	// Get install info
+	ISteamUGC* pUGC = GetSteamUGC();
+	if (!pUGC)
+	{
+		Warning("Failed to get Steam UGC interface\n");
+		return;
+	}
+
+	uint64 nUGCSize = 0;
+	uint32 nTimestamp = 0;
+	char szInstallPath[MAX_PATH];
+	if (!pUGC->GetItemInstallInfo(fileID, &nUGCSize, szInstallPath, sizeof(szInstallPath), &nTimestamp))
+	{
+		Warning("Failed to get install info for Workshop map %llu\n", fileID);
+		return;
+	}
+
+	// Mount the Workshop item
+	CFWorkshop()->MountWorkshopItem(fileID);
+
+	// Get the original filename
+	const char* pszOriginalName = pItem->GetOriginalFilename();
+	if (!pszOriginalName || !pszOriginalName[0])
+	{
+		Warning("Workshop map %llu has no original filename metadata\n", fileID);
+		// Try to find a BSP file in the install directory
+		char szSearchPath[MAX_PATH];
+		V_snprintf(szSearchPath, sizeof(szSearchPath), "%s/*.bsp", szInstallPath);
+		FileFindHandle_t hFind;
+		const char* pszBSP = g_pFullFileSystem->FindFirstEx(szSearchPath, "GAME", &hFind);
+		if (pszBSP)
+		{
+			pszOriginalName = pszBSP;
+			g_pFullFileSystem->FindClose(hFind);
+		}
+		else
+		{
+			// Try maps subfolder
+			V_snprintf(szSearchPath, sizeof(szSearchPath), "%s/maps/*.bsp", szInstallPath);
+			pszBSP = g_pFullFileSystem->FindFirstEx(szSearchPath, "GAME", &hFind);
+			if (pszBSP)
+			{
+				pszOriginalName = pszBSP;
+				g_pFullFileSystem->FindClose(hFind);
+			}
+			else
+			{
+				Warning("Could not find BSP file in Workshop item %llu\n", fileID);
+				return;
+			}
+		}
+	}
+
+	// Generate canonical name
+	char szCanonicalName[MAX_PATH];
+	if (!CFWorkshop()->CanonicalNameForMap(fileID, pszOriginalName, szCanonicalName, sizeof(szCanonicalName)))
+	{
+		Warning("Failed to generate canonical name for Workshop map %llu\n", fileID);
+		return;
+	}
+
+	Msg("Loading Workshop map: %s (ID: %llu)\n", szCanonicalName, fileID);
+	
+	// Execute the map command with the canonical name
+	engine->ClientCmd_Unrestricted(CFmtStr("map %s", szCanonicalName));
+}
