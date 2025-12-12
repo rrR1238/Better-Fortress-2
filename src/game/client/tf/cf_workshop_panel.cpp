@@ -1009,43 +1009,44 @@ void CCFWorkshopBrowserPanel::RefreshList()
 	{
 		CCFWorkshopItem* pItem = CFWorkshop()->GetBrowseableItem(i);
 		
-		if (pItem)
+		// Verify item still exists and is valid
+		if (!pItem || !pItem->GetTitle() || !pItem->GetTitle()[0])
+			continue;
+		
+		// Apply tag filter if one is set
+		if (m_szCurrentTagFilter[0] != '\0' && V_stricmp(m_szCurrentTagFilter, "All Items") != 0)
 		{
-			// Apply tag filter if one is set
-			if (m_szCurrentTagFilter[0] != '\0' && V_stricmp(m_szCurrentTagFilter, "All Items") != 0)
+			// Check if this item has the selected tag
+			const char* pszItemTags = pItem->GetTags();
+			if (!pszItemTags || !V_stristr(pszItemTags, m_szCurrentTagFilter))
 			{
-				// Check if this item has the selected tag
-				const char* pszItemTags = pItem->GetTags();
-				if (!pszItemTags || !V_stristr(pszItemTags, m_szCurrentTagFilter))
-				{
-					// Item doesn't match filter, skip it
-					continue;
-				}
+				// Item doesn't match filter, skip it
+				continue;
 			}
-			
-			KeyValues* kv = new KeyValues("item");
-			kv->SetString("name", pItem->GetTitle());
-			
-			// Show tags instead of type
-			const char* pszTags = pItem->GetTags();
-			if (!pszTags || !pszTags[0])
-				pszTags = "-";
-			kv->SetString("tags", pszTags);
-			
-			// Show subscription status instead of download state
-			const char* pszState = pItem->IsSubscribed() ? "Subscribed" : "Not Subscribed";
-			if (pItem->GetState() == CF_WORKSHOP_STATE_DOWNLOADING)
-				pszState = "Downloading";
-			kv->SetString("status", pszState);
-			
-			float sizeMB = pItem->GetFileSize() / (1024.0f * 1024.0f);
-			char szSize[32];
-			V_snprintf(szSize, sizeof(szSize), "%.1f MB", sizeMB);
-			kv->SetString("size", szSize);
-			
-			int itemID = m_pItemList->AddItem(kv, (unsigned int)pItem->GetFileID(), false, false);
-			kv->deleteThis();
 		}
+		
+		KeyValues* kv = new KeyValues("item");
+		kv->SetString("name", pItem->GetTitle());
+		
+		// Show tags instead of type
+		const char* pszTags = pItem->GetTags();
+		if (!pszTags || !pszTags[0])
+			pszTags = "-";
+		kv->SetString("tags", pszTags);
+		
+		// Show subscription status instead of download state
+		const char* pszState = pItem->IsSubscribed() ? "Subscribed" : "Not Subscribed";
+		if (pItem->GetState() == CF_WORKSHOP_STATE_DOWNLOADING)
+			pszState = "Downloading";
+		kv->SetString("status", pszState);
+		
+		float sizeMB = pItem->GetFileSize() / (1024.0f * 1024.0f);
+		char szSize[32];
+		V_snprintf(szSize, sizeof(szSize), "%.1f MB", sizeMB);
+		kv->SetString("size", szSize);
+		
+		int itemID = m_pItemList->AddItem(kv, (unsigned int)pItem->GetFileID(), false, false);
+		kv->deleteThis();
 	}
 	
 	// If no items yet (query in progress), show a message

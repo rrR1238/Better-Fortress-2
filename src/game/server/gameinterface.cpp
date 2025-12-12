@@ -99,7 +99,6 @@
 #include "tf_gamerules.h"
 #include "player_vs_environment/tf_population_manager.h"
 #include "tf/cf_workshop_manager.h"
-#include "tf/cf_workshop_manager.h"
 
 extern ConVar tf_mm_trusted;
 extern ConVar tf_mm_servermode;
@@ -2824,11 +2823,12 @@ void CServerGameClients::ClientActive( edict_t *pEdict, bool bLoadGame )
 				}
 			}
 			
-			// Broadcast Workshop addon list to this client if we're a listen server
-			// This allows clients to automatically download the host's addons
-			if ( !engine->IsDedicatedServer() )
+			// Broadcast workshop addon list for listen servers (auto-download)
+			// This allows clients connecting to a listen server to automatically
+			// subscribe to and download the host's workshop addons
+			if ( !engine->IsDedicatedServer() && CFWorkshop() )
 			{
-				CFWorkshop()->BroadcastAddonListToClient( pPlayer );
+				CFWorkshop()->BroadcastAddonList( pEdict );
 			}
 		}
 	#endif

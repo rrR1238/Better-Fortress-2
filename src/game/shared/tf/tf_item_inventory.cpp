@@ -2273,8 +2273,9 @@ CON_COMMAND(clear_loadout_ui, "Clear local loadout back to stock defaults (show 
 }
 #endif	// TF_CLIENT_DLL
 
-#if defined( CLIENT_DLL )
-CON_COMMAND_F( cl_reload_item_schema, "Reload the item schema from items_game.txt and items_custom.txt on the client", FCVAR_CHEAT )
+#ifdef CLIENT_DLL
+// Helper function to reload item schema (can be called directly)
+void ReloadClientItemSchema()
 {
 	DevMsg("Reloading item schema on client...\n");
 	
@@ -2307,9 +2308,6 @@ CON_COMMAND_F( cl_reload_item_schema, "Reload the item schema from items_game.tx
 			if ( pKVItems )
 			{
 				DevMsg("Found custom items section, attempting to merge...\n");
-				// Note: This is a simplified approach - ideally we'd need to merge properly
-				// but for now this will reload the base schema and the custom file will 
-				// be handled by the existing BInitTextBuffer override
 			}
 		}
 		pKVCustom->deleteThis();
@@ -2322,7 +2320,33 @@ CON_COMMAND_F( cl_reload_item_schema, "Reload the item schema from items_game.tx
 	TFInventoryManager()->PostInit();
 	
 	// Reload custom workshop item schemas
-	CFCustomItemSchema()->ReloadAllCustomSchemas();
+	// This will scan for loose files and write items_workshop.txt
+	bool bHasCustomItems = CFCustomItemSchema()->ReloadAllCustomSchemas();
+	
+	// If we have custom items, we need to reload the schema again
+	// to pick up items_workshop.txt that was just written
+	if (bHasCustomItems)
+	{
+		DevMsg("Custom items found, reloading schema again to merge items_workshop.txt...\n");
+		vecErrors.Purge();
+		bSuccess = ItemSystem()->GetItemSchema()->BInit("scripts/items/items_game.txt", "GAME", &vecErrors);
+		
+		if( !bSuccess )
+		{
+			FOR_EACH_VEC( vecErrors, nError )
+			{
+				Warning( "%s\n", vecErrors[nError].String() );
+			}
+			DevMsg("Failed to reload main item schema!\n");
+		}
+		else
+		{
+			// Regenerate base items and inventory again with the new schema
+			TFInventoryManager()->GenerateBaseItems();
+			TFInventoryManager()->PostInit();
+			CFCustomItemSchema()->CreateInventoryItemsForCustomSchema();
+		}
+	}
 	
 	// Refresh attributes on all players without reconnecting
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
@@ -2352,6 +2376,11 @@ CON_COMMAND_F( cl_reload_item_schema, "Reload the item schema from items_game.tx
 	}
 	
 	DevMsg("Item schema reloaded successfully and attributes refreshed.\n");
+}
+
+CON_COMMAND_F( cl_reload_item_schema, "Reload the item schema from items_game.txt and items_custom.txt on the client", FCVAR_CHEAT )
+{
+	ReloadClientItemSchema();
 }
 #else
 CON_COMMAND_F( sv_reload_item_schema, "Reload the item schema from items_game.txt on the server", FCVAR_CHEAT )

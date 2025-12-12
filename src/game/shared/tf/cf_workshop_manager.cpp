@@ -985,7 +985,12 @@ void CCFWorkshopManager::RemoveItem(PublishedFileId_t fileID)
 	unsigned short index = m_mapItems.Find(fileID);
 	if (index != m_mapItems.InvalidIndex())
 	{
-		delete m_mapItems[index];
+		CCFWorkshopItem* pItem = m_mapItems[index];
+		
+		// Also remove from browseable items list
+		m_vecBrowseableItems.FindAndRemove(pItem);
+		
+		delete pItem;
 		m_mapItems.RemoveAt(index);
 	}
 }
@@ -1011,6 +1016,8 @@ void CCFWorkshopManager::SetItemEnabled(PublishedFileId_t fileID, bool bEnabled)
 		m_vecDisabledItems.FindAndRemove(fileID);
 		// Mount the item
 		MountWorkshopItem(fileID);
+		// Load custom item schema if available
+		LoadCustomItemSchemaForItem(fileID);
 	}
 	else
 	{
@@ -1019,6 +1026,26 @@ void CCFWorkshopManager::SetItemEnabled(PublishedFileId_t fileID, bool bEnabled)
 		{
 			m_vecDisabledItems.AddToTail(fileID);
 		}
+		
+		// Unload custom item schema if loaded
+		if (CFCustomItemSchema()->IsWorkshopItemLoaded(fileID))
+		{
+			CFCustomItemSchema()->UnregisterWorkshopItem(fileID);
+			m_vecCustomSchemaItems.FindAndRemove(fileID);
+			
+			// Regenerate merged schema without this item
+			CFCustomItemSchema()->WriteMergedCustomSchema();
+			
+#ifdef CLIENT_DLL
+			// Trigger item schema reload on client to pick up changes
+			if (GetItemSchema())
+			{
+				CFWorkshopMsg("Triggering client item schema reload after disabling item...\n");
+				ReloadClientItemSchema();
+			}
+#endif
+		}
+		
 		// Unmount the item
 		UnmountWorkshopItem(fileID);
 	}
@@ -2425,6 +2452,71 @@ void CCFWorkshopManager::AdvertiseWorkshopMapID(PublishedFileId_t fileID)
 	}
 #endif
 }
+
+// Server: Broadcast list of subscribed addons to a client (for listen server auto-download)
+void CCFWorkshopManager::BroadcastAddonList(edict_t* pClient)
+{
+	// Only send on listen servers (not dedicated servers)
+	if (!pClient || engine->IsDedicatedServer())
+		return;
+	
+	// Get list of subscribed items (excluding maps, since those are handled separately)
+	CUtlVector<PublishedFileId_t> addonList;
+	
+	// Iterate through all subscribed items
+	for (int i = 0; i < m_vecSubscribedItems.Count(); i++)
+	{
+		PublishedFileId_t fileID = m_vecSubscribedItems[i];
+		CCFWorkshopItem* pItem = GetItem(fileID);
+		
+		if (!pItem)
+			continue;
+		
+		// Skip maps - they're handled by the workshop map system
+		if (pItem->GetType() == CF_WORKSHOP_TYPE_MAP)
+			continue;
+		
+		// Only send subscribed and downloaded items
+		if (pItem->IsSubscribed() && pItem->IsDownloaded())
+		{
+			addonList.AddToTail(fileID);
+		}
+	}
+	
+	// Limit to 255 items to fit in a byte
+	int numToSend = MIN(addonList.Count(), 255);
+	
+	if (numToSend == 0)
+	{
+		CFWorkshopDebug("No addons to broadcast to client\\n");
+		// Still send an empty list so client knows we tried
+	}
+	else
+	{
+		CFWorkshopMsg("Broadcasting %d workshop addons to client\\n", numToSend);
+	}
+	
+	// Send to the specific client
+	CBasePlayer* pPlayer = (CBasePlayer*)CBaseEntity::Instance(pClient);
+	if (!pPlayer)
+		return;
+	
+	CRecipientFilter filter;
+	filter.AddRecipient(pPlayer);
+	filter.MakeReliable();
+	
+	UserMessageBegin(filter, "AddonList");
+		WRITE_BYTE(numToSend);
+		
+		// Write each addon's file ID (as two 32-bit values)
+		for (int i = 0; i < numToSend; i++)
+		{
+			PublishedFileId_t fileID = addonList[i];
+			WRITE_LONG((uint32)(fileID & 0xFFFFFFFF));  // Low 32 bits
+			WRITE_LONG((uint32)(fileID >> 32));          // High 32 bits
+		}
+	MessageEnd();
+}
 #endif
 
 #ifdef CLIENT_DLL
@@ -2598,257 +2690,6 @@ void CCFWorkshopManager::GameServerSteamAPIActivated()
 #endif
 }
 
-#ifndef CLIENT_DLL
-// ConVar to enable/disable automatic addon syncing for listen servers
-ConVar cf_workshop_sync_addons( "cf_workshop_sync_addons", "1", FCVAR_NOTIFY, 
-	"Enable automatic Workshop addon download for clients connecting to listen servers. 1 = enabled, 0 = disabled" );
-
-// Console command to manually broadcast addon list to all clients
-CON_COMMAND( cf_workshop_broadcast_addons, "Manually broadcast Workshop addon list to all connected clients (listen server only)" )
-{
-	if (engine->IsDedicatedServer())
-	{
-		Msg("This command is only available on listen servers.\n");
-		return;
-	}
-	
-	CFWorkshop()->BroadcastAddonListToAllClients();
-	Msg("Broadcasted addon list to all connected clients.\n");
-}
-
-// Broadcast all subscribed addons to a connecting client (listen server only)
-void CCFWorkshopManager::BroadcastAddonListToClient(CBasePlayer* pPlayer)
-{
-	if (!pPlayer || !cf_workshop_sync_addons.GetBool())
-		return;
-	
-	// Only broadcast on listen servers (not dedicated servers)
-	if (engine->IsDedicatedServer())
-		return;
-	
-	// Get subscribed items
-	ISteamUGC* pUGC = GetSteamUGC();
-	if (!pUGC)
-		return;
-	
-	uint32 numSubscribed = m_vecSubscribedItems.Count();
-	if (numSubscribed == 0)
-	{
-		CFWorkshopMsg("No workshop addons to broadcast to client\n");
-		return;
-	}
-	
-	CFWorkshopMsg("Broadcasting %d workshop addon(s) to connecting client...\n", numSubscribed);
-	
-	// Send addons in batches to avoid message size limits (max ~30 addons per message)
-	const int MAX_ADDONS_PER_MESSAGE = 30;
-	int currentIndex = 0;
-	
-	while (currentIndex < (int)numSubscribed)
-	{
-		int batchSize = MIN(MAX_ADDONS_PER_MESSAGE, numSubscribed - currentIndex);
-		
-		// Create message for this player
-		CRecipientFilter filter;
-		filter.AddRecipient(pPlayer);
-		
-		UserMessageBegin( filter, "WorkshopAddonList" );
-			WRITE_BYTE( batchSize );  // Number of addons in this batch
-			
-			for (int i = 0; i < batchSize; i++)
-			{
-				PublishedFileId_t fileID = m_vecSubscribedItems[currentIndex + i];
-				WRITE_LONG( (uint32)(fileID & 0xFFFFFFFF) );  // Low 32 bits
-				WRITE_LONG( (uint32)(fileID >> 32) );          // High 32 bits
-			}
-		MessageEnd();
-		
-		currentIndex += batchSize;
-	}
-	
-	CFWorkshopMsg("Finished broadcasting workshop addons to client\n");
-}
-
-// Broadcast all subscribed addons to all connected clients (listen server only)
-void CCFWorkshopManager::BroadcastAddonListToAllClients()
-{
-	if (!cf_workshop_sync_addons.GetBool())
-		return;
-	
-	// Only broadcast on listen servers (not dedicated servers)
-	if (engine->IsDedicatedServer())
-		return;
-	
-	// Get subscribed items
-	ISteamUGC* pUGC = GetSteamUGC();
-	if (!pUGC)
-		return;
-	
-	uint32 numSubscribed = m_vecSubscribedItems.Count();
-	if (numSubscribed == 0)
-	{
-		CFWorkshopMsg("No workshop addons to broadcast to clients\n");
-		return;
-	}
-	
-	CFWorkshopMsg("Broadcasting %d workshop addon(s) to all clients...\n", numSubscribed);
-	
-	// Send addons in batches to avoid message size limits (max ~30 addons per message)
-	const int MAX_ADDONS_PER_MESSAGE = 30;
-	int currentIndex = 0;
-	
-	while (currentIndex < (int)numSubscribed)
-	{
-		int batchSize = MIN(MAX_ADDONS_PER_MESSAGE, numSubscribed - currentIndex);
-		
-		// Create message for all players
-		CRecipientFilter filter;
-		filter.AddAllPlayers();
-		
-		UserMessageBegin( filter, "WorkshopAddonList" );
-			WRITE_BYTE( batchSize );  // Number of addons in this batch
-			
-			for (int i = 0; i < batchSize; i++)
-			{
-				PublishedFileId_t fileID = m_vecSubscribedItems[currentIndex + i];
-				WRITE_LONG( (uint32)(fileID & 0xFFFFFFFF) );  // Low 32 bits
-				WRITE_LONG( (uint32)(fileID >> 32) );          // High 32 bits
-			}
-		MessageEnd();
-		
-		currentIndex += batchSize;
-	}
-	
-	CFWorkshopMsg("Finished broadcasting workshop addons to all clients\n");
-}
-#endif
-
-#ifdef CLIENT_DLL
-// ConVar to enable/disable automatic addon download from listen servers
-ConVar cl_workshop_download_addons( "cl_workshop_download_addons", "1", FCVAR_ARCHIVE, 
-	"Automatically download Workshop addons when connecting to listen servers. 1 = enabled, 0 = disabled" );
-
-// Console command to show download status
-CON_COMMAND( cl_workshop_addon_status, "Show Workshop addon download status" )
-{
-	CFWorkshop()->PrintStatus();
-}
-
-// Handle workshop addon list from server (listen server auto-download)
-void CCFWorkshopManager::OnServerAddonListReceived(const CUtlVector<PublishedFileId_t>& addonIDs)
-{
-	if (!cl_workshop_download_addons.GetBool())
-	{
-		CFWorkshopMsg("Received addon list from server, but auto-download is disabled (cl_workshop_download_addons)\n");
-		return;
-	}
-	
-	if (addonIDs.Count() == 0)
-		return;
-	
-	CFWorkshopMsg("Received %d addon(s) from listen server host\n", addonIDs.Count());
-	
-	ISteamUGC* pUGC = GetSteamUGC();
-	if (!pUGC)
-	{
-		CFWorkshopWarning("Steam Workshop not available, cannot download addons\n");
-		return;
-	}
-	
-	// Get our current subscriptions
-	uint32 numSubscribed = pUGC->GetNumSubscribedItems();
-	PublishedFileId_t* pSubscribed = NULL;
-	
-	if (numSubscribed > 0)
-	{
-		pSubscribed = new PublishedFileId_t[numSubscribed];
-		pUGC->GetSubscribedItems(pSubscribed, numSubscribed);
-	}
-	
-	// Check each addon from the server
-	int numNewSubscriptions = 0;
-	int numAlreadyHave = 0;
-	int numDownloading = 0;
-	
-	FOR_EACH_VEC(addonIDs, i)
-	{
-		PublishedFileId_t fileID = addonIDs[i];
-		
-		// Skip invalid IDs
-		if (fileID == 0 || fileID == k_PublishedFileIdInvalid)
-			continue;
-		
-		// Check if we're already subscribed
-		bool bIsSubscribed = false;
-		for (uint32 j = 0; j < numSubscribed; j++)
-		{
-			if (pSubscribed[j] == fileID)
-			{
-				bIsSubscribed = true;
-				break;
-			}
-		}
-		
-		// Get or create item
-		CCFWorkshopItem* pItem = GetItem(fileID);
-		if (!pItem)
-		{
-			pItem = AddItem(fileID, CF_WORKSHOP_TYPE_OTHER);
-		}
-		
-		if (bIsSubscribed)
-		{
-			// Already subscribed - check if we need to download
-			if (pItem->IsDownloaded() || pItem->IsInstalled())
-			{
-				numAlreadyHave++;
-				CFWorkshopDebug("Already have addon %llu\n", fileID);
-			}
-			else
-			{
-				// Subscribed but not downloaded yet - start download
-				CFWorkshopMsg("Downloading subscribed addon %llu...\n", fileID);
-				pItem->Download(false);  // Normal priority
-				numDownloading++;
-			}
-		}
-		else
-		{
-			// Not subscribed - subscribe and download
-			CFWorkshopMsg("Subscribing to server addon %llu...\n", fileID);
-			SubscribeItem(fileID);
-			numNewSubscriptions++;
-			
-			// Start download (will happen automatically after subscribe completes)
-			if (pItem)
-			{
-				pItem->Download(false);  // Normal priority
-			}
-		}
-	}
-	
-	// Clean up
-	if (pSubscribed)
-		delete[] pSubscribed;
-	
-	// Print summary
-	if (numNewSubscriptions > 0 || numDownloading > 0)
-	{
-		Msg("[CF Workshop] Listen Server Addon Sync:\n");
-		if (numNewSubscriptions > 0)
-			Msg("  - Subscribing to %d new addon(s)\n", numNewSubscriptions);
-		if (numDownloading > 0)
-			Msg("  - Downloading %d addon(s)\n", numDownloading);
-		if (numAlreadyHave > 0)
-			Msg("  - Already have %d addon(s)\n", numAlreadyHave);
-		Msg("  Downloads will happen in the background. You may need to reconnect after downloading.\n");
-	}
-	else if (numAlreadyHave > 0)
-	{
-		Msg("[CF Workshop] You already have all %d addon(s) from this listen server!\n", numAlreadyHave);
-	}
-}
-#endif
 // Steam callbacks
 void CCFWorkshopManager::Steam_OnDownloadItem(DownloadItemResult_t* pResult)
 {
@@ -2879,6 +2720,9 @@ void CCFWorkshopManager::Steam_OnItemInstalled(ItemInstalled_t* pResult)
 	
 	// Mount the item immediately so maps are available without restart
 	MountWorkshopItem(fileID);
+	
+	// Load custom item schema if available
+	LoadCustomItemSchemaForItem(fileID);
 }
 
 void CCFWorkshopManager::Steam_OnQueryCompleted(SteamUGCQueryCompleted_t* pResult, bool bError)
@@ -3061,6 +2905,9 @@ void CCFWorkshopManager::Steam_OnSubscribeItem(RemoteStorageSubscribePublishedFi
 		{
 			// Already installed, mount it now
 			MountWorkshopItem(pResult->m_nPublishedFileId);
+			
+			// Load custom item schema if available
+			LoadCustomItemSchemaForItem(pResult->m_nPublishedFileId);
 		}
 	}
 	
@@ -3095,7 +2942,7 @@ void CCFWorkshopManager::Steam_OnUnsubscribeItem(RemoteStorageUnsubscribePublish
 		if (GetItemSchema())
 		{
 			CFWorkshopMsg("Triggering client item schema reload after unsubscribe...\n");
-			engine->ClientCmd_Unrestricted("cl_reload_item_schema\n");
+			ReloadClientItemSchema();
 		}
 #endif
 	}
@@ -4051,8 +3898,17 @@ void CCFWorkshopManager::LoadCustomItemSchemaForItem(PublishedFileId_t fileID)
 		
 		CFWorkshopMsg("Loaded custom item schema for workshop item %llu\n", fileID);
 		
-		// Trigger inventory update
-		CFCustomItemSchema()->CreateInventoryItemsForCustomSchema();
+		// Write merged schema file
+		CFCustomItemSchema()->WriteMergedCustomSchema();
+		
+#ifdef CLIENT_DLL
+		// Trigger item schema reload on client to pick up changes
+		if (GetItemSchema())
+		{
+			CFWorkshopMsg("Triggering client item schema reload after loading custom schema...\n");
+			ReloadClientItemSchema();
+		}
+#endif
 	}
 }
 
@@ -4068,7 +3924,10 @@ void CCFWorkshopManager::RefreshCustomItemSchemas()
 		if (m_vecSubscribedItems.Find(fileID) == m_vecSubscribedItems.InvalidIndex())
 		{
 			// Item unsubscribed, unload schema
-			CFCustomItemSchema()->UnregisterWorkshopItem(fileID);
+			if (CFCustomItemSchema()->IsWorkshopItemLoaded(fileID))
+			{
+				CFCustomItemSchema()->UnregisterWorkshopItem(fileID);
+			}
 			m_vecCustomSchemaItems.Remove(i);
 		}
 	}
@@ -4081,7 +3940,7 @@ void CCFWorkshopManager::RefreshCustomItemSchemas()
 	if (GetItemSchema())
 	{
 		CFWorkshopMsg("Triggering client item schema reload...\n");
-		engine->ClientCmd_Unrestricted("cl_reload_item_schema\n");
+		ReloadClientItemSchema();
 	}
 #endif
 	

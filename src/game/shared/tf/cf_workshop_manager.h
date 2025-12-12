@@ -428,9 +428,6 @@ public:
 	// Handle workshop map ID from server
 	void OnWorkshopMapIDReceived(PublishedFileId_t fileID);
 	
-	// Handle workshop addon list from server (listen server auto-download)
-	void OnServerAddonListReceived(const CUtlVector<PublishedFileId_t>& addonIDs);
-	
 	// Check if we need to download map before connecting (called from server browser)
 	// Returns true if we have the map, false if download is needed
 	bool CheckAndDownloadMapBeforeConnect(const char* pszServerIP, const char* pszMapName, PublishedFileId_t fileID);
@@ -462,11 +459,8 @@ public:
 	// Advertise workshop map ID in server info (for server browser)
 	void AdvertiseWorkshopMapID(PublishedFileId_t fileID);
 	
-	// Broadcast all subscribed addons to a connecting client (listen server only)
-	void BroadcastAddonListToClient(CBasePlayer* pPlayer);
-	
-	// Broadcast all subscribed addons to all clients (listen server only)
-	void BroadcastAddonListToAllClients();
+	// Broadcast list of subscribed addons to a specific client (for listen server auto-download)
+	void BroadcastAddonList(edict_t* pClient);
 #endif
 
 private:

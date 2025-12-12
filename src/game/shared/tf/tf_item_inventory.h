@@ -319,5 +319,9 @@ public:
 };
 #endif
 
+#ifdef CLIENT_DLL
+// Helper function to reload item schema (can be called directly without console)
+void ReloadClientItemSchema();
+#endif
 
 #endif // TF_ITEM_INVENTORY_H
