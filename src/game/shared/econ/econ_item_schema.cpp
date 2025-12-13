@@ -4418,12 +4418,112 @@ bool CEconItemSchema::BInitTextBuffer( CUtlBuffer &buffer, CUtlVector<CUtlString
 {
 	Reset();
 	m_pKVRawDefinition = new KeyValues( "CEconItemSchema" );
-	//if ( m_pKVRawDefinition->LoadFromBuffer( NULL, buffer ) )
-	if (m_pKVRawDefinition->LoadFromFile(g_pFullFileSystem, "scripts/items/items_custom.txt", "GAME"))
+	
+	// First load the main schema from the buffer
+	if ( m_pKVRawDefinition->LoadFromBuffer( NULL, buffer ) )
 	{
+		// Merge items_custom.txt if it exists
+		if (g_pFullFileSystem->FileExists("scripts/items/items_custom.txt", "GAME"))
+		{
+			KeyValues* pCustom = new KeyValues("items_game");
+			if (pCustom->LoadFromFile(g_pFullFileSystem, "scripts/items/items_custom.txt", "GAME"))
+			{
+				// Merge prefabs section first (needed by items)
+				KeyValues* pMainPrefabs = m_pKVRawDefinition->FindKey("prefabs");
+				KeyValues* pCustomPrefabs = pCustom->FindKey("prefabs");
+				if (pCustomPrefabs && pMainPrefabs)
+				{
+					for (KeyValues* pPrefab = pCustomPrefabs->GetFirstSubKey(); pPrefab; pPrefab = pPrefab->GetNextKey())
+					{
+						const char* pszPrefabName = pPrefab->GetName();
+						if (!pMainPrefabs->FindKey(pszPrefabName))
+						{
+							KeyValues* pClone = pPrefab->MakeCopy();
+							pMainPrefabs->AddSubKey(pClone);
+						}
+					}
+				}
+				
+				// Merge attributes section
+				KeyValues* pMainAttributes = m_pKVRawDefinition->FindKey("attributes");
+				KeyValues* pCustomAttributes = pCustom->FindKey("attributes");
+				if (pCustomAttributes && pMainAttributes)
+				{
+					for (KeyValues* pAttr = pCustomAttributes->GetFirstSubKey(); pAttr; pAttr = pAttr->GetNextKey())
+					{
+						const char* pszAttrName = pAttr->GetName();
+						if (!pMainAttributes->FindKey(pszAttrName))
+						{
+							KeyValues* pClone = pAttr->MakeCopy();
+							pMainAttributes->AddSubKey(pClone);
+						}
+					}
+				}
+				
+				// Merge items section
+				KeyValues* pMainItems = m_pKVRawDefinition->FindKey("items");
+				if (!pMainItems)
+				{
+					pMainItems = m_pKVRawDefinition->CreateNewKey();
+					pMainItems->SetName("items");
+				}
+				
+				KeyValues* pCustomItems = pCustom->FindKey("items");
+				if (pCustomItems)
+				{
+					// Copy each item from custom schema
+					for (KeyValues* pItem = pCustomItems->GetFirstSubKey(); pItem; pItem = pItem->GetNextKey())
+					{
+						// Check if this item already exists in main schema
+						const char* pszItemName = pItem->GetName();
+						if (!pMainItems->FindKey(pszItemName))
+						{
+							KeyValues* pClone = pItem->MakeCopy();
+							pMainItems->AddSubKey(pClone);
+						}
+					}
+				}
+			}
+			pCustom->deleteThis();
+		}
+		
+		// Merge items_workshop.txt if it exists
+		if (g_pFullFileSystem->FileExists("scripts/items/items_workshop.txt", "GAME"))
+		{
+			KeyValues* pWorkshop = new KeyValues("items_game");
+			if (pWorkshop->LoadFromFile(g_pFullFileSystem, "scripts/items/items_workshop.txt", "GAME"))
+			{
+				// Get items section
+				KeyValues* pMainItems = m_pKVRawDefinition->FindKey("items");
+				if (!pMainItems)
+				{
+					pMainItems = m_pKVRawDefinition->CreateNewKey();
+					pMainItems->SetName("items");
+				}
+				
+				KeyValues* pWorkshopItems = pWorkshop->FindKey("items");
+				if (pWorkshopItems)
+				{
+					// Copy each item from workshop schema
+					for (KeyValues* pItem = pWorkshopItems->GetFirstSubKey(); pItem; pItem = pItem->GetNextKey())
+					{
+						// Check if this item already exists in main schema
+						const char* pszItemName = pItem->GetName();
+						if (!pMainItems->FindKey(pszItemName))
+						{
+							KeyValues* pClone = pItem->MakeCopy();
+							pMainItems->AddSubKey(pClone);
+						}
+					}
+				}
+			}
+			pWorkshop->deleteThis();
+		}
+		
 		return BInitSchema( m_pKVRawDefinition, pVecErrors )
 			&& BPostSchemaInit( pVecErrors );
 	}
+	
 	if ( pVecErrors )
 	{
 		pVecErrors->AddToTail( "Error parsing keyvalues" );

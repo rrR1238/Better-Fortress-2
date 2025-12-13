@@ -42,6 +42,7 @@
 #include "tf_gcmessages.h"
 #include "econ_item.h"
 #include "game_item_schema.h"
+#include "cf_custom_item_schema.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -253,11 +254,22 @@ void CTFInventoryManager::GenerateBaseItems( void )
 		pItem->Init( mapItems[it]->GetDefinitionIndex(), AE_USE_SCRIPT_VALUE, AE_USE_SCRIPT_VALUE, false );
 		m_pBaseLoadoutItems.AddToTail( pItem );
 	}
-	const CEconItemSchema::BaseItemDefinitionMap_t& mapItemsMod = GetItemSchema()->GetSoloItemDefinitionMap();
-	iStart = 0;
-	for (int it = iStart; it != mapItemsMod.InvalidIndex(); it = mapItemsMod.NextInorder(it))
+	
+	// Load mod items if schema is initialized
+	if (GetItemSchema())
 	{
-		AddModItem( mapItemsMod[it]->GetDefinitionIndex() );
+		const CEconItemSchema::BaseItemDefinitionMap_t& mapItemsMod = GetItemSchema()->GetSoloItemDefinitionMap();
+		if (mapItemsMod.Count() > 0)
+		{
+			iStart = 0;
+			for (int it = iStart; it != mapItemsMod.InvalidIndex(); it = mapItemsMod.NextInorder(it))
+			{
+				if (mapItemsMod.IsValidIndex(it))
+				{
+					AddModItem( mapItemsMod[it]->GetDefinitionIndex() );
+				}
+			}
+		}
 	}
 }
 
@@ -2308,6 +2320,9 @@ CON_COMMAND_F( cl_reload_item_schema, "Reload the item schema from items_game.tx
 	
 	// Reload the inventory
 	TFInventoryManager()->PostInit();
+	
+	// Reload custom workshop item schemas
+	CFCustomItemSchema()->ReloadAllCustomSchemas();
 	
 	// Refresh attributes on all players without reconnecting
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();

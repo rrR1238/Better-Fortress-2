@@ -630,8 +630,6 @@ steamworks
 /game/customfortress/crashes
 /game/customfortress/.sentry-native
 /test_workshop
-tf/
-hl2/
 /game/platform
 game/srcds_linux
 game/srcds_linux64

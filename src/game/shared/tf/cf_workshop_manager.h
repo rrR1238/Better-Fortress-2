@@ -412,6 +412,14 @@ public:
 	// Console commands
 	void PrintStatus();
 	
+	// Custom Item Schema Support
+	void LoadAllCustomItemSchemas();
+	void LoadCustomItemSchemaForItem(PublishedFileId_t fileID);
+	void RefreshCustomItemSchemas();
+	int GetCustomItemCount() const;
+	bool HasCustomItems() const;
+	bool IsItemCustomSchemaLoaded(PublishedFileId_t fileID) const;
+	
 	// Content reload (deferred to avoid crashes during Steam callbacks)
 	void SetContentReloadPending(bool bPending) { m_bContentReloadPending = bPending; }
 	void SetHUDReloadPending(bool bPending) { m_bHUDReloadPending = bPending; }
@@ -496,6 +504,9 @@ private:
 	
 	// Active skins
 	CUtlMap<CUtlString, PublishedFileId_t> m_mapActiveSkins;
+	
+	// Custom items from schema
+	CUtlVector<PublishedFileId_t> m_vecCustomSchemaItems;
 	
 	// Mounted weapon mods
 	CUtlVector<PublishedFileId_t> m_vecMountedWeaponMods;
