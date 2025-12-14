@@ -1054,6 +1054,15 @@
     		"effect_type"    "positive"
     		"stored_as_integer"    "0"
 		}
+		"4037"
+		{
+			"name"	"scripted weapon flags"
+			"attribute_class"	"vscript_weapon_flags"
+			"description_format"	"value_is_additive"
+			"hidden"	"1"
+			"effect_type"	"neutral"
+			"stored_as_integer"	"1"
+		}
 		
 	}
 	"items"
@@ -3102,6 +3111,97 @@
 			}
 			"mouse_pressed_sound"	"ui/item_metal_weapon_pickup.wav"
 			"drop_sound"		"ui/item_metal_weapon_drop.wav"
+		}
+		//TEST SCRIPTED WEAPON
+		"32026"
+		{
+			"name" 									"Vscripted weapon test 1"
+			"prefab"								"paintkit_base"
+			"capabilities"
+			{
+				"nameable"							"1"
+				"can_craft_count"					"1"
+			}
+			"tags"
+			{
+				"can_be_festivized"					"1"
+				"can_deal_damage"					"1"
+				"can_deal_critical_damage"			"1"
+				"can_deal_mvm_penetration_damage"	"1"
+				"can_deal_long_distance_damage"		"1"
+			}
+			"item_class"							"tf_weapon_scripted"
+			"craft_class"							"weapon"
+			"craft_material_type"					"weapon"
+			"item_type_name"						"#TF_Weapon_Pistol"
+			"item_name"								"#TFCW_SVDL_Conventional"
+			"item_description"						"#TFCW_SVDL_Conventional_Desc"
+			"item_logname"							"pistol_conventional"
+			"item_iconname"							"pistol_conventional"
+			"item_slot"								"primary"
+			"item_quality"							"community"
+			"moditem" 								"1"
+			"min_ilevel"							"10"
+			"max_ilevel"							"10"
+			"propername" 							"1"
+			"show_in_armory"						"1"
+			"attach_to_hands"						"1"
+			"image_inventory"						"backpack/weapons/custommade/c_silencedpistol"
+			"image_inventory_size_w"				"128"
+			"image_inventory_size_h"				"82"
+			"inspect_panel_dist" 					"31"
+			"model_player"							"models/weapons/c_models/c_silencedpistol/c_silencedpistol.mdl"
+			"capabilities"
+			{
+				"can_collect" "1"
+			}
+			"visuals"
+			{
+				"styles"
+				{
+					"0"
+					{
+						"skin_red"	 "0"
+						"skin_blu"	 "1"
+						"selectable" "0"
+					}
+				}
+				"attached_models_festive"
+				{
+					"0"
+					{
+						"model"	"models/weapons/c_models/c_silencedpistol/c_silencedpistol_festivizer.mdl"
+					}
+				}
+			}
+			"used_by_classes"
+			{
+				"scout"	   "1"
+				"engineer" "1"
+				"medic"    "1"
+				"sniper"   "1"
+				"heavy"	   "1"
+			}
+			"static_attrs"
+			{
+				"min_viewmodel_offset"					"10 0 -10"
+			}
+			"attributes"
+			{
+				"scripted weapon flags"
+				{
+					"attribute_class"	"vscript_weapon_flags"
+					"value" "8192"
+				}
+			}
+			"visuals"
+			{
+				"sound_single_shot"		"Weapon_SilencedPistol.Single"
+				"sound_burst"			"Weapon_SilencedPistol.SingleCrit"
+			}
+			"mouse_pressed_sound"	"ui/item_light_gun_pickup.wav"
+			"drop_sound"		"ui/item_light_gun_drop.wav"
+			"xifier_class_remap"	"pistol_silenced"
 		}
 
 		"34000" 

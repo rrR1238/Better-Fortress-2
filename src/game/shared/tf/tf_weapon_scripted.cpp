@@ -32,7 +32,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_scripted );
 
 // Server specific.
 #ifndef CLIENT_DLL
-BEGIN_DATADESC( CTFWeaponScripted )
+BEGIN_DATADESC(CTFWeaponScripted)
 END_DATADESC()
 #endif
 
@@ -79,22 +79,36 @@ bool CTFWeaponScripted::Holster( CBaseCombatWeapon *pSwitchingTo )
 
 void CTFWeaponScripted::RemoveProjectileAmmo( CTFPlayer *pPlayer )
 {
-	
+
 
 	return BaseClass::RemoveProjectileAmmo( pPlayer );
 }
 
 bool CTFWeaponScripted::HasPrimaryAmmo( void )
 {
-	
+
 	return BaseClass::HasPrimaryAmmo();
 }
 */
 
-void CTFWeaponScripted::PrimaryAttack( void ) 
+//Scan for current flags
+
+
+void CTFWeaponScripted::Precache( void )
+{
+	int iFlags = 0;
+	m_bitsWeaponFlags = iFlags;
+	CALL_ATTRIB_HOOK_INT( iFlags, vscript_weapon_flags );
+
+	BaseClass::Precache();
+}
+
+
+
+bool CTFWeaponScripted::FunctionCallBack( const char * iszFunction )
 {
 #ifndef CLIENT_DLL
-	HSCRIPT hFunc = m_ScriptScope.LookupFunction( "PrimaryAttack" );
+	HSCRIPT hFunc = m_ScriptScope.LookupFunction( iszFunction );
 	if ( hFunc )
 	{
 		ScriptVariant_t pFunctionReturn;
@@ -102,8 +116,33 @@ void CTFWeaponScripted::PrimaryAttack( void )
 		m_ScriptScope.ReleaseFunction( hFunc );
 
 		if( !pFunctionReturn )
-			return;
+			return false;
 	}
 #endif
-	return BaseClass::PrimaryAttack();
+	return true;
+}
+
+
+// Headshot Support
+int	CTFWeaponScripted::GetDamageType( void ) const
+{
+	if ( CanHeadshot() )
+	{
+		int iDamageType = BaseClass::GetDamageType() | DMG_USE_HITLOCATIONS;
+		return iDamageType;
+	}
+
+	BaseClass::GetDamageType();
+}
+
+void CTFWeaponScripted::PrimaryAttack() 
+{
+	FunctionCallBack("PrimaryAttack");
+	BaseClass::PrimaryAttack();
+}
+
+void CTFWeaponScripted::SecondaryAttack() 
+{
+	FunctionCallBack("SecondaryAttack");
+	BaseClass::SecondaryAttack();
 }
