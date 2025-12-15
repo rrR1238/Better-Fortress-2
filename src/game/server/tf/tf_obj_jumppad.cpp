@@ -225,8 +225,8 @@ void CObjectJumpPad::ApplyJumpBoost( CTFPlayer *pPlayer )
 	vecForward.z = 0; // Only horizontal component
 	VectorNormalize( vecForward );
 
-	// Calculate horizontal boost (about 20% of vertical boost)
-	float flHorizontalBoost = flVelocity * 0.2f;
+	// Calculate horizontal boost (about 15% of vertical boost)
+	float flHorizontalBoost = flVelocity * 0.15f;
 	Vector vecHorizontalBoost = vecForward * flHorizontalBoost;
 
 	// Apply upward and horizontal velocity impulse
