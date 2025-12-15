@@ -1404,8 +1404,8 @@ enum ObjectType_t
 	// ADD NEW ITEMS HERE TO AVOID BREAKING DEMOS
 	//
 
-
-
+	OBJ_SPEEDPAD,		// Speed boost pad (replaces teleporter entrance)
+	OBJ_JUMPPAD,		// Jump boost pad (replaces teleporter exit)
 
 	OBJ_LAST,
 };

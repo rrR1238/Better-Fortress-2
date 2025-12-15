@@ -198,11 +198,14 @@ private:
 	void DestroyControls();
 	void GatherCurrentValues();
 	void SaveValues();
+	void FilterOptions();
 
 	virtual void OnCommand( const char *command );
 	virtual void OnClose();
 	virtual void OnKeyCodeTyped(vgui::KeyCode code);
 	virtual void OnKeyCodePressed(vgui::KeyCode code);
+	virtual void OnTextChanged( vgui::Panel *panel );
+	virtual void OnThink();
 
 private:
 	CInfoDescription	*m_pDescription;
@@ -210,6 +213,8 @@ private:
 	vgui::PanelListPanel *m_pListPanel;
 	CTFTextToolTip		*m_pToolTip;
 	vgui::EditablePanel	*m_pToolTipEmbeddedPanel;
+	vgui::TextEntry		*m_pSearchEntry;
+	char				m_szLastSearchFilter[256];
 
 	CPanelAnimationVarAliasType( int, m_iControlW, "control_w", "0", "proportional_int" );
 	CPanelAnimationVarAliasType( int, m_iControlH, "control_h", "0", "proportional_int" );
@@ -317,6 +322,7 @@ private:
 	void LoadMapList();
 	void RefreshMapList();
 	void RequestWorkshopPreview(PublishedFileId_t fileID);
+	void FilterOptions();
 
 	// HTTP callback for workshop preview image
 	CCallResult<CTFCreateServerDialog, HTTPRequestCompleted_t> m_callbackHTTPPreview;
@@ -347,6 +353,10 @@ private:
 	CUtlVector< PublishedFileId_t > m_vecMapFileIDs;
 	char m_szLastSearchFilter[256];
 	bool m_bLastWorkshopOnly;
+
+	// General options filtering
+	vgui::TextEntry* m_pOptionsSearchEntry;
+	char m_szLastOptionsSearchFilter[256];
 
 	// Workshop preview image
 	HTTPRequestHandle m_hPendingPreviewRequest;

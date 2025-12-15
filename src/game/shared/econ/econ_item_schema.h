@@ -683,6 +683,7 @@ enum
 	ATTDESCFORM_VALUE_IS_OR,					// Printed as:  m_flValue, but results are ORd together instead of added
 	ATTDESCFORM_VALUE_IS_DATE,					// Printed as a date
 	ATTDESCFORM_VALUE_IS_ACCOUNT_ID,			// Printed as steam user name
+	ATTDESCFORM_VALUE_IS_STEAMID3,				// Printed as steam user name from SteamID3 format
 	ATTDESCFORM_VALUE_IS_PARTICLE_INDEX,		// Printed as a particle description
 	ATTDESCFORM_VALUE_IS_KILLSTREAKEFFECT_INDEX,// Printed as killstreak effect description
 	ATTDESCFORM_VALUE_IS_KILLSTREAK_IDLEEFFECT_INDEX,  // Printed as idle effect description

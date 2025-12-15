@@ -579,6 +579,29 @@ void CHudMenuEngyBuild::OnTick( void )
 			// we can buy it
 			m_pAvailableObjects[i]->SetVisible( true );
 		}
+
+		// Update the label text for Speed Pad and Jump Pad
+		if ( iRemappedObjectID == OBJ_SPEEDPAD || iRemappedObjectID == OBJ_JUMPPAD )
+		{
+			const wchar_t *pszLocalizedName = g_pVGuiLocalize->Find( 
+				iRemappedObjectID == OBJ_SPEEDPAD ? "TF_Object_SpeedPad" : "TF_Object_JumpPad" );
+			
+			if ( pszLocalizedName )
+			{
+				// Update all panel variants with the proper name
+				CExLabel *pLabel = dynamic_cast<CExLabel *>( m_pAvailableObjects[i]->FindChildByName( "ItemNameLabel" ) );
+				if ( pLabel ) pLabel->SetText( pszLocalizedName );
+				
+				pLabel = dynamic_cast<CExLabel *>( m_pAlreadyBuiltObjects[i]->FindChildByName( "ItemNameLabel" ) );
+				if ( pLabel ) pLabel->SetText( pszLocalizedName );
+				
+				pLabel = dynamic_cast<CExLabel *>( m_pCantAffordObjects[i]->FindChildByName( "ItemNameLabel" ) );
+				if ( pLabel ) pLabel->SetText( pszLocalizedName );
+				
+				pLabel = dynamic_cast<CExLabel *>( m_pUnavailableObjects[i]->FindChildByName( "ItemNameLabel" ) );
+				if ( pLabel ) pLabel->SetText( pszLocalizedName );
+			}
+		}
 	}
 }
 
@@ -766,6 +789,51 @@ void CHudMenuEngyBuild::ReplaceBuildings( EngyConstructBuilding_t (&targetBuildi
 	C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
 	if ( !pLocalPlayer )
 		return;
+
+	// Check if player has pda_builds_pads attribute
+	bool bBuildsPads = false;
+	for ( int i = 0; i < MAX_WEAPONS; i++ )
+	{
+		C_TFWeaponBase *pWeapon = dynamic_cast<C_TFWeaponBase*>( pLocalPlayer->GetWeapon( i ) );
+		if ( pWeapon && pWeapon->GetWeaponID() == TF_WEAPON_PDA_ENGINEER_BUILD )
+		{
+			int iBuildsPads = 0;
+			CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iBuildsPads, pda_builds_pads );
+			if ( iBuildsPads != 0 )
+			{
+				bBuildsPads = true;
+			}
+			break;
+		}
+	}
+
+	// If we have the pads attribute, replace teleporter slots with pads
+	if ( bBuildsPads )
+	{
+		// Replace slot 3 (Teleporter Entrance) with Speed Pad
+		targetBuildings[2] = EngyConstructBuilding_t( true,
+													 OBJ_SPEEDPAD,
+													 0,
+													 "tele_entrance_active.res",
+													 "tele_entrance_already_built.res",
+													 "tele_entrance_cant_afford.res",
+													 "tele_entrance_unavailable.res",
+													 "tele_entrance_active.res",
+													 "tele_entrance_inactive.res",
+													 "tele_entrance_inactive.res" );
+
+		// Replace slot 4 (Teleporter Exit) with Jump Pad
+		targetBuildings[3] = EngyConstructBuilding_t( true,
+													 OBJ_JUMPPAD,
+													 0,
+													 "tele_exit_active.res",
+													 "tele_exit_already_built.res",
+													 "tele_exit_cant_afford.res",
+													 "tele_exit_unavailable.res",
+													 "tele_exit_active.res",
+													 "tele_exit_inactive.res",
+													 "tele_exit_inactive.res" );
+	}
 
 	CUtlVector< const EngyBuildingReplacement_t* > vecReplacements;
 

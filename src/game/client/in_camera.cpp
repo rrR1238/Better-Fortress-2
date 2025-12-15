@@ -33,6 +33,7 @@ ConVar cam_idealdistright( "cam_idealdistright", "0", FCVAR_ARCHIVE | FCVAR_CHEA
 ConVar cam_idealdistup( "cam_idealdistup", "0", FCVAR_ARCHIVE | FCVAR_CHEAT );	 // thirdperson distance
 static ConVar cam_collision( "cam_collision", "1", FCVAR_ARCHIVE | FCVAR_CHEAT, "When in thirdperson and cam_collision is set to 1, an attempt is made to keep the camera from passing though walls." );
 static ConVar cam_showangles( "cam_showangles", "0", FCVAR_CHEAT, "When in thirdperson, print viewangles/idealangles/cameraoffsets to the console." );
+ConVar cam_freelook( "cam_freelook", "0", FCVAR_ARCHIVE, "Locks the camera angles, allowing free movement without camera rotation." );
 static ConVar c_maxpitch( "c_maxpitch", "90", FCVAR_ARCHIVE| FCVAR_CHEAT );
 static ConVar c_minpitch( "c_minpitch", "0", FCVAR_ARCHIVE| FCVAR_CHEAT );
 static ConVar c_maxyaw( "c_maxyaw",   "135", FCVAR_ARCHIVE | FCVAR_CHEAT);
@@ -181,6 +182,74 @@ CAM_ToggleSnapto
 void CAM_ToggleSnapto( void )
 { 
 	cam_snapto.SetValue( !cam_snapto.GetInt() );
+}
+
+/*
+==============================
+CAM_ToggleFreeLook
+
+==============================
+*/
+void CAM_ToggleFreeLook( void )
+{
+	// Only allow in third person mode
+	if ( !::input->CAM_IsThirdPerson() )
+	{
+		ConColorMsg( Color( 255, 255, 0, 255 ), "Free look camera can only be used in third person mode\n" );
+		return;
+	}
+	
+	cam_freelook.SetValue( !cam_freelook.GetBool() );
+	
+	if ( cam_freelook.GetBool() )
+	{
+		// Store current camera position and angles when locking
+		C_BasePlayer *pPlayer = C_BasePlayer::GetLocalPlayer();
+		if ( pPlayer )
+		{
+			CInput *pInput = static_cast<CInput*>( ::input );
+			
+			// Get player eye position
+			Vector eyeOrigin = pPlayer->GetAbsOrigin();
+			if ( pPlayer->GetFlags() & FL_DUCKING )
+			{
+				eyeOrigin += VEC_DUCK_VIEW;
+			}
+			else
+			{
+				eyeOrigin += VEC_VIEW;
+			}
+			
+			// Get the current third person camera angles
+			const Vector& cam_ofs = g_ThirdPersonManager.GetCameraOffsetAngles();
+			Vector cam_ofs_distance = g_ThirdPersonManager.GetFinalCameraOffset();
+			cam_ofs_distance *= g_ThirdPersonManager.GetDistanceFraction();
+			
+			QAngle camAngles;
+			camAngles[ PITCH ] = cam_ofs[ PITCH ];
+			camAngles[ YAW ] = cam_ofs[ YAW ];
+			camAngles[ ROLL ] = 0;
+			
+			if ( g_ThirdPersonManager.IsOverridingThirdPerson() == false )
+			{
+				engine->GetViewAngles( camAngles );
+			}
+			
+			// Calculate camera position
+			Vector camForward, camRight, camUp;
+			AngleVectors( camAngles, &camForward, &camRight, &camUp );
+			
+			Vector camOrigin = eyeOrigin;
+			VectorMA( camOrigin, -cam_ofs_distance[0], camForward, camOrigin );
+			VectorMA( camOrigin, cam_ofs_distance[1], camRight, camOrigin );
+			VectorMA( camOrigin, cam_ofs_distance[2], camUp, camOrigin );
+			
+			pInput->m_vecFreeLookOrigin = camOrigin;
+			pInput->m_angFreeLookAngles = camAngles;
+		}
+	}
+	
+	ConColorMsg( Color( 0, 255, 0, 255 ), cam_freelook.GetBool() ? "Camera locked (free look enabled)\n" : "Camera unlocked (free look disabled)\n" );
 }
 
 
@@ -921,6 +990,7 @@ static ConCommand endcammousemove( "-cammousemove",::CAM_EndMouseMove);
 static ConCommand startcamdistance( "+camdistance", ::CAM_StartDistance );
 static ConCommand endcamdistance( "-camdistance", ::CAM_EndDistance );
 static ConCommand snapto( "snapto", CAM_ToggleSnapto );
+static ConCommand cam_freelook_toggle( "cam_freelook_toggle", CAM_ToggleFreeLook, "Toggle camera lock (free look mode). When enabled, camera stays locked while you can still move." );
 /*
 ==============================
 Init_Camera

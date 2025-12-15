@@ -155,6 +155,15 @@ public:
 
 		virtual bool OnIterateAttributeValue( const CEconItemAttributeDefinition *pAttrDef, const CAttribute_String& value ) OVERRIDE
 		{
+			// For string attributes, we can't store the actual string in attrib_value_t,
+			// but we still need to display them. Store a dummy value and let AddAttributeDescription
+			// fetch the actual string from the item.
+			if ( !pAttrDef->IsHidden() )
+			{
+				attrib_value_t dummyValue = { 0 };
+				attrib_iterator_value_t attrVal = { pAttrDef, dummyValue, m_vecAttributes.Count() };
+				m_vecAttributes.AddToTail( attrVal );
+			}
 			return true;
 		}
 
@@ -213,7 +222,7 @@ private:
 
 private:
 	// Internal.
-	virtual void AddAttributeDescription( const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value, attrib_colors_t eOverrideDisplayColor = NUM_ATTRIB_COLORS, uint32 unAdditionalMetaType = 0 );
+	virtual void AddAttributeDescription( const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value, attrib_colors_t eOverrideDisplayColor = NUM_ATTRIB_COLORS, uint32 unAdditionalMetaType = 0, const IEconItemInterface *pEconItem = NULL );
 	
 	virtual void Generate_ItemName( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
 	virtual void Generate_ItemLevelDesc( const CLocalizationProvider *pLocalizationProvider, const IEconItemInterface *pEconItem );
@@ -304,7 +313,8 @@ private:
 		const CEconItemAttributeDefinition *pAttribDef,
 		attrib_value_t value,
 		TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( MD5Context_t *pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
-		IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer
+		IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer,
+		const IEconItemInterface *pEconItem
 	);
 
 public:
@@ -317,12 +327,13 @@ public:
 		const CEconItemAttributeDefinition *pAttribDef,
 		T value,
 		TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( MD5Context_t *pHashContext = NULL ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
-		IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer = NULL
+		IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer = NULL,
+		const IEconItemInterface *pEconItem = NULL
 	)
 	{
 		COMPILE_TIME_ASSERT( sizeof( T ) == sizeof( attrib_value_t ) );
 
-		InternalConstruct( pLocalizationProvider, pAttribDef, *(attrib_value_t *)&value, TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA pOptionalAccountPersonaLocalizer  );
+		InternalConstruct( pLocalizationProvider, pAttribDef, *(attrib_value_t *)&value, TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA pOptionalAccountPersonaLocalizer, pEconItem );
 	}
 
 	const CUtlConstStringBase<locchar_t>& GetDescription() const { return m_loc_sValue; }

@@ -103,8 +103,6 @@ void CTFWeaponScripted::Precache( void )
 	BaseClass::Precache();
 }
 
-
-
 bool CTFWeaponScripted::FunctionCallBack( const char * iszFunction )
 {
 #ifndef CLIENT_DLL

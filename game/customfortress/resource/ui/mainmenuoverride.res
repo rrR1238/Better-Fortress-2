@@ -2615,7 +2615,7 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"WorkshopButton"
-		"xpos"			"c-34+273"
+		"xpos"			"c-34+250"
 		"ypos"			"437"
 		"zpos"			"4"
 		"wide"			"25"
@@ -2664,7 +2664,7 @@
 	{
 		"ControlName"	"CExImageButton"
 		"fieldName"		"ReplayButton"
-		"xpos"			"c-14+273"
+		"xpos"			"c-14+250"
 		"ypos"			"437"
 		"zpos"			"3"
 		"wide"			"30"

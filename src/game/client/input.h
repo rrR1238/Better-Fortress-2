@@ -37,7 +37,7 @@ public:
 
 class ConVar;
 
-class CInput : public IInput
+class CInput : public ::IInput
 {
 // Interface
 public:
@@ -127,6 +127,10 @@ public:
 	virtual void	SetGameActionSetFlags( GameActionSetFlags_t action_set_flags );
 
 	virtual bool IsSteamControllerActive();
+
+	// Camera lock (free look) state
+	Vector		m_vecFreeLookOrigin;
+	QAngle		m_angFreeLookAngles;
 
 // Private Implementation
 protected:

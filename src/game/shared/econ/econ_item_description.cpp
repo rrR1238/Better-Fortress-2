@@ -3427,7 +3427,7 @@ void CEconItemDescription::CVisibleAttributeDisplayer::Finalize( const IEconItem
 		if ( pEconItem && m_vecAttributes[i].m_pAttrDef == pAttrDef_SupplyCrateSeries && pEconItem->FindAttribute( pAttrDef_HideSeries ) )
 			continue;
 
-		pEconItemDescription->AddAttributeDescription( pLocalizationProvider, m_vecAttributes[i].m_pAttrDef, m_vecAttributes[i].m_value );
+		pEconItemDescription->AddAttributeDescription( pLocalizationProvider, m_vecAttributes[i].m_pAttrDef, m_vecAttributes[i].m_value, NUM_ATTRIB_COLORS, 0, pEconItem );
 	}
 }
 
@@ -3505,7 +3505,8 @@ void CEconAttributeDescription::InternalConstruct
 	const CEconItemAttributeDefinition *pAttribDef,
 	attrib_value_t value,
 	TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( MD5Context_t *pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
-	IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer
+	IAccountPersonaLocalizer *pOptionalAccountPersonaLocalizer,
+	const IEconItemInterface *pEconItem
 )
 {
 	Assert( pAttribDef != NULL );
@@ -3552,6 +3553,109 @@ void CEconAttributeDescription::InternalConstruct
 		{
 			m_loc_sValue = pOptionalAccountPersonaLocalizer->FindAccountPersonaName( value_as_uint32 );
 		}
+		break;
+
+	case ATTDESCFORM_VALUE_IS_STEAMID3:
+#ifdef CLIENT_DLL
+		{
+			// For string attributes, fetch the actual string value from the item
+			CAttribute_String attrSteamID3;
+			if ( pEconItem && pEconItem->FindAttribute( pAttribDef, &attrSteamID3 ) )
+			{
+				const char *pszSteamID3 = attrSteamID3.value().c_str();
+				if ( pszSteamID3 && pszSteamID3[0] != '\0' )
+				{
+					// Parse multiple Steam IDs separated by commas
+					CUtlVector<CUtlString> vecNames;
+					
+					// Manual parsing to avoid strtok issues
+					const char *pStart = pszSteamID3;
+					char szToken[128];
+					
+					while ( *pStart != '\0' )
+					{
+						// Skip whitespace
+						while ( *pStart == ' ' || *pStart == '\t' )
+							pStart++;
+						
+						if ( *pStart == '\0' )
+							break;
+						
+						// Find the next comma or end of string
+						const char *pEnd = pStart;
+						while ( *pEnd != '\0' && *pEnd != ',' )
+							pEnd++;
+						
+						// Extract token
+						int nLen = pEnd - pStart;
+						if ( nLen > 0 && nLen < sizeof(szToken) )
+						{
+							V_strncpy( szToken, pStart, nLen + 1 );
+							szToken[nLen] = '\0';
+							
+							// Trim trailing whitespace
+							char *pTrim = szToken + nLen - 1;
+							while ( pTrim >= szToken && (*pTrim == ' ' || *pTrim == '\t') )
+							{
+								*pTrim = '\0';
+								pTrim--;
+							}
+							
+							// Parse Steam ID
+							uint32 unAccountID = 0;
+							if ( sscanf( szToken, "[U:1:%u]", &unAccountID ) == 1 )
+							{
+								CUtlString strName;
+								
+								if ( steamapicontext && steamapicontext->SteamFriends() )
+								{
+									CSteamID steamID( unAccountID, k_EUniversePublic, k_EAccountTypeIndividual );
+									
+									// Request user info if we don't have it yet
+									steamapicontext->SteamFriends()->RequestUserInformation( steamID, false );
+									
+									const char *pszPersonaName = steamapicontext->SteamFriends()->GetFriendPersonaName( steamID );
+									if ( pszPersonaName && pszPersonaName[0] != '\0' && V_strcmp( pszPersonaName, "[unknown]" ) != 0 )
+									{
+										strName = pszPersonaName;
+									}
+								}
+								
+								// Fallback to showing account ID if persona name not available
+								if ( strName.IsEmpty() )
+								{
+									strName = CFmtStr( "%u", unAccountID ).Access();
+								}
+								
+								vecNames.AddToTail( strName );
+							}
+						}
+						
+						// Move to next token
+						pStart = (*pEnd == ',') ? pEnd + 1 : pEnd;
+					}
+					
+					// Build comma-separated list of names
+					if ( vecNames.Count() > 0 )
+					{
+						CUtlString strCombined;
+						FOR_EACH_VEC( vecNames, i )
+						{
+							if ( i > 0 )
+								strCombined += ", ";
+							strCombined += vecNames[i];
+						}
+						pLocalizationProvider->ConvertUTF8ToLocchar( strCombined.Get(), &m_loc_sValue );
+					}
+					else
+					{
+						// Invalid format, just show the string as-is
+						pLocalizationProvider->ConvertUTF8ToLocchar( pszSteamID3, &m_loc_sValue );
+					}
+				}
+			}
+		}
+#endif
 		break;
 
 	case ATTDESCFORM_VALUE_IS_ADDITIVE:
@@ -3686,7 +3790,7 @@ void CEconAttributeDescription::InternalConstruct
 // --------------------------------------------------------------------------
 // Purpose:
 // --------------------------------------------------------------------------
-void CEconItemDescription::AddAttributeDescription( const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value, attrib_colors_t eOverrideDisplayColor /* = NUM_ATTRIB_COLORS */, uint32 unAdditionalMetaType /*= 0*/ )
+void CEconItemDescription::AddAttributeDescription( const CLocalizationProvider *pLocalizationProvider, const CEconItemAttributeDefinition *pAttribDef, attrib_value_t value, attrib_colors_t eOverrideDisplayColor /* = NUM_ATTRIB_COLORS */, uint32 unAdditionalMetaType /*= 0*/, const IEconItemInterface *pEconItem /*= NULL*/ )
 {
 	Assert( pLocalizationProvider );
 	Assert( pAttribDef );
@@ -3695,7 +3799,8 @@ void CEconItemDescription::AddAttributeDescription( const CLocalizationProvider 
 										pAttribDef,
 										value,
 										TF_ANTI_IDLEBOT_VERIFICATION_ONLY_ARG( m_pHashContext ) TF_ANTI_IDLEBOT_VERIFICATION_ONLY_COMMA
-										this );
+										this,
+										pEconItem );
 
 	if ( AttrDesc.GetDescription().IsEmpty() )
 		return;

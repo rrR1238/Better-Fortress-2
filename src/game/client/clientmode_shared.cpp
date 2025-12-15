@@ -11,6 +11,7 @@
 #include "cbase.h"
 #include "clientmode_shared.h"
 #include "iinput.h"
+#include "input.h"
 #include "view_shared.h"
 #include "iviewrender.h"
 #include "hud_basechat.h"
@@ -35,6 +36,8 @@
 #include "cam_thirdperson.h"
 #include <vgui/ILocalize.h>
 #include "hud_vote.h"
+
+extern ConVar cam_freelook;
 #include "ienginevgui.h"
 #include "sourcevr/isourcevirtualreality.h"
 #if defined( _X360 )
@@ -457,6 +460,15 @@ void ClientModeShared::OverrideView( CViewSetup *pSetup )
 		return;
 
 	pPlayer->OverrideView( pSetup );
+	
+	// Override camera position and angles if freelook (camera lock) is enabled
+	if ( cam_freelook.GetBool() && ::input->CAM_IsThirdPerson() )
+	{
+		CInput *pInput = static_cast<CInput*>( ::input );
+		pSetup->origin = pInput->m_vecFreeLookOrigin;
+		pSetup->angles = pInput->m_angFreeLookAngles;
+		return;
+	}
 
 	if( ::input->CAM_IsThirdPerson() )
 	{

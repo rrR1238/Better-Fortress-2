@@ -11303,7 +11303,31 @@ int CTFPlayer::CanBuild( int iObjectType, int iObjectMode )
 
 	if ( !bHasSubType && pCls && pCls->CanBuildObject( iObjectType ) == false )
 	{
-		return CB_CANNOT_BUILD;
+		// Check if this is a pad type and we have the pda_builds_pads attribute
+		bool bCanBuildPad = false;
+		if ( iObjectType == OBJ_SPEEDPAD || iObjectType == OBJ_JUMPPAD )
+		{
+			// Find the PDA weapon in the player's inventory
+			for ( int i = 0; i < MAX_WEAPONS; i++ )
+			{
+				CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase*>( GetWeapon( i ) );
+				if ( pWeapon && pWeapon->GetWeaponID() == TF_WEAPON_PDA_ENGINEER_BUILD )
+				{
+					int iBuildsPads = 0;
+					CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iBuildsPads, pda_builds_pads );
+					if ( iBuildsPads != 0 )
+					{
+						bCanBuildPad = true;
+					}
+					break;
+				}
+			}
+		}
+		
+		if ( !bCanBuildPad )
+		{
+			return CB_CANNOT_BUILD;
+		}
 	}
 #endif
 
@@ -13209,6 +13233,35 @@ void CTFPlayer::SetTauntYaw( float flTauntYaw )
 //-----------------------------------------------------------------------------
 void CTFPlayer::StartBuildingObjectOfType( int iType, int iMode )
 {
+	// Check if we should replace teleporters with pads
+	int iBuildsPads = 0;
+	
+	// Find the PDA weapon in the player's inventory
+	for ( int i = 0; i < MAX_WEAPONS; i++ )
+	{
+		CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase*>( GetWeapon( i ) );
+		if ( pWeapon && pWeapon->GetWeaponID() == TF_WEAPON_PDA_ENGINEER_BUILD )
+		{
+			CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iBuildsPads, pda_builds_pads );
+			break;
+		}
+	}
+	
+	// If we have the pads attribute, replace teleporter types with pad types
+	if ( iBuildsPads != 0 && iType == OBJ_TELEPORTER )
+	{
+		if ( iMode == MODE_TELEPORTER_ENTRANCE )
+		{
+			iType = OBJ_SPEEDPAD;
+			iMode = 0;
+		}
+		else if ( iMode == MODE_TELEPORTER_EXIT )
+		{
+			iType = OBJ_JUMPPAD;
+			iMode = 0;
+		}
+	}
+
 	// early out if we can't build this type of object
 	if ( CanBuild( iType, iMode ) != CB_CAN_BUILD )
 		return;
@@ -14713,6 +14766,27 @@ CTFWeaponBuilder *CTFPlayerSharedUtils::GetBuilderForObjectType( CTFPlayer *pTFP
 	if ( !pTFPlayer )
 		return NULL;
 
+	// Check if we're looking for pads with the pda_builds_pads attribute
+	bool bLookingForPadWithAttribute = false;
+	if ( iObjectType == OBJ_SPEEDPAD || iObjectType == OBJ_JUMPPAD )
+	{
+		// Check if player has the attribute
+		for ( int i = 0; i < MAX_WEAPONS; i++ )
+		{
+			CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase*>( pTFPlayer->GetWeapon( i ) );
+			if ( pWeapon && pWeapon->GetWeaponID() == TF_WEAPON_PDA_ENGINEER_BUILD )
+			{
+				int iBuildsPads = 0;
+				CALL_ATTRIB_HOOK_INT_ON_OTHER( pWeapon, iBuildsPads, pda_builds_pads );
+				if ( iBuildsPads != 0 )
+				{
+					bLookingForPadWithAttribute = true;
+				}
+				break;
+			}
+		}
+	}
+
 	for ( int i = 0; i < MAX_WEAPONS; i++ )
 	{
 		CTFWeaponBuilder *pBuilder = dynamic_cast< CTFWeaponBuilder* >( pTFPlayer->GetWeapon( i ) );
@@ -14721,6 +14795,10 @@ CTFWeaponBuilder *CTFPlayerSharedUtils::GetBuilderForObjectType( CTFPlayer *pTFP
 
 		// Any builder will do - return first
 		if ( iObjectType == OBJ_ANY )
+			return pBuilder;
+
+		// If looking for pads with attribute, return the teleporter builder
+		if ( bLookingForPadWithAttribute && pBuilder->CanBuildObjectType( OBJ_TELEPORTER ) )
 			return pBuilder;
 
 		// Requires a specific builder for this type

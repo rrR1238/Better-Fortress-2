@@ -57,7 +57,6 @@
 		{
 			"label"		"SEARCH MAPS"
 			"type"		"STRING"
-			"val"		""
 		}
 		"cl_map_workshop_only"
 		{
@@ -72,231 +71,8 @@
 			"options"
 			{
 				"#GameUI_RandomMap"		"-1"
-				"background_gravelpit"		"0"
-				"cf_devtest"		"1"
-				"arena_afterlife"		"2"
-				"arena_badlands"		"3"
-				"arena_byre"		"4"
-				"arena_granary"		"5"
-				"arena_lumberyard"		"6"
-				"arena_lumberyard_event"		"7"
-				"arena_nucleus"		"8"
-				"arena_offblast_final"		"9"
-				"arena_perks"		"10"
-				"arena_ravine"		"11"
-				"arena_sawmill"		"12"
-				"arena_watchtower"		"13"
-				"arena_well"		"14"
-				"background01"		"15"
-				"cp_5gorge"		"16"
-				"cp_altitude"		"17"
-				"cp_ambush_event"		"18"
-				"cp_badlands"		"19"
-				"cp_brew"		"20"
-				"cp_burghausen"		"21"
-				"cp_canaveral_5cp"		"22"
-				"cp_cargo"		"23"
-				"cp_carrier"		"24"
-				"cp_cloak"		"25"
-				"cp_coldfront"		"26"
-				"cp_conifer"		"27"
-				"cp_cowerhouse"		"28"
-				"cp_darkmarsh"		"29"
-				"cp_degrootkeep"		"30"
-				"cp_degrootkeep_rats"		"31"
-				"cp_dustbowl"		"32"
-				"cp_egypt_final"		"33"
-				"cp_fastlane"		"34"
-				"cp_fortezza"		"35"
-				"cp_foundry"		"36"
-				"cp_freaky_fair"		"37"
-				"cp_freight_final1"		"38"
-				"cp_frostwatch"		"39"
-				"cp_fulgur"		"40"
-				"cp_gorge"		"41"
-				"cp_gorge_event"		"42"
-				"cp_granary"		"43"
-				"cp_gravelpit"		"44"
-				"cp_gravelpit_snowy"		"45"
-				"cp_gullywash_final1"		"46"
-				"cp_hadal"		"47"
-				"cp_hardwood_final"		"48"
-				"cp_junction_final"		"49"
-				"cp_lavapit_final"		"50"
-				"cp_manor_event"		"51"
-				"cp_mercenarypark"		"52"
-				"cp_metalworks"		"53"
-				"cp_mossrock"		"54"
-				"cp_mountainlab"		"55"
-				"cp_overgrown"		"56"
-				"cp_powerhouse"		"57"
-				"cp_process_final"		"58"
-				"cp_reckoner"		"59"
-				"cp_snakewater_final1"		"60"
-				"cp_snowplow"		"61"
-				"cp_spookeyridge"		"62"
-				"cp_standin_final"		"63"
-				"cp_steel"		"64"
-				"cp_sulfur"		"65"
-				"cp_sunshine"		"66"
-				"cp_sunshine_event"		"67"
-				"cp_vanguard"		"68"
-				"cp_well"		"69"
-				"cp_yukon_final"		"70"
-				"ctf_2fort"		"71"
-				"ctf_2fort_invasion"		"72"
-				"ctf_applejack"		"73"
-				"ctf_crasher"		"74"
-				"ctf_doublecross"		"75"
-				"ctf_doublecross_event"		"76"
-				"ctf_doublecross_snowy"		"77"
-				"ctf_foundry"		"78"
-				"ctf_frosty"		"79"
-				"ctf_gorge"		"80"
-				"ctf_haarp"		"81"
-				"ctf_hellfire"		"82"
-				"ctf_helltrain_event"		"83"
-				"ctf_landfall"		"84"
-				"ctf_pelican_peak"		"85"
-				"ctf_penguin_peak"		"86"
-				"ctf_pressure"		"87"
-				"ctf_sawmill"		"88"
-				"ctf_snowfall_final"		"89"
-				"ctf_thundermountain"		"90"
-				"ctf_turbine"		"91"
-				"ctf_turbine_winter"		"92"
-				"ctf_well"		"93"
-				"itemtest"		"94"
-				"koth_badlands"		"95"
-				"koth_bagel_event"		"96"
-				"koth_blowout"		"97"
-				"koth_boardwalk"		"98"
-				"koth_brazil"		"99"
-				"koth_cachoeira"		"100"
-				"koth_cascade"		"101"
-				"koth_demolition"		"102"
-				"koth_dusker"		"103"
-				"koth_harvest_event"		"104"
-				"koth_harvest_final"		"105"
-				"koth_highpass"		"106"
-				"koth_king"		"107"
-				"koth_krampus"		"108"
-				"koth_lakeside_event"		"109"
-				"koth_lakeside_final"		"110"
-				"koth_lazarus"		"111"
-				"koth_los_muertos"		"112"
-				"koth_mannhole"		"113"
-				"koth_maple_ridge_event"		"114"
-				"koth_megalo"		"115"
-				"koth_megaton"		"116"
-				"koth_moonshine_event"		"117"
-				"koth_nucleus"		"118"
-				"koth_overcast_final"		"119"
-				"koth_probed"		"120"
-				"koth_rotunda"		"121"
-				"koth_sawmill"		"122"
-				"koth_sawmill_event"		"123"
-				"koth_sharkbay"		"124"
-				"koth_slasher"		"125"
-				"koth_slaughter_event"		"126"
-				"koth_slime"		"127"
-				"koth_snowtower"		"128"
-				"koth_suijin"		"129"
-				"koth_synthetic_event"		"130"
-				"koth_toxic"		"131"
-				"koth_undergrove_event"		"132"
-				"koth_viaduct"		"133"
-				"koth_viaduct_event"		"134"
-				"mvm_bigrock"		"135"
-				"mvm_coaltown"		"136"
-				"mvm_decoy"		"137"
-				"mvm_ghost_town"		"138"
-				"mvm_mannhattan"		"139"
-				"mvm_mannworks"		"140"
-				"mvm_rottenburg"		"141"
-				"pass_brickyard"		"142"
-				"pass_district"		"143"
-				"pass_timbertown"		"144"
-				"pd_atom_smash"		"145"
-				"pd_circus"		"146"
-				"pd_cursed_cove_event"		"147"
-				"pd_farmageddon"		"148"
-				"pd_galleria"		"149"
-				"pd_mannsylvania"		"150"
-				"pd_monster_bash"		"151"
-				"pd_pit_of_death_event"		"152"
-				"pd_selbyen"		"153"
-				"pd_snowville_event"		"154"
-				"pd_watergate"		"155"
-				"plr_bananabay"		"156"
-				"plr_cutter"		"157"
-				"plr_hacksaw"		"158"
-				"plr_hacksaw_event"		"159"
-				"plr_hightower"		"160"
-				"plr_hightower_event"		"161"
-				"plr_nightfall_final"		"162"
-				"plr_pipeline"		"163"
-				"pl_aquarius"		"164"
-				"pl_badwater"		"165"
-				"pl_barnblitz"		"166"
-				"pl_bloodwater"		"167"
-				"pl_borneo"		"168"
-				"pl_breadspace"		"169"
-				"pl_cactuscanyon"		"170"
-				"pl_camber"		"171"
-				"pl_cashworks"		"172"
-				"pl_chilly"		"173"
-				"pl_citadel"		"174"
-				"pl_coal_event"		"175"
-				"pl_corruption"		"176"
-				"pl_embargo"		"177"
-				"pl_emerge"		"178"
-				"pl_enclosure_final"		"179"
-				"pl_fifthcurve_event"		"180"
-				"pl_frontier_final"		"181"
-				"pl_frostcliff"		"182"
-				"pl_goldrush"		"183"
-				"pl_hasslecastle"		"184"
-				"pl_hoodoo_final"		"185"
-				"pl_millstone_event"		"186"
-				"pl_odyssey"		"187"
-				"pl_patagonia"		"188"
-				"pl_phoenix"		"189"
-				"pl_pier"		"190"
-				"pl_precipice_event_final"		"191"
-				"pl_rumble_event"		"192"
-				"pl_rumford_event"		"193"
-				"pl_sludgepit_event"		"194"
-				"pl_snowycoast"		"195"
-				"pl_spineyard"		"196"
-				"pl_swiftwater_final1"		"197"
-				"pl_terror_event"		"198"
-				"pl_thundermountain"		"199"
-				"pl_upward"		"200"
-				"pl_venice"		"201"
-				"pl_wutville_event"		"202"
-				"rd_asteroid"		"203"
-				"sd_doomsday"		"204"
-				"sd_doomsday_event"		"205"
-				"sd_marshlands"		"206"
-				"tc_hydro"		"207"
-				"tow_dynamite"		"208"
-				"tr_dustbowl"		"209"
-				"tr_target"		"210"
-				"vsh_distillery"		"211"
-				"vsh_maul"		"212"
-				"vsh_nucleus"		"213"
-				"vsh_outburst"		"214"
-				"vsh_skirmish"		"215"
-				"vsh_tinyrock"		"216"
-				"zi_atoll"		"217"
-				"zi_blazehattan"		"218"
-				"zi_devastation_final1"		"219"
-				"zi_murky"		"220"
-				"zi_sanitarium"		"221"
-				"zi_woods"		"222"
 			}
-			"val"		"71"
+			"val"		"-1"
 		}
 		"map_preview"
 		{
@@ -317,7 +93,7 @@
 				"#Server_Visibility_Local"		"0"
 				"#Start_Server_SteamNetworking"		"1"
 			}
-			"val"		"0"
+			"val"		"1"
 		}
 		"sv_password"
 		{
@@ -452,24 +228,12 @@
 			"val"		"1"
 		}
 	}
-	"#Replay_Contest_Rules"
+	"GAMEPLAY"
 	{
 		"category1"
 		{
 			"label"		"GAMEPLAY RULES"
 			"type"		"CATEGORY"
-		}
-		"sv_cheats"
-		{
-			"label"		"ENABLE CHEATS"
-			"type"		"BOOL"
-			"val"		"0"
-		}
-		"sv_cheats_server_owner"
-		{
-			"label"		"ENABLE CHEATS FOR OWNER"
-			"type"		"BOOL"
-			"val"		"0"
 		}
 		"mp_tournament"
 		{
@@ -513,12 +277,6 @@
 			"type"		"BOOL"
 			"val"		"1"
 		}
-		"cf_instantrespawn"
-		{
-			"label"		"INSTANT RESPAWN"
-			"type"		"BOOL"
-			"val"		"0"
-		}
 		"cf_max_speed"
 		{
 			"label"		"MAX SPEED"
@@ -557,18 +315,6 @@
 		"tf_use_fixed_weaponspreads"
 		{
 			"label"		"USE FIXED WEAPON SPREAD"
-			"type"		"BOOL"
-			"val"		"0"
-		}
-		"sv_infinite_ammo"
-		{
-			"label"		"INFINITE AMMO"
-			"type"		"BOOL"
-			"val"		"0"
-		}
-		"cf_infinite_shotgun_knockback"
-		{
-			"label"		"INFINITE F.A.N KNOCKBACK"
 			"type"		"BOOL"
 			"val"		"0"
 		}
@@ -648,6 +394,50 @@
 			}
 			"val"		"0"
 		}
+	}
+	"FUN"
+	{
+		"category1"
+		{
+			"label"		"CHEATS"
+			"type"		"CATEGORY"
+		}
+		"sv_cheats"
+		{
+			"label"		"ENABLE CHEATS"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+		"sv_cheats_server_owner"
+		{
+			"label"		"ENABLE CHEATS FOR OWNER"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+		"mp_friendlyfire"
+		{
+			"label"		"ENABLE FRIENDLY FIRE"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+		"sv_gravity"
+		{
+			"label"		"GRAVITY"
+			"type"		"STRING"
+			"val"		"800"
+		}
+		"sv_infinite_ammo"
+		{
+			"label"		"INFINITE AMMO"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+		"cf_infinite_shotgun_knockback"
+		{
+			"label"		"INFINITE F.A.N KNOCKBACK"
+			"type"		"BOOL"
+			"val"		"0"
+		}
 		"cf_voicespam"
 		{
 			"label"		"ALLOW VOICE SPAM"
@@ -658,96 +448,11 @@
 		{
 			"label"		"MAX VOICE SPEAK DELAY (SECONDS)"
 			"type"		"STRING"
-			"val"		"1.5"
+			"val"		"1.500000"
 		}
-		"category4"
+		"category2"
 		{
-			"label"		"MANN VS MACHINE OPTIONS"
-			"type"		"CATEGORY"
-			"prefix"		"mvm_"
-		}
-		"cf_mvm_footstep_sounds"
-		{
-			"label"		"UNIQUE GIANT FOOTSTEP SOUNDS"
-			"type"		"BOOL"
-			"val"		"1"
-			"prefix"		"mvm_"
-		}
-		"cf_mvm_inspect_friends_only"
-		{
-			"label"		"INSPECT FRIENDS ONLY"
-			"type"		"BOOL"
-			"val"		"0"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_enable_human_busters"
-		{
-			"label"		"ENABLE HUMAN SENTRY BUSTERS"
-			"type"		"BOOL"
-			"val"		"0"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_invader_bomb_chance"
-		{
-			"label"		"INVADER BOMB CHANCE (%)"
-			"type"		"STRING"
-			"val"		"0"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_max_bosses"
-		{
-			"label"		"MAX BOSSES"
-			"type"		"STRING"
-			"val"		"1"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_max_giants"
-		{
-			"label"		"MAX GIANTS"
-			"type"		"STRING"
-			"val"		"3"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_playstyle"
-		{
-			"label"		"MVM VS PLAYSTYLE"
-			"type"		"LIST"
-			"options"
-			{
-				"TRADITIONAL MVM"		"0"
-				"ROBOT CONTROL"		"1"
-				"MIXED (RANDOM)"		"2"
-			}
-			"val"		"0"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_restrict_slots"
-		{
-			"label"		"RESTRICT ROBOT SLOTS"
-			"type"		"BOOL"
-			"val"		"1"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_robot_stations"
-		{
-			"label"		"ENABLE ROBOT UPGRADE STATIONS"
-			"type"		"BOOL"
-			"val"		"0"
-			"prefix"		"mvm_"
-		}
-		"cf_mvmvs_use_loadout"
-		{
-			"label"		"ROBOTS USE PLAYER LOADOUT"
-			"type"		"BOOL"
-			"val"		"0"
-			"prefix"		"mvm_"
-		}
-	}
-	"Reverts"
-	{
-		"category1"
-		{
-			"label"		"GENERAL"
+			"label"		"REVERTS - GENERAL"
 			"type"		"CATEGORY"
 		}
 		"cf_dropped_weapons_give_ammo"
@@ -762,9 +467,9 @@
 			"type"		"BOOL"
 			"val"		"0"
 		}
-		"category2"
+		"category3"
 		{
-			"label"		"SCOUT"
+			"label"		"REVERTS - SCOUT"
 			"type"		"CATEGORY"
 		}
 		"cf_scout_stunball_old_stun"
@@ -779,9 +484,9 @@
 			"type"		"BOOL"
 			"val"		"1"
 		}
-		"category3"
+		"category4"
 		{
-			"label"		"SOLDIER"
+			"label"		"REVERTS - SOLDIER"
 			"type"		"CATEGORY"
 		}
 		"cf_revert_airstrike"
@@ -792,7 +497,7 @@
 		}
 		"category4"
 		{
-			"label"		"PYRO"
+			"label"		"REVERTS - PYRO"
 			"type"		"CATEGORY"
 		}
 		"cf_revert_airblast"
@@ -804,6 +509,85 @@
 		"cf_revert_flamethrower"
 		{
 			"label"		"REVERT FLAMETHROWER (PRE-BM)"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+	}
+	"MVM"
+	{
+		"category1"
+		{
+			"label"		"MANN VS MACHINE OPTIONS"
+			"type"		"CATEGORY"
+		}
+		"cf_mvm_footstep_sounds"
+		{
+			"label"		"UNIQUE GIANT FOOTSTEP SOUNDS"
+			"type"		"BOOL"
+			"val"		"1"
+		}
+		"cf_mvm_inspect_friends_only"
+		{
+			"label"		"INSPECT FRIENDS ONLY"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+		"category2"
+		{
+			"label"		"MANN VS MACHINE VERSUS OPTIONS"
+			"type"		"CATEGORY"
+		}
+		"cf_mvmvs_enable_human_busters"
+		{
+			"label"		"ENABLE HUMAN SENTRY BUSTERS"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+		"cf_mvmvs_invader_bomb_chance"
+		{
+			"label"		"INVADER BOMB CHANCE (%)"
+			"type"		"STRING"
+			"val"		"0"
+		}
+		"cf_mvmvs_max_bosses"
+		{
+			"label"		"MAX BOSSES"
+			"type"		"STRING"
+			"val"		"1"
+		}
+		"cf_mvmvs_max_giants"
+		{
+			"label"		"MAX GIANTS"
+			"type"		"STRING"
+			"val"		"3"
+		}
+		"cf_mvmvs_playstyle"
+		{
+			"label"		"MVM VS PLAYSTYLE"
+			"type"		"LIST"
+			"options"
+			{
+				"TRADITIONAL MVM"		"0"
+				"ROBOT CONTROL"		"1"
+				"MIXED (RANDOM)"		"2"
+			}
+			"val"		"0"
+		}
+		"cf_mvmvs_restrict_slots"
+		{
+			"label"		"RESTRICT ROBOT SLOTS"
+			"type"		"BOOL"
+			"val"		"1"
+		}
+		"cf_mvmvs_robot_stations"
+		{
+			"label"		"ENABLE ROBOT UPGRADE STATIONS"
+			"type"		"BOOL"
+			"val"		"0"
+		}
+		"cf_mvmvs_use_loadout"
+		{
+			"label"		"ROBOTS USE PLAYER LOADOUT"
 			"type"		"BOOL"
 			"val"		"0"
 		}

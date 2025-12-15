@@ -31,7 +31,6 @@
 		
 	}
 	
-	
 	"Sheet"
 	{
 		"ControlName"	"EditablePanel"
@@ -59,6 +58,18 @@
 		}				
 		
 		// No idea why but i have to do this instead of using tabskv
+		"tab"
+		{
+			"fieldName"			"tab_styled"
+			"textinsetx"		"40"
+			"font"				"HudFontMediumSmallBold"
+			"selectedcolor"		"200 187 161 255"
+			"unselectedcolor"	"130 120 104 255"	
+			"defaultBgColor_override"	"46 43 42 255"
+			"paintbackground"	"0"
+			"activeborder_override"	"OutlinedGreyBox"
+			"normalborder_override" "OutlinedDullGreyBox"
+		}
 		"tab"
 		{
 			"fieldName"			"tab_styled"
@@ -177,10 +188,10 @@
 		}
 	}
 	
-	"#Replay_Contest_Rules"
+	"GAMEPLAY"
 	{
 		"ControlName"		"CPanelListPanel"
-		"fieldName"		"#Replay_Contest_Rules"
+		"fieldName"		"GAMEPLAY"
 		"xpos"		"10"
 		"ypos"		"40"
 		"wide"		"480"
@@ -193,10 +204,26 @@
 		"bgcolor_override"	"0 0 0 0"
 	}
 	
-	"#GameUI_GameMenu_Options"
+	"FUN"
 	{
 		"ControlName"		"CPanelListPanel"
-		"fieldName"		"#GameUI_GameMenu_Options"
+		"fieldName"		"FUN"
+		"xpos"		"10"
+		"ypos"		"40"
+		"wide"		"480"
+		"tall"		"260"
+		"autoResize"		"0"
+		"pinCorner"		"0"
+		"visible"		"0"
+		"enabled"		"1"
+		"tabPosition"		"0"
+		"bgcolor_override"	"0 0 0 0"
+	}
+
+	"MVM"
+	{
+		"ControlName"		"CPanelListPanel"
+		"fieldName"		"MVM"
 		"xpos"		"10"
 		"ypos"		"40"
 		"wide"		"480"

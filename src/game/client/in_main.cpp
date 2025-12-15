@@ -40,6 +40,7 @@
 extern ConVar in_joystick;
 extern ConVar cam_idealpitch;
 extern ConVar cam_idealyaw;
+extern ConVar cam_freelook;
 
 // For showing/hiding the scoreboard
 #include <game/client/iviewport.h>

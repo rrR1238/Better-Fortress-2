@@ -115,6 +115,7 @@ const char *g_AttributeDescriptionFormats[] =
 	"value_is_or",						// ATTDESCFORM_VALUE_IS_OR
 	"value_is_date",					// ATTDESCFORM_VALUE_IS_DATE
 	"value_is_account_id",				// ATTDESCFORM_VALUE_IS_ACCOUNT_ID
+	"value_is_steamid3",				// ATTDESCFORM_VALUE_IS_STEAMID3
 	"value_is_particle_index",			// ATTDESCFORM_VALUE_IS_PARTICLE_INDEX -> Could change to "string index"
 	"value_is_killstreakeffect_index",	// ATTDESCFORM_VALUE_IS_KILLSTREAKEFFECT_INDEX -> Could change to "string index"
 	"value_is_killstreak_idleeffect_index",  // ATTDESCFORM_VALUE_IS_KILLSTREAK_IDLEEFFECT_INDEX

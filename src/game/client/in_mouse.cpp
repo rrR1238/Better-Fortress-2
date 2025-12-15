@@ -48,6 +48,7 @@
 extern ConVar lookstrafe;
 extern ConVar cl_pitchdown;
 extern ConVar cl_pitchup;
+extern ConVar cam_freelook;
 extern const ConVar *sv_cheats;
 
 class ConVar_m_pitch : public ConVar_ServerBounded

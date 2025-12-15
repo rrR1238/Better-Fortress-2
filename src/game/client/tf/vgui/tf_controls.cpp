@@ -740,6 +740,8 @@ CTFAdvancedOptionsDialog::CTFAdvancedOptionsDialog(vgui::Panel *parent) : BaseCl
 	m_pListPanel = new vgui::PanelListPanel( this, "PanelListPanel" );
 
 	m_pList = NULL;
+	m_pSearchEntry = NULL;
+	m_szLastSearchFilter[0] = '\0';
 
 	m_pToolTip = new CTFTextToolTip( this );
 	m_pToolTipEmbeddedPanel = new vgui::EditablePanel( this, "TooltipPanel" );
@@ -775,6 +777,13 @@ void CTFAdvancedOptionsDialog::ApplySchemeSettings( vgui::IScheme *pScheme )
 
 	LoadControlSettings("resource/ui/TFAdvancedOptionsDialog.res");
 	m_pListPanel->SetFirstColumnWidth( 0 );
+
+	// Find the search entry control
+	m_pSearchEntry = dynamic_cast<TextEntry*>( FindChildByName( "SearchEntry" ) );
+	if ( m_pSearchEntry )
+	{
+		m_pSearchEntry->AddActionSignalTarget( this );
+	}
 
 	CreateControls();
 }
@@ -1255,6 +1264,153 @@ void CTFAdvancedOptionsDialog::Deploy( void )
 	vgui::surface()->GetWorkspaceBounds( x, y, ww, wt );
 	GetSize(wide, tall);
 	SetPos(x + ((ww - wide) / 2), y + ((wt - tall) / 2));
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Called when search text changes
+//-----------------------------------------------------------------------------
+void CTFAdvancedOptionsDialog::OnTextChanged( vgui::Panel *panel )
+{
+	if ( panel == m_pSearchEntry )
+	{
+		FilterOptions();
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Monitor for search filter changes
+//-----------------------------------------------------------------------------
+void CTFAdvancedOptionsDialog::OnThink()
+{
+	BaseClass::OnThink();
+
+	// Check if search filter has changed
+	if ( m_pSearchEntry )
+	{
+		char szCurrentSearch[256] = { 0 };
+		m_pSearchEntry->GetText( szCurrentSearch, sizeof( szCurrentSearch ) );
+
+		if ( Q_strcmp( szCurrentSearch, m_szLastSearchFilter ) != 0 )
+		{
+			V_strncpy( m_szLastSearchFilter, szCurrentSearch, sizeof( m_szLastSearchFilter ) );
+			FilterOptions();
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Filter the options list based on search text
+//-----------------------------------------------------------------------------
+void CTFAdvancedOptionsDialog::FilterOptions()
+{
+	if ( !m_pListPanel )
+		return;
+
+	// Get the search filter text
+	char szSearchFilter[256] = { 0 };
+	if ( m_pSearchEntry )
+	{
+		m_pSearchEntry->GetText( szSearchFilter, sizeof( szSearchFilter ) );
+		Q_strlower( szSearchFilter );
+	}
+
+	bool bHasFilter = ( szSearchFilter[0] != '\0' );
+
+	// If no filter, show everything in original order
+	if ( !bHasFilter )
+	{
+		mpcontrol_t *pList = m_pList;
+		while ( pList )
+		{
+			pList->SetVisible( true );
+			pList = pList->next;
+		}
+		m_pListPanel->InvalidateLayout();
+		return;
+	}
+
+	// Clear the panel list and rebuild with matches first
+	m_pListPanel->RemoveAll();
+
+	// First pass: Add matching items
+	mpcontrol_t *pList = m_pList;
+	while ( pList )
+	{
+		bool bMatches = false;
+
+		if ( pList->pScrObj )
+		{
+			// Search in the prompt text
+			char szLowerPrompt[256];
+			V_strncpy( szLowerPrompt, pList->pScrObj->prompt, sizeof( szLowerPrompt ) );
+			Q_strlower( szLowerPrompt );
+
+			// Search in the cvar name
+			char szLowerCvar[256];
+			V_strncpy( szLowerCvar, pList->pScrObj->cvarname, sizeof( szLowerCvar ) );
+			Q_strlower( szLowerCvar );
+
+			// Search in the tooltip
+			char szLowerTooltip[256] = { 0 };
+			if ( pList->pScrObj->tooltip && pList->pScrObj->tooltip[0] )
+			{
+				V_strncpy( szLowerTooltip, pList->pScrObj->tooltip, sizeof( szLowerTooltip ) );
+				Q_strlower( szLowerTooltip );
+			}
+
+			// Check if search text is found
+			bMatches = ( V_strstr( szLowerPrompt, szSearchFilter ) != NULL ) ||
+					   ( V_strstr( szLowerCvar, szSearchFilter ) != NULL ) ||
+					   ( szLowerTooltip[0] != '\0' && V_strstr( szLowerTooltip, szSearchFilter ) != NULL );
+		}
+
+		if ( bMatches )
+		{
+			pList->SetVisible( true );
+			m_pListPanel->AddItem( NULL, pList );
+		}
+
+		pList = pList->next;
+	}
+
+	// Second pass: Add non-matching items (hidden)
+	pList = m_pList;
+	while ( pList )
+	{
+		bool bMatches = false;
+
+		if ( pList->pScrObj )
+		{
+			char szLowerPrompt[256];
+			V_strncpy( szLowerPrompt, pList->pScrObj->prompt, sizeof( szLowerPrompt ) );
+			Q_strlower( szLowerPrompt );
+
+			char szLowerCvar[256];
+			V_strncpy( szLowerCvar, pList->pScrObj->cvarname, sizeof( szLowerCvar ) );
+			Q_strlower( szLowerCvar );
+
+			char szLowerTooltip[256] = { 0 };
+			if ( pList->pScrObj->tooltip && pList->pScrObj->tooltip[0] )
+			{
+				V_strncpy( szLowerTooltip, pList->pScrObj->tooltip, sizeof( szLowerTooltip ) );
+				Q_strlower( szLowerTooltip );
+			}
+
+			bMatches = ( V_strstr( szLowerPrompt, szSearchFilter ) != NULL ) ||
+					   ( V_strstr( szLowerCvar, szSearchFilter ) != NULL ) ||
+					   ( szLowerTooltip[0] != '\0' && V_strstr( szLowerTooltip, szSearchFilter ) != NULL );
+		}
+
+		if ( !bMatches )
+		{
+			pList->SetVisible( false );
+			m_pListPanel->AddItem( NULL, pList );
+		}
+
+		pList = pList->next;
+	}
+
+	m_pListPanel->InvalidateLayout();
 }
 
 //-----------------------------------------------------------------------------
@@ -3079,7 +3235,9 @@ CTFCreateServerDialog::CTFCreateServerDialog(vgui::Panel* parent) : PropertyDial
 	m_pList = NULL;
 	m_pMapSearchEntry = NULL;
 	m_pWorkshopFilterCheck = NULL;
+	m_pOptionsSearchEntry = NULL;
 	m_szLastSearchFilter[0] = '\0';
+	m_szLastOptionsSearchFilter[0] = '\0';
 	m_bLastWorkshopOnly = false;
 	m_hPendingPreviewRequest = INVALID_HTTPREQUEST_HANDLE;
 	m_nCurrentPreviewFileID = 0;
@@ -3170,6 +3328,13 @@ void CTFCreateServerDialog::ApplySchemeSettings(vgui::IScheme* pScheme)
 
 	CreateControls();
 	LoadControlSettings( RES_SERVERMENU );
+
+	// Find the options search entry control
+	m_pOptionsSearchEntry = dynamic_cast<TextEntry*>( FindChildByName( "OptionsSearchEntry" ) );
+	if ( m_pOptionsSearchEntry )
+	{
+		m_pOptionsSearchEntry->AddActionSignalTarget( this );
+	}
 
 	FOR_EACH_VEC(m_pPages, i)
 	{
@@ -4291,11 +4456,16 @@ void CTFCreateServerDialog::RefreshMapList()
 void CTFCreateServerDialog::OnTextChanged( vgui::Panel *panel )
 {
 	Warning( "OnTextChanged called, panel=%p, m_pMapSearchEntry=%p\n", panel, m_pMapSearchEntry );
-	// Only refresh if this came from the map search entry
+	// Refresh map list if this came from the map search entry
 	if ( panel == m_pMapSearchEntry )
 	{
 		Warning( "Refreshing map list from search\n" );
 		RefreshMapList();
+	}
+	// Filter options if this came from the options search entry
+	else if ( panel == m_pOptionsSearchEntry )
+	{
+		FilterOptions();
 	}
 }
 
@@ -4306,6 +4476,161 @@ void CTFCreateServerDialog::OnCheckButtonChecked( int state )
 {
 	Warning( "OnCheckButtonChecked called, state=%d, m_pWorkshopFilterCheck=%p\n", state, m_pWorkshopFilterCheck );
 	RefreshMapList();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Filter all options across all tabs based on search text
+//-----------------------------------------------------------------------------
+void CTFCreateServerDialog::FilterOptions()
+{
+	// Get the search filter text
+	char szSearchFilter[256] = { 0 };
+	if ( m_pOptionsSearchEntry )
+	{
+		m_pOptionsSearchEntry->GetText( szSearchFilter, sizeof( szSearchFilter ) );
+		Q_strlower( szSearchFilter );
+	}
+
+	bool bHasFilter = ( szSearchFilter[0] != '\0' );
+
+	// If no filter, show everything in original order
+	if ( !bHasFilter )
+	{
+		mpcontrol_t *pList = m_pList;
+		while ( pList )
+		{
+			pList->SetVisible( true );
+			pList = pList->next;
+		}
+		FOR_EACH_VEC( m_pPages, i )
+		{
+			if ( m_pPages[i] )
+				m_pPages[i]->InvalidateLayout();
+		}
+		return;
+	}
+
+	// Clear all page lists and rebuild with matches first
+	FOR_EACH_VEC( m_pPages, i )
+	{
+		if ( m_pPages[i] )
+			m_pPages[i]->RemoveAll();
+	}
+
+	// First pass: Add matching items to their respective pages
+	mpcontrol_t *pList = m_pList;
+	while ( pList )
+	{
+		// Skip map-related controls as they have their own search
+		if ( pList->pScrObj && 
+			( !Q_stricmp( pList->pScrObj->cvarname, "cl_map" ) ||
+			  !Q_stricmp( pList->pScrObj->cvarname, "cl_map_search" ) ||
+			  !Q_stricmp( pList->pScrObj->cvarname, "cl_map_workshop_only" ) ) )
+		{
+			pList = pList->next;
+			continue;
+		}
+
+		bool bMatches = false;
+
+		if ( pList->pScrObj )
+		{
+			// Search in the prompt text
+			char szLowerPrompt[256];
+			V_strncpy( szLowerPrompt, pList->pScrObj->prompt, sizeof( szLowerPrompt ) );
+			Q_strlower( szLowerPrompt );
+
+			// Search in the cvar name
+			char szLowerCvar[256];
+			V_strncpy( szLowerCvar, pList->pScrObj->cvarname, sizeof( szLowerCvar ) );
+			Q_strlower( szLowerCvar );
+
+			// Search in the tooltip
+			char szLowerTooltip[256] = { 0 };
+			if ( pList->pScrObj->tooltip && pList->pScrObj->tooltip[0] )
+			{
+				V_strncpy( szLowerTooltip, pList->pScrObj->tooltip, sizeof( szLowerTooltip ) );
+				Q_strlower( szLowerTooltip );
+			}
+
+			// Check if search text is found
+			bMatches = ( V_strstr( szLowerPrompt, szSearchFilter ) != NULL ) ||
+					   ( V_strstr( szLowerCvar, szSearchFilter ) != NULL ) ||
+					   ( szLowerTooltip[0] != '\0' && V_strstr( szLowerTooltip, szSearchFilter ) != NULL );
+		}
+
+		if ( bMatches )
+		{
+			pList->SetVisible( true );
+			if ( pList->pScrObj && pList->pScrObj->objParent )
+			{
+				PanelListPanel *pParent = dynamic_cast<PanelListPanel*>( pList->pScrObj->objParent );
+				if ( pParent )
+					pParent->AddItem( NULL, pList );
+			}
+		}
+
+		pList = pList->next;
+	}
+
+	// Second pass: Add non-matching items (hidden)
+	pList = m_pList;
+	while ( pList )
+	{
+		// Skip map-related controls
+		if ( pList->pScrObj && 
+			( !Q_stricmp( pList->pScrObj->cvarname, "cl_map" ) ||
+			  !Q_stricmp( pList->pScrObj->cvarname, "cl_map_search" ) ||
+			  !Q_stricmp( pList->pScrObj->cvarname, "cl_map_workshop_only" ) ) )
+		{
+			pList = pList->next;
+			continue;
+		}
+
+		bool bMatches = false;
+
+		if ( pList->pScrObj )
+		{
+			char szLowerPrompt[256];
+			V_strncpy( szLowerPrompt, pList->pScrObj->prompt, sizeof( szLowerPrompt ) );
+			Q_strlower( szLowerPrompt );
+
+			char szLowerCvar[256];
+			V_strncpy( szLowerCvar, pList->pScrObj->cvarname, sizeof( szLowerCvar ) );
+			Q_strlower( szLowerCvar );
+
+			char szLowerTooltip[256] = { 0 };
+			if ( pList->pScrObj->tooltip && pList->pScrObj->tooltip[0] )
+			{
+				V_strncpy( szLowerTooltip, pList->pScrObj->tooltip, sizeof( szLowerTooltip ) );
+				Q_strlower( szLowerTooltip );
+			}
+
+			bMatches = ( V_strstr( szLowerPrompt, szSearchFilter ) != NULL ) ||
+					   ( V_strstr( szLowerCvar, szSearchFilter ) != NULL ) ||
+					   ( szLowerTooltip[0] != '\0' && V_strstr( szLowerTooltip, szSearchFilter ) != NULL );
+		}
+
+		if ( !bMatches )
+		{
+			pList->SetVisible( false );
+			if ( pList->pScrObj && pList->pScrObj->objParent )
+			{
+				PanelListPanel *pParent = dynamic_cast<PanelListPanel*>( pList->pScrObj->objParent );
+				if ( pParent )
+					pParent->AddItem( NULL, pList );
+			}
+		}
+
+		pList = pList->next;
+	}
+
+	// Invalidate all pages to refresh their layout
+	FOR_EACH_VEC( m_pPages, i )
+	{
+		if ( m_pPages[i] )
+			m_pPages[i]->InvalidateLayout();
+	}
 }
 
 //-----------------------------------------------------------------------------
@@ -4356,6 +4681,19 @@ void CTFCreateServerDialog::OnThink()
 			V_strncpy( m_szLastSearchFilter, szCurrentSearch, sizeof( m_szLastSearchFilter ) );
 			m_bLastWorkshopOnly = bCurrentWorkshopOnly;
 			RefreshMapList();
+		}
+	}
+
+	// Check if options search filter has changed
+	if ( m_pOptionsSearchEntry )
+	{
+		char szCurrentOptionsSearch[256] = { 0 };
+		m_pOptionsSearchEntry->GetText( szCurrentOptionsSearch, sizeof( szCurrentOptionsSearch ) );
+
+		if ( Q_strcmp( szCurrentOptionsSearch, m_szLastOptionsSearchFilter ) != 0 )
+		{
+			V_strncpy( m_szLastOptionsSearchFilter, szCurrentOptionsSearch, sizeof( m_szLastOptionsSearchFilter ) );
+			FilterOptions();
 		}
 	}
 

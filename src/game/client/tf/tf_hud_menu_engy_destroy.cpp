@@ -19,6 +19,7 @@
 
 #include "tf_hud_menu_engy_destroy.h"
 #include "tf_hud_menu_engy_build.h"
+#include "tf_controls.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -336,6 +337,26 @@ void CHudMenuEngyDestroy::OnTick( void )
 			m_pActiveItems[i]->SetVisible( false );
 			m_pInactiveItems[i]->SetVisible( true );
 			m_pUnavailableItems[i]->SetVisible( false );
+		}
+
+		// Update the label text for Speed Pad and Jump Pad
+		if ( iRemappedObjectID == OBJ_SPEEDPAD || iRemappedObjectID == OBJ_JUMPPAD )
+		{
+			const wchar_t *pszLocalizedName = g_pVGuiLocalize->Find( 
+				iRemappedObjectID == OBJ_SPEEDPAD ? "TF_Object_SpeedPad" : "TF_Object_JumpPad" );
+			
+			if ( pszLocalizedName )
+			{
+				// Update all panel variants with the proper name
+				CExLabel *pLabel = dynamic_cast<CExLabel *>( m_pActiveItems[i]->FindChildByName( "ItemNameLabel" ) );
+				if ( pLabel ) pLabel->SetText( pszLocalizedName );
+				
+				pLabel = dynamic_cast<CExLabel *>( m_pInactiveItems[i]->FindChildByName( "ItemNameLabel" ) );
+				if ( pLabel ) pLabel->SetText( pszLocalizedName );
+				
+				pLabel = dynamic_cast<CExLabel *>( m_pUnavailableItems[i]->FindChildByName( "ItemNameLabel" ) );
+				if ( pLabel ) pLabel->SetText( pszLocalizedName );
+			}
 		}
 	}
 }
