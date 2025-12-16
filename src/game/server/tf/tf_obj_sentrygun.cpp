@@ -945,6 +945,10 @@ bool CObjectSentrygun::FindTarget()
 			if ( pTargetPlayer->GetFlags() & FL_NOTARGET )
 				continue;
 
+			//Ignore Spawn protection Uber
+			if ( pTargetPlayer->m_Shared.InCond( TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED ) )
+				continue;
+
 			vecTargetCenter = pTargetPlayer->GetAbsOrigin();
 			vecTargetCenter += pTargetPlayer->GetViewOffset();
 			VectorSubtract( vecTargetCenter, vecSentryOrigin, vecSegment );
