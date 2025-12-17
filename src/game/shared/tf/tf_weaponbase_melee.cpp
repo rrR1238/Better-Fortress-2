@@ -8,6 +8,7 @@
 #include "tf_weaponbase_melee.h"
 #include "effect_dispatch_data.h"
 #include "tf_gamerules.h"
+#include "tf_weapon_medigun.h"
 
 // Server specific.
 #if !defined( CLIENT_DLL )
@@ -679,6 +680,72 @@ bool CTFWeaponBaseMelee::OnSwingHit( trace_t &trace )
 					// Subtract health given from my own
 					CTakeDamageInfo info( pPlayer, pPlayer, this, nHealthGiven, DMG_GENERIC | DMG_PREVENT_PHYSICS_FORCE );
 					pPlayer->TakeDamage( info );
+					CTF_GameStats.Event_PlayerHealedOther(pPlayer, nHealthGiven);
+				}
+			}
+			// Cleanse teammate on hit, removes debuffs
+			int nCleanseAlly = 0;
+			CALL_ATTRIB_HOOK_INT(nCleanseAlly, melee_cleanse_ally);
+			if (nCleanseAlly != 0) {
+				float flUberGet = 0;
+				// Check for conds, could probably be a table.
+				// Excluded debuffs: TF_COND_CANNOT_SWITCH_FROM_MELEE (Mini-Crit minigun is a no)
+				if (pTargetPlayer->m_Shared.InCond(TF_COND_STUNNED) || pTargetPlayer->m_Shared.InCond(TF_COND_BURNING) || pTargetPlayer->m_Shared.InCond(TF_COND_URINE) || pTargetPlayer->m_Shared.InCond(TF_COND_MAD_MILK) ||
+					pTargetPlayer->m_Shared.InCond(TF_COND_MARKEDFORDEATH) || pTargetPlayer->m_Shared.InCond(TF_COND_MARKEDFORDEATH_SILENT) || pTargetPlayer->m_Shared.InCond(TF_COND_SAPPED) || pTargetPlayer->m_Shared.InCond(TF_COND_PLAGUE) ||
+					pTargetPlayer->m_Shared.InCond( TF_COND_HEALING_DEBUFF) || pTargetPlayer->m_Shared.InCond(TF_COND_GAS) || pTargetPlayer->m_Shared.InCond(TF_COND_BURNING_PYRO)) {
+
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_STUNNED ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_STUNNED );
+						flUberGet += 0.1;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_BURNING ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_BURNING );
+						flUberGet += 0.1;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_URINE ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_URINE );
+						flUberGet += 0.15;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_MAD_MILK ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_MAD_MILK );
+						flUberGet += 0.15;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_MARKEDFORDEATH ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_MARKEDFORDEATH );
+						flUberGet += 0.20;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_MARKEDFORDEATH_SILENT ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_MARKEDFORDEATH_SILENT );
+						flUberGet += 0.01;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_SAPPED ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_SAPPED );
+						flUberGet += 0.20;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_PLAGUE ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_PLAGUE );
+						flUberGet += 0.1;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_HEALING_DEBUFF ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_HEALING_DEBUFF );
+						flUberGet += 0.05;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_GAS ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_GAS );
+						flUberGet += 0.15;
+					}
+					if ( pTargetPlayer->m_Shared.InCond( TF_COND_BURNING_PYRO ) ) {
+						pTargetPlayer->m_Shared.RemoveCond( TF_COND_BURNING_PYRO );
+						flUberGet += 0.05;
+					}
+
+					CWeaponMedigun* pMedigun = (CWeaponMedigun*)pPlayer->Weapon_OwnsThisID(TF_WEAPON_MEDIGUN);
+					if ( pMedigun )
+					{
+						pMedigun->AddCharge( flUberGet );
+					}
+					// Reset for next swing
+					flUberGet = 0;
 				}
 			}
 		}

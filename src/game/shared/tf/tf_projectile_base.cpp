@@ -88,6 +88,7 @@ void CTFBaseProjectile::Precache( void )
 #ifdef GAME_DLL
 	PrecacheModel( GetProjectileModelName() );
 #endif
+	PrecacheScriptSound( "DisciplineDevice.PowerUp" );
 	BaseClass::Precache();
 }
 
@@ -454,6 +455,18 @@ void CTFBaseProjectile::ProjectileTouch( CBaseEntity *pOther )
 			if ( pTFVictim && pTFOwner && pTFVictim->GetTeamNumber() != pTFOwner->GetTeamNumber() )
 			{
 				pTFVictim->m_Shared.AddCond( TF_COND_MAD_MILK, 1.f, pTFOwner );
+			}
+		}
+		int iSpeedBuffOnHit = 0;
+		CALL_ATTRIB_HOOK_INT_ON_OTHER( GetOwnerEntity(), iSpeedBuffOnHit, speed_buff_ally );
+		if ( iSpeedBuffOnHit )
+		{
+			CTFPlayer *pTFVictim = ToTFPlayer( pOther );
+			CTFPlayer *pTFOwner = ToTFPlayer( GetOwnerEntity() );
+			if ( pTFVictim && pTFOwner && pTFVictim->GetTeamNumber() == pTFOwner->GetTeamNumber() )
+			{
+				pTFVictim->m_Shared.AddCond( TF_COND_SPEED_BOOST, 1.f, pTFOwner );
+				pTFVictim->EmitSound( "DisciplineDevice.PowerUp" );
 			}
 		}
 	}

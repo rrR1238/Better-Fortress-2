@@ -26,6 +26,7 @@ enum medigun_weapontypes_t
 	MEDIGUN_UBER,
 	MEDIGUN_QUICKFIX,
 	MEDIGUN_RESIST,
+	MEDIGUN_MEAN
 };
 
 enum medigun_resist_types_t

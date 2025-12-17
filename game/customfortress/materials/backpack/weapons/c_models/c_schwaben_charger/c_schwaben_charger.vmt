@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	"$baseTexture" "backpack/weapons/c_models/c_schwaben_charger/c_schwaben_charger"
+	$translucent 1
+	$vertexcolor 1
+}
