@@ -147,4 +147,53 @@
 			"text"		"#Voice_Menu_Help"
 		}	
 	}
+	//--------------------------------------------------------------
+	"TF_KILL_MENU"
+	{
+		"Center"
+		{
+			"command"	"tf_kill 9"
+			"text"		"Turn to Gold"
+		}
+		"North"
+		{
+			"command"	"tf_kill 3"
+			"text"		"Incinerate"
+		}
+		"NorthEast"
+		{
+			"command"	"tf_kill 2"
+			"text"		"Freeze"
+		}	
+		"East"
+		{
+			"command"	"tf_kill 1"
+			"text"		"Burn"
+		}	
+		"SouthEast"
+		{
+			"command"	"tf_kill 4"
+			"text"		"Disintegrate"
+		}	
+		"South"
+		{
+			"command"	"tf_kill 5"
+			"text"		"Disintegrate and Gib"
+		}
+		"SouthWest"
+		{
+			"command"	"tf_kill 6"
+			"text"		"Mistify"
+		}
+		"West"
+		{
+			"command"	"tf_kill 8"
+			"text"		"Cloak"
+		}
+		"NorthWest"
+		{
+			"command"	"tf_kill 7"
+			"text"		"Decapitate"	
+		}	
+	}
 }
