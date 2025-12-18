@@ -2863,9 +2863,9 @@
 					"attribute_class"  "is_community_contributed_item"
 					"value"							"[U:1:12215355]"
 				}
-                "single wep deploy time decreased"
+                "switch from wep deploy time decreased"
                 {
-                    "attribute_class"    "mult_single_wep_deploy_time"
+                    "attribute_class"    "mult_switch_from_wep_deploy_time"
                     "value" "0.6"
                 }
                 "airblast pushback downscale"
@@ -2892,6 +2892,11 @@
                 {
                     "attribute_class"  "afterburner_negative_text"
                     "value"                            "1"
+                }
+				"mult airblast refire time"
+                {
+                    "attribute_class"  "mult_airblast_refire_time"
+                    "value"                            "1.4"
                 }
                 "weapon burn dmg increased"
                 {
@@ -2968,6 +2973,11 @@
 			"image_inventory"		"backpack/weapons/custommade/c_pilotflaregun"
 			"attributes"
 			{
+				"minicrit vs burning player"
+				{
+					"attribute_class"	"or_minicrit_vs_playercond_burning"
+					"value"	"1"
+				}
 				"dmg bonus vs buildings"
 				{
 					"attribute_class"  "mult_dmg_vs_buildings"
@@ -2987,6 +2997,11 @@
 				{
 					"attribute_class"  "mod_projectile_heat_seek_power"
 					"value"								"15"
+				}
+				"maxammo secondary reduced"
+				{
+					"attribute_class"	"mult_maxammo_secondary"
+					"value" "0.75"
 				}
 				"custom projectile model"
 				{
@@ -3208,10 +3223,10 @@
 			"item_slot"								"melee"
 			"item_logname"							"cardiacarrest"
 			"item_iconname"							"cardiacarrest"
-			"image_inventory"						"backpack/weapons/c_models/c_ubersaw/c_ubersaw"
+			"image_inventory"						"backpack/weapons/c_items/medpack/c_defib"
 			"image_inventory_size_w"				"128"
 			"image_inventory_size_h"				"82"
-			"moditem" 								"0"
+			"moditem" 								"1"
 			"model_player"							"models/weapons/c_items/med_pack/c_defib.mdl"
 			"attach_to_hands"						"1"
 			"inspect_panel_dist"					"42"
@@ -3252,12 +3267,12 @@
 				"melee range multiplier"
 				{
 					"attribute_class"	"melee_range_multiplier"
-					"value"	"1.7"
+					"value"	"1.5"
 				}
 				"melee bounds multiplier"
 				{
 					"attribute_class"	"melee_bounds_multiplier"
-					"value"	"1.55"
+					"value"	"1.35"
 				}
 				"damage penalty"
 				{
@@ -3403,12 +3418,12 @@
 				"damage bonus"
 				{
 					"attribute_class"	"mult_dmg"
-					"value"	"1.5"
+					"value"	"1.4"
 				}
 				"fire rate penalty"
 				{
 					"attribute_class"	"mult_postfiredelay"
-					"value"	"1.75"
+					"value"	"1.6"
 				}
 				"clip size penalty"
 				{
@@ -3554,12 +3569,12 @@
 				"melee range multiplier"
 				{
 					"attribute_class"	"melee_range_multiplier"
-					"value"	"1.25"
+					"value"	"1.5"
 				}
 				"melee bounds multiplier"
 				{
 					"attribute_class"	"melee_bounds_multiplier"
-					"value"	"1.1"
+					"value"	"1.35"
 				}
 				"single wep deploy time decreased"
 				{
