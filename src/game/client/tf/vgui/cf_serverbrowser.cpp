@@ -18,7 +18,7 @@
 #include <vgui_controls/ComboBox.h>
 #include <vgui_controls/ToggleButton.h>
 #include "ienginevgui.h"
-#include "engine/ienginesound.h"
+#include "engine/IEngineSound.h"
 #include "steam/steam_api.h"
 #include "filesystem.h"
 #include "tier3/tier3.h"
