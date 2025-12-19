@@ -166,10 +166,8 @@ bool CTFWeaponScripted::Holster( CBaseCombatWeapon *pSwitchingTo )
 		if( !pFunctionReturn.IsNull() && pFunctionReturn )
 			return pFunctionReturn;
 	}
-#else
-	return BaseClass::Holster( pSwitchingTo );
 #endif
-	BaseClass::Holster( pSwitchingTo );
+	return BaseClass::Holster( pSwitchingTo );
 }
 
 int CTFWeaponScripted::GetWeaponProjectileType( void )
