@@ -28,7 +28,6 @@
 #include "tf_matchmaking_dashboard_side_panel.h"
 #include "tf_matchmaking_dashboard_explanations.h"
 #include "tf_matchmaking_dashboard_mvm_criteria.h"
-#include "vgui/cf_serverbrowser.h"
 
 using namespace vgui;
 using namespace GCSDK;
