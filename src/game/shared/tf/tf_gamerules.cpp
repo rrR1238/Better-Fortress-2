@@ -19,6 +19,7 @@
 #include "tf_logic_player_destruction.h"
 #include "tf_matchmaking_shared.h"
 #include "tf_progression_description.h"
+#include "tf_steam_branch.h"
 
 #ifdef CLIENT_DLL
 	#include <game/client/iviewport.h>
@@ -18878,6 +18879,20 @@ void CTFGameRules::GetTaggedConVarList( KeyValues *pCvarTagList )
 
 		pCvarTagList->AddSubKey( pKV );
 	}
+
+#ifdef GAME_DLL
+	// Add Steam branch tag to server tags
+	// This allows filtering servers by their Steam branch (e.g., "beta" vs "public")
+	const char *pszBranch = GetSteamBranchName();
+	if ( pszBranch && pszBranch[0] )
+	{
+		KeyValues *pKVBranch = new KeyValues( "branch_tag" );
+		pKVBranch->SetString( "tag", CFmtStr( "branch_%s", pszBranch ).Access() );
+		pCvarTagList->AddSubKey( pKVBranch );
+		
+		DevMsg( "Server tagged with branch: branch_%s\n", pszBranch );
+	}
+#endif
 }
 
 //-----------------------------------------------------------------------------

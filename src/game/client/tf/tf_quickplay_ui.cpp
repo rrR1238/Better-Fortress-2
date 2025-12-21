@@ -12,6 +12,7 @@
 #include "econ_game_account_server.h"
 #include "gc_clientsystem.h"
 #include "tf_quickplay.h"
+#include "tf_steam_branch.h"
 
 // ui related
 #include "filesystem.h"
@@ -842,6 +843,13 @@ public:
 		AddFilter( vecServerFilters, "ngametype", GetCommaDelimited( m_vecStrRejectTags ) );
 		AddFilter( vecServerFilters, "gametype", GetCommaDelimited( m_vecStrRequiredTags ) );
 		AddFilter( vecServerFilters, "steamblocking", "1" );
+
+		// Add Steam branch filter - only show servers running on the same branch
+		const char *pszBranch = GetSteamBranchName();
+		if ( pszBranch && pszBranch[0] )
+		{
+			AddFilter( vecServerFilters, "gametagsand", CFmtStr( "branch_%s", pszBranch ).Access() );
+		}
 
 		if ( m_options.m_eServers == QuickplaySearchOptions::eServersOfficial )
 		{
