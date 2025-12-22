@@ -99,7 +99,22 @@
 			"min_ilevel"	"1"
 			"max_ilevel"	"1"
 			"item_slot"	"skin"
-			"equip_region"	"zombie_body"
+			"equip_regions"
+			{
+				"pants"				"1"
+				"shirt"				"1"			
+				"medal"				"1"	
+				"necklace"			"1"
+				"grenades"			"1"
+				"arm_tattoos"		"1"
+				"flair"				"1"		
+				"ears"				"1"
+				"left_shoulder"		"1"			
+				"belt_misc"	        "1"	
+				"zombie_body"		"1"
+				"sleeves"			"1"
+				"right_shoulder"	"1"
+			}
 			"attributes"
 			{
 				"robotrobotrobotrobot"
