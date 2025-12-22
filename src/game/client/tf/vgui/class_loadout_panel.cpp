@@ -8,6 +8,7 @@
 #include "cbase.h"
 #include "class_loadout_panel.h"
 #include "c_tf_player.h"
+#include "tf_weaponbase.h"
 #include "vgui_controls/CheckButton.h"
 #include "econ_gcmessages.h"
 #include "gc_clientsystem.h"
@@ -277,6 +278,22 @@ void CLoadoutItemOptionsPanel::OnMessage( const KeyValues* pParams, vgui::VPANEL
 	if ( FStrEq( pParams->GetName(), "SliderDragEnd" ) )
 	{
 		m_pHatParticleSlider->ApplyChanges();
+	}
+	else if ( FStrEq( pParams->GetName(), "SelectionReturned" ) )
+	{
+		// Style was changed, force update of equipped items
+		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
+		if ( pLocalPlayer )
+		{
+			pLocalPlayer->UpdateWearables();
+			
+			// Also force update the active weapon
+			CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase*>( pLocalPlayer->GetActiveWeapon() );
+			if ( pWeapon )
+			{
+				pWeapon->UpdateVisibility();
+			}
+		}
 	}
 
 	BaseClass::OnMessage( pParams, hFromPanel );

@@ -872,6 +872,9 @@ void CTFWearable::OnDataChanged( DataUpdateType_t updateType )
 
 		m_nWorldModelIndex = m_nModelIndex;
 	}
+
+	// Update skin to support style changes
+	m_nSkin = GetSkin();
 }
 
 //-----------------------------------------------------------------------------

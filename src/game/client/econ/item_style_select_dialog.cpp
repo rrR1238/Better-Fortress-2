@@ -15,6 +15,9 @@
 #include "backpack_panel.h"
 #include "econ_ui.h"
 #include "gc_clientsystem.h"
+#include "c_tf_player.h"
+#include "tf_item_inventory.h"
+#include "tf_weaponbase.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include <tier0/memdbgon.h>
@@ -180,20 +183,62 @@ void CStyleSelectDialog::OnComboBoxApplication()
 	if ( pItem )
 	{
 		const char* pszStyleName = pItem->GetStaticData()->GetStyleInfo( iNewStyle )->GetName();
+		itemid_t ulItemID = pItem->GetItemID();
 
-		// Tell the GC to update the style.
+		// Apply the style to ALL instances of this item in the loadout (all classes/slots)
+		// We need to set it on the actual CEconItem object so it persists
+		for ( int iClass = TF_FIRST_NORMAL_CLASS; iClass < TF_LAST_NORMAL_CLASS; iClass++ )
+		{
+			for ( int iSlot = 0; iSlot < CLASS_LOADOUT_POSITION_COUNT; iSlot++ )
+			{
+				CEconItemView *pLoadoutItem = TFInventoryManager()->GetItemInLoadoutForClass( iClass, iSlot );
+				if ( pLoadoutItem && pLoadoutItem->GetItemID() == ulItemID )
+				{
+					// Set style override for immediate visual update
+					pLoadoutItem->SetItemStyleOverride( iNewStyle );
+					
+					// Also set it on the backing CEconItem so it persists
+					CEconItem *pSOCData = pLoadoutItem->GetSOCData();
+					if ( pSOCData )
+					{
+						pSOCData->SetStyle( iNewStyle );
+					}
+				}
+			}
+		}
+
+		// Tell the GC to update the style (for backend persistence if available).
 		GCSDK::CGCMsg< MsgGCSetItemStyle_t > msg( k_EMsgGCSetItemStyle );
-		msg.Body().m_unItemID = pItem->GetItemID();
+		msg.Body().m_unItemID = ulItemID;
 		msg.Body().m_iStyle = iNewStyle;
 		GCClientSystem()->BSendMessage( msg );
 
 		EconUI()->Gamestats_ItemTransaction( IE_ITEM_CHANGED_STYLE, pItem, pszStyleName /* stored unlocalized here intentionally */, iNewStyle );
 
+		// Force update of equipped items on the local player
+		C_TFPlayer *pLocalPlayer = C_TFPlayer::GetLocalTFPlayer();
+		if ( pLocalPlayer )
+		{
+			pLocalPlayer->UpdateWearables();
+			
+			// Force weapon update - iterate all weapons to catch viewmodels
+			for ( int i = 0; i < MAX_WEAPONS; i++ )
+			{
+				CTFWeaponBase *pWeapon = dynamic_cast<CTFWeaponBase*>( pLocalPlayer->GetWeapon( i ) );
+				if ( pWeapon )
+				{
+					// Trigger OnDataChanged to update skins
+					pWeapon->m_nSkin = pWeapon->GetSkin();
+					pWeapon->UpdateVisibility();
+				}
+			}
+		}
+
 		// Tell our parent about the change
 		if ( pItem && pItem->IsValid() )
 		{
 			KeyValues *pKey = new KeyValues( "SelectionReturned" );
-			pKey->SetUint64( "itemindex", pItem->GetItemID() );
+			pKey->SetUint64( "itemindex", ulItemID );
 			PostMessage( GetParent(), pKey );
 		}
 	}
