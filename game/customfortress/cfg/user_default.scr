@@ -803,6 +803,14 @@ DESCRIPTION INFO_OPTIONS
 		{ "0" }
 	}
 
+	"cf_disable_holiday_themes"
+	{
+		"#CF_DisableHolidayThemes"
+		"#Tooltip_DisableHolidayThemes"
+		{ BOOL }
+		{ "0" }
+	}
+
 	"category8"
 	{
 		"#TF_OptionCategory_DemoSupport"

@@ -172,7 +172,7 @@
 		"tall"			"f0"
 		"visible"		"0"
 		"enabled"		"1"
-		"image"			""
+		"image"			"../console/background_upward_widescreen"
 		"scaleImage"	"1"
 		"proportionaltoparent"	"1"
 

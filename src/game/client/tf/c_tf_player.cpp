@@ -225,10 +225,12 @@ ConVar tf_romevision_skip_prompt( "tf_romevision_skip_prompt", "0", FCVAR_ARCHIV
 void cf_disable_cosmetics_changed( IConVar *var, const char *pOldValue, float flOldValue );
 void cf_disable_unusual_effects_changed( IConVar *var, const char *pOldValue, float flOldValue );
 void cf_disable_weapon_skins_changed( IConVar *var, const char *pOldValue, float flOldValue );
+void cf_disable_holiday_themes_changed( IConVar *var, const char *pOldValue, float flOldValue );
 
 ConVar cf_disable_cosmetics( "cf_disable_cosmetics", "0", FCVAR_ARCHIVE, "When set to 1, all cosmetic items (hats, misc items) will be hidden.", cf_disable_cosmetics_changed );
 ConVar cf_disable_unusual_effects( "cf_disable_unusual_effects", "0", FCVAR_ARCHIVE, "When set to 1, all unusual particle effects will be hidden.", cf_disable_unusual_effects_changed );
 ConVar cf_disable_weapon_skins( "cf_disable_weapon_skins", "0", FCVAR_ARCHIVE, "When set to 1, all weapon skins and warpaints will be disabled, showing default weapon textures.", cf_disable_weapon_skins_changed );
+ConVar cf_disable_holiday_themes( "cf_disable_holiday_themes", "0", FCVAR_ARCHIVE, "When set to 1, holiday-themed main menu backgrounds will be disabled.", cf_disable_holiday_themes_changed );
 
 //-----------------------------------------------------------------------------
 // Purpose: Callback functions to immediately update wearable visibility
@@ -312,6 +314,12 @@ void cf_disable_weapon_skins_changed( IConVar *var, const char *pOldValue, float
 			}
 		}
 	}
+}
+
+void cf_disable_holiday_themes_changed( IConVar *var, const char *pOldValue, float flOldValue )
+{
+	// Reload the HUD scheme to update the main menu background
+	engine->ClientCmd_Unrestricted( "hud_reloadscheme" );
 }
 
 #define BDAY_HAT_MODEL		"models/effects/bday_hat.mdl"

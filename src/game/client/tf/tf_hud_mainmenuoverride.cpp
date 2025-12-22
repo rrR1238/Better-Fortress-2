@@ -82,6 +82,7 @@ void AddSubKeyNamed( KeyValues *pKeys, const char *pszName );
 
 extern const char *g_sImagesBlue[];
 extern int EconWear_ToIntCategory( float flWear );
+extern ConVar cf_disable_holiday_themes;
 
 void cc_tf_safemode_toggle( IConVar *pConVar, const char *pOldString, float flOldValue )
 {
@@ -559,6 +560,11 @@ void CHudMainMenuOverride::ApplySchemeSettings( IScheme *scheme )
 	KeyValues *pConditions = NULL;
 	const char *pszHoliday = UTIL_GetActiveHolidayString();
 
+	// Check if holiday themes are disabled
+	if ( cf_disable_holiday_themes.GetBool() )
+	{
+		pszHoliday = NULL; // Force no holiday theme
+	}
 
 	if ( pszHoliday && pszHoliday[0] )
 	{
@@ -871,7 +877,15 @@ void CHudMainMenuOverride::LoadCharacterImageFile( void )
 			}
 			else if ( eHoliday != kHoliday_None )
 			{
-				iWeight = UTIL_IsHolidayActive( eHoliday ) ? MAX( iWeight, 6 ) : 0;
+				// Check if holiday themes are disabled
+				if ( cf_disable_holiday_themes.GetBool() )
+				{
+					iWeight = 0; // Disable holiday character images
+				}
+				else
+				{
+					iWeight = UTIL_IsHolidayActive( eHoliday ) ? MAX( iWeight, 6 ) : 0;
+				}
 			}
 			else if ( bActiveOperation && !bIsOperationCharacter )
 			{
@@ -880,7 +894,8 @@ void CHudMainMenuOverride::LoadCharacterImageFile( void )
 			else
 			{
 				// special cases for summer, halloween, fullmoon, and christmas...turn off anything not covered above
-				if ( UTIL_IsHolidayActive( kHoliday_Summer ) || UTIL_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) || UTIL_IsHolidayActive( kHoliday_Christmas ) )
+				// Unless the user has disabled holiday themes
+				if ( !cf_disable_holiday_themes.GetBool() && ( UTIL_IsHolidayActive( kHoliday_Summer ) || UTIL_IsHolidayActive( kHoliday_HalloweenOrFullMoon ) || UTIL_IsHolidayActive( kHoliday_Christmas ) ) )
 				{
 					iWeight = 0;
 				}
