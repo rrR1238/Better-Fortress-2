@@ -22,6 +22,7 @@
 IMPLEMENT_NETWORKCLASS_ALIASED( TFWeaponScripted, DT_WeaponScripted )
 
 BEGIN_NETWORK_TABLE( CTFWeaponScripted, DT_WeaponScripted )
+//RecvPropInt( RECVINFO( m_iWeaponFlags ) ),
 END_NETWORK_TABLE()
 
 BEGIN_PREDICTION_DATA( CTFWeaponScripted )
@@ -33,6 +34,7 @@ PRECACHE_WEAPON_REGISTER( tf_weapon_scripted );
 // Server specific.
 #ifndef CLIENT_DLL
 BEGIN_DATADESC(CTFWeaponScripted)
+DEFINE_KEYFIELD( m_iWeaponFlags, FIELD_INTEGER, "WeaponFlags" ),
 END_DATADESC()
 #endif
 

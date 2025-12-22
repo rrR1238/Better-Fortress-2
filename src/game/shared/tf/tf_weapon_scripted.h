@@ -77,12 +77,13 @@ public:
 	virtual int GetWeaponProjectileType( void );
 	// virtual CBaseEntity *FireProjectile( CTFPlayer *pPlayer );
 	virtual int		GetWeaponID( void ) const			{ return TF_WEAPON_SCRIPTED; }
+	virtual int		GetWeaponFlags( void ) { return m_iWeaponFlags; }
 
 	//virtual void RemoveProjectileAmmo( CTFPlayer *pPlayer );
 	//virtual bool HasPrimaryAmmo( void );
 
 private:
-
+	CNetworkVar( int, m_iWeaponFlags );
 	CTFWeaponScripted( const CTFWeaponScripted & ) {}
 };
 

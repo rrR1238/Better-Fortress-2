@@ -118,6 +118,7 @@
 #include "tf_player_resource.h"
 #include "gcsdk/gcclient_sharedobjectcache.h"
 #include "tf_party.h"
+#include "tf_weapon_scripted.h"
 
 #ifdef TF_RAID_MODE
 #include "bot_npc/bot_npc_decoy.h"
@@ -11197,6 +11198,10 @@ int CTFPlayer::OnTakeDamage( const CTakeDamageInfo &inputInfo )
 			HandleRageGain( pTFAttacker, kRageBuffFlag_OnBurnDamageDealt, info.GetDamage() * flRageScale, flInverseRageGainScale );
 		}
 	}
+
+	CTFWeaponScripted *pScriptedWeapon = dynamic_cast<CTFWeaponScripted*>(info.GetWeapon());
+	
+	// TODO: IMPLEMENT if(pScriptedWeapon && pScriptedWeapon->GetWeaponFlags() & SCRIPTED_WEAPON_HAS_DEATH_NOTICE)
 
 	// Check for weapons that show hits in killfeed (Fish, Slap, or custom weapons with attribute)
 	int iShowHitsInKillfeed = 0;

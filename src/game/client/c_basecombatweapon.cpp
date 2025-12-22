@@ -165,6 +165,7 @@ void C_BaseCombatWeapon::OnDataChanged( DataUpdateType_t updateType )
 
 	if ( updateType == DATA_UPDATE_CREATED )
 	{
+		Precache(); //cache weapon on client again, otherwise the client will always use default script name while server not
 		UpdateVisibility();
 	}
 

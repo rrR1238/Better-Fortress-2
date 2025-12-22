@@ -240,6 +240,8 @@ CBaseEntity* CBaseCombatWeapon::Respawn( void )
 
 	if ( pNewWeapon )
 	{
+		pNewWeapon->Precache(); // precache it here to avoid prediction errors
+		pNewWeapon->SetModel(GetWorldModel()); // fix bbox for world model
 		pNewWeapon->AddEffects( EF_NODRAW );// invisible for now
 		pNewWeapon->SetTouch( NULL );// no touch
 		pNewWeapon->SetThink( &CBaseCombatWeapon::AttemptToMaterialize );
