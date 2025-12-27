@@ -54,7 +54,7 @@ ConVar tf_raid_sentry_density( "tf_raid_sentry_density", "0.0000005", 0/*FCVAR_C
 ConVar tf_raid_sentry_spacing( "tf_raid_sentry_spacing", "750", 0/*FCVAR_CHEAT*/, "Minimum travel distance between sentry gun spots" );
 ConVar tf_raid_debug_sentry_placement( "tf_raid_debug_sentry_placement", "0"/*, FCVAR_CHEAT*/ );
 ConVar tf_raid_spawn_sentries( "tf_raid_spawn_sentries", "1"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_engineers( "tf_raid_spawn_engineers", "0"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_engineers( "tf_raid_spawn_engineers", "1"/*, FCVAR_CHEAT*/ );
 ConVar tf_raid_engineer_spawn_interval( "tf_raid_engineer_spawn_interval", "20"/*, FCVAR_CHEAT*/ );
 
 ConVar tf_raid_mob_spawn_min_interval( "tf_raid_mob_spawn_min_interval", "60"/*, FCVAR_CHEAT*/ );
@@ -74,7 +74,7 @@ ConVar tf_raid_capture_mob_interval( "tf_raid_capture_mob_interval", "20"/*, FCV
 
 ConVar tf_raid_special_spawn_min_interval( "tf_raid_special_spawn_min_interval", "20"/*, FCVAR_CHEAT*/ );
 ConVar tf_raid_special_spawn_max_interval( "tf_raid_special_spawn_max_interval", "30"/*, FCVAR_CHEAT*/ );
-ConVar tf_raid_spawn_specials( "tf_raid_spawn_specials", "0"/*, FCVAR_CHEAT*/ );
+ConVar tf_raid_spawn_specials( "tf_raid_spawn_specials", "1"/*, FCVAR_CHEAT*/ );
 
 ConVar tf_raid_sniper_spawn_ahead_incursion( "tf_raid_sniper_spawn_ahead_incursion", "6000"/*, FCVAR_CHEAT*/ );
 ConVar tf_raid_sniper_spawn_behind_incursion( "tf_raid_sniper_spawn_behind_incursion", "6000"/*, FCVAR_CHEAT*/ );
@@ -93,6 +93,8 @@ ConVar tf_raid_spawn_enable( "tf_raid_spawn_enable", "1"/*, FCVAR_CHEAT*/ );
 
 extern ConVar tf_populator_active_buffer_range;
 
+//Initial Proto
+extern void CreateBotName( int iTeam, int iClassIndex, CTFBot::DifficultyType skill, char* pBuffer, int iBufferSize );
 
 extern bool IsSpaceToSpawnHere( const Vector &where );
 
@@ -230,7 +232,33 @@ void CRaidLogic::Reset( void )
 }
 
 
-#if 0
+#if 1
+//--------------------------------------------------------------------------------------------------------
+#define IS_MOB_RUSHER true
+CTFBot *SpawnRedTFBot( int iClassIndex, const Vector &spot, bool bRusher = false)
+{
+	//No Slots available
+	if ( GetAvailableRedSpawnSlots() <= 0 )
+		return nullptr;
+
+	CTFBot* bot = NextBotCreatePlayerBot< CTFBot >("Bot");
+
+
+	if ( !bot )
+		return nullptr;
+
+	bot->SetAttribute(CTFBot::REMOVE_ON_DEATH);
+	if (bRusher)
+	{
+		bot->SetAttribute(CTFBot::AGGRESSIVE);
+	}
+	bot->ChangeTeam(TF_TEAM_RED, false, true);
+	bot->SetDifficulty(CTFBot::NORMAL);
+	bot->HandleCommand_JoinClass(g_aRawPlayerClassNames[iClassIndex]);
+	bot->SetPosition(spot);
+
+	return bot;
+}
 //--------------------------------------------------------------------------------------------------------
 bool SpawnWanderer( const Vector &spot )
 {
@@ -239,7 +267,7 @@ bool SpawnWanderer( const Vector &spot )
 
 	return SpawnRedTFBot( TF_CLASS_SCOUT, spot ) ? true : false;
 
-/*
+	/*
 	CBaseCombatCharacter *minion = static_cast< CBaseCombatCharacter * >( CreateEntityByName( "bot_npc_minion" ) );
 	if ( minion )
 	{
@@ -250,11 +278,33 @@ bool SpawnWanderer( const Vector &spot )
 
 		return true;
 	}
-
 	return false;
-*/
+	*/
+
 }
 #endif // 0
+
+
+bool SpawnSentry( const Vector &spot )
+{
+
+	CObjectSentrygun *sentry = (CObjectSentrygun *)CreateEntityByName( "obj_sentrygun" );
+	if ( sentry )
+	{
+
+		sentry->SetAbsOrigin( spot );
+		sentry->Spawn();
+		sentry->ChangeTeam( TF_TEAM_RED );
+
+		sentry->StartPlacement( NULL );
+		sentry->StartBuilding( NULL );
+
+		return true;
+	}
+
+	return false;
+
+}
 
 
 //-------------------------------------------------------------------------
@@ -265,12 +315,20 @@ void CRaidLogic::OnRoundStart( void )
 
 	Reset();
 
-	// unspawn entire red team
-	CTeam *defendingTeam = GetGlobalTeam( TF_TEAM_RED );
+	//Until i figure out how to resolve the kick issue, use this.
+	bool bTemp_KickFix = true;
 	int i;
-	for( i=0; i<defendingTeam->GetNumPlayers(); ++i )
-	{
-		engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", defendingTeam->GetPlayer(i)->GetUserID() ) );
+
+	// unspawn entire red team
+
+	if ( !bTemp_KickFix ) 
+	{ 
+		CTeam *defendingTeam = GetGlobalTeam( TF_TEAM_RED );
+		
+		for( i=0; i<defendingTeam->GetNumPlayers(); ++i )
+		{
+			engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", defendingTeam->GetPlayer(i)->GetUserID() ) );
+		}
 	}
 
 	// remove all minions
@@ -281,13 +339,16 @@ void CRaidLogic::OnRoundStart( void )
 	}
 
 	// kick last round's NPCs
-	CTeam *raidingTeam = GetGlobalTeam( TF_TEAM_BLUE );
-	for( i=0; i<raidingTeam->GetNumPlayers(); ++i )
+	if ( !bTemp_KickFix )
 	{
-		CTFBot *bot = ToTFBot( raidingTeam->GetPlayer(i) );
-		if ( bot && bot->HasAttribute( CTFBot::IS_NPC ) )
+		CTeam* raidingTeam = GetGlobalTeam(TF_TEAM_BLUE);
+		for ( i = 0; i < raidingTeam->GetNumPlayers(); ++i)
 		{
-			engine->ServerCommand( UTIL_VarArgs( "kickid %d\n", raidingTeam->GetPlayer(i)->GetUserID() ) );
+			CTFBot* bot = ToTFBot(raidingTeam->GetPlayer(i));
+			if (bot && bot->HasAttribute(CTFBot::IS_NPC))
+			{
+				engine->ServerCommand(UTIL_VarArgs("kickid %d\n", raidingTeam->GetPlayer(i)->GetUserID()));
+			}
 		}
 	}
 
@@ -334,7 +395,7 @@ void CRaidLogic::OnRoundStart( void )
 		area->SetWanderCount( 0 );
 	}
 
-#if 0
+#if 1
 	//----------------------------------------------
 	// fill the world with wandering defenders
 	int totalPopulation = (int)( tf_raid_wandering_density.GetFloat() * totalSpace + 0.5f );
@@ -345,7 +406,7 @@ void CRaidLogic::OnRoundStart( void )
 	for( int i=0; i<minionAreaVector.Count(); ++i )
 	{
 		static_cast< CTFNavArea * >( minionAreaVector[i] )->AddToWanderCount( 1 );
-//		SpawnWanderer( minionAreaVector[i]->GetRandomPoint() );
+		SpawnWanderer( minionAreaVector[i]->GetRandomPoint() );
 	}
 
 	DevMsg( "RAID: Total minion population = %d\n", minionAreaVector.Count() );
@@ -467,7 +528,7 @@ int CompareIncursionDistances( CTFNavArea * const *area1, CTFNavArea * const *ar
 }
 
 
-#if 0
+#if 1
 //--------------------------------------------------------------------------------------------------------
 class CPopulator : public ISearchSurroundingAreasFunctor
 {
@@ -735,7 +796,7 @@ CTFNavArea *CRaidLogic::FindSpawnAreaBehind( void )
 }
 
 
-#if 0
+#if 1
 //--------------------------------------------------------------------------------------------------------
 bool CRaidLogic::SpawnSquad( CTFNavArea *spawnArea )
 {
@@ -824,7 +885,7 @@ void CRaidLogic::StartMobTimer( float duration )
 }
 
 
-#if 0
+#if 1
 //--------------------------------------------------------------------------------------------------------
 CTFNavArea *CRaidLogic::SelectMobSpawn( CUtlVector< CTFNavArea * > *spawnAreaVector, RelativePositionType where )
 {
@@ -1091,7 +1152,7 @@ CTFNavArea *CRaidLogic::SelectRaidSentryArea( void ) const
 }
 
 
-#if 0
+#if 1
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::SpawnEngineers( void )
 {
@@ -1234,7 +1295,7 @@ void CRaidLogic::SpawnSpecials( CUtlVector< CTFNavArea * > *spawnAheadVector, CU
 //--------------------------------------------------------------------------------------------------------
 void CRaidLogic::CullObsoleteEnemies( float minIncursion, float maxIncursion )
 {
-return;
+	//return;
 
 	// cull wanderers outside of the active area set - use slightly larger range to avoid thrashing
 	CTeam *defenseTeam = GetGlobalTeam( TF_TEAM_RED );
@@ -1742,7 +1803,7 @@ void CRaidLogic::Update( void )
 	if ( tf_raid_spawn_enable.GetBool() == false )
 		return;
 
-#if 0
+#if 1
 	// populate wanderers
 	CPopulator populator( maxIncursion, tf_raid_max_wanderers.GetInt() - m_wandererCount );
 	SearchSurroundingAreas( m_farthestAlongRaider->GetLastKnownArea(), populator );
@@ -1777,7 +1838,7 @@ void CRaidLogic::Update( void )
 
 		if ( m_mobArea )
 		{
-			if ( SpawnRedTFBot( m_mobClass, m_mobArea->GetCenter() + Vector( 0, 0, StepHeight ), IS_MOB_RUSHER ) )
+			if ( SpawnRedTFBot( m_mobClass, m_mobArea->GetCenter() + Vector( 0, 0, StepHeight )/*, IS_MOB_RUSHER*/)) //TODO: Investigate what is this, behavior?
 			{
 				--m_mobCountRemaining;
 				DevMsg( "RAID: %3.2f: Spawned mob member, %d to go\n", gpGlobals->curtime, m_mobCountRemaining );
