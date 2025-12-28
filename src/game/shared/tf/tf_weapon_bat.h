@@ -235,6 +235,7 @@ public:
 
 protected:
 		Vector		m_vCollisionVelocity;
+		bool		bIsLongRangeHit;		
 #endif
 };
 

@@ -1128,7 +1128,7 @@ void CTFBall_Ornament::Precache( void )
 	PrecacheScriptSound( "BallBuster.DrawCatch" );
 	PrecacheScriptSound( "BallBuster.Ornament_DrawCatch" );
 	PrecacheScriptSound( "BallBuster.Ball_HitWorld" );
-
+	bIsLongRangeHit = false;
 	BaseClass::Precache();
 }
 
@@ -1185,7 +1185,6 @@ void CTFBall_Ornament::ApplyBallImpactEffectOnVictim( CBaseEntity *pOther )
 
 	bool bIsCriticalHit = IsCritical();
 	float flBleedTime = 5.0f;
-	bool bIsLongRangeHit = false;
 
 	// long distance hit is always a crit
 	float flLifeTime = gpGlobals->curtime - m_flCreationTime;
@@ -1316,7 +1315,11 @@ void CTFBall_Ornament::Explode( trace_t *pTrace, int bitsDamageType )
 	EmitSound_t params;
 	params.m_flSoundTime = 0;
 	params.m_pflSoundDuration = 0;
-	params.m_pSoundName = "BallBuster.OrnamentImpact";
+	if (bIsLongRangeHit)
+	{
+		params.m_pSoundName = "BallBuster.OrnamentImpactRange";
+	} else params.m_pSoundName = "BallBuster.OrnamentImpact";
+
 	CPASFilter filter( vecOrigin );
 	filter.RemoveRecipient( pOwner );
 	EmitSound( filter, entindex(), params );

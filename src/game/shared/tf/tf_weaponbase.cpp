@@ -96,6 +96,7 @@ extern ConVar tf_weapon_criticals_bucket_bottom;
 #ifdef CLIENT_DLL
 extern ConVar cl_crosshair_file;
 extern ConVar cl_muzzleflash_dlight_1st;
+ConVar cl_tf_ejectbrass( "cl_tf_ejectbrass", "1", FCVAR_ARCHIVE );
 #endif
 
 //=============================================================================
@@ -3318,6 +3319,8 @@ void CTFWeaponBase::CreateMuzzleFlashEffects( C_BaseEntity *pAttachEnt, int nInd
 
 	int iMuzzleFlashAttachment = pAttachEnt->LookupAttachment( "muzzle" );
 
+	int iEjectBrassAttachment = pAttachEnt->LookupAttachment( "eject_brass" );
+
 	const char *pszMuzzleFlashEffect = NULL;
 	const char *pszMuzzleFlashModel = GetMuzzleFlashModel();
 	const char *pszMuzzleFlashParticleEffect = GetMuzzleFlashParticleEffect();
@@ -3379,6 +3382,25 @@ void CTFWeaponBase::CreateMuzzleFlashEffects( C_BaseEntity *pAttachEnt, int nInd
 		if ( pszMuzzleFlashParticleEffect ) 
 		{
 			DispatchMuzzleFlash( pszMuzzleFlashParticleEffect, pAttachEnt );
+		}
+
+		if ( ShouldEjectBrass() && ( cl_tf_ejectbrass.GetBool() == true ) ) {
+			const CTFWeaponInfo* pWpn = &GetTFWpnData();
+
+			if ( pWpn->m_bDoInstantEjectBrass )
+			{
+				if ( iEjectBrassAttachment > 0 )
+				{
+					Vector vecOrigin;
+					QAngle angAngles;
+					pAttachEnt->GetAttachment( iEjectBrassAttachment, vecOrigin, angAngles );
+					CEffectData data;
+					data.m_nHitBox = GetWeaponID();
+					data.m_vOrigin = vecOrigin;
+					data.m_vAngles = angAngles;
+					DispatchEffect("TF_EjectBrass", data);
+				}
+			}
 		}
 	}
 }
@@ -5085,7 +5107,13 @@ bool CTFWeaponBase::OnFireEvent( C_BaseViewModel *pViewModel, const Vector& orig
 		}
 		data.m_nDamageType = GetAttributeContainer()->GetItem() ? GetAttributeContainer()->GetItem()->GetItemDefIndex() : 0;
 		data.m_nHitBox = GetWeaponID();
+		
+		if ( ( data.m_nHitBox != TF_WEAPON_PISTOL || data.m_nHitBox != TF_WEAPON_PISTOL_SCOUT ) && ( cl_tf_ejectbrass.GetBool() == true ) ) //Disable Ejection for pistol, since that was added to the animation afterward.
+		{
 		DispatchEffect( "TF_EjectBrass", data );
+		} else if ( cl_tf_ejectbrass.GetBool() == false )
+		DispatchEffect( "TF_EjectBrass", data );
+
 		return true;
 	}
 	if ( event == AE_WPN_INCREMENTAMMO )
