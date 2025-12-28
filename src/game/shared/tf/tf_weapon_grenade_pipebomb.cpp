@@ -413,6 +413,7 @@ int CTFGrenadePipebombProjectile::DrawModel( int flags )
 #define TF_WEAPON_PIPEBOMB2_MODEL		"models/weapons/w_models/w_stickybomb2.mdl"
 #define TF_WEAPON_PIPEBOMBD_MODEL		"models/weapons/w_models/w_stickybomb_d.mdl"
 #define TF_WEAPON_PIPEBOMB_BOUNCE_SOUND	"Weapon_Grenade_Pipebomb.Bounce"
+#define TF_WEAPON_PIPEBOMB_DUD_SOUND	"Weapon_LocknLoad.Dud"
 #define TF_WEAPON_CANNON_IMPACT_SOUND	"Weapon_LooseCannon.BallImpact"
 #define TF_WEAPON_GRENADE_DETONATE_TIME		2.0f
 #define TF_WEAPON_GRENADE_XBOX_DAMAGE 112
@@ -582,6 +583,7 @@ void CTFGrenadePipebombProjectile::Precache()
 	PrecacheParticleSystem( "stickybombtrail_red" );
 
 	PrecacheScriptSound( TF_WEAPON_PIPEBOMB_BOUNCE_SOUND );
+	PrecacheScriptSound( TF_WEAPON_PIPEBOMB_DUD_SOUND );
 	PrecacheScriptSound( TF_WEAPON_CANNON_IMPACT_SOUND );
 
 	BaseClass::Precache();
@@ -708,6 +710,7 @@ void CTFGrenadePipebombProjectile::CreatePipebombGibs( void )
 //-----------------------------------------------------------------------------
 void CTFGrenadePipebombProjectile::Fizzle( void )
 {
+	EmitSound( TF_WEAPON_PIPEBOMB_DUD_SOUND );
 	m_bFizzle = true;
 }
 

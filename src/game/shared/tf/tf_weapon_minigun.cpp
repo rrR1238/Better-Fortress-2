@@ -37,6 +37,7 @@
 
 #ifdef CLIENT_DLL
 extern ConVar cl_muzzleflash_dlight_1st;
+extern ConVar cl_tf_ejectbrass;
 #endif
 
 //=============================================================================
@@ -375,15 +376,30 @@ void CTFMinigun::SharedAttack()
 					if ( haptics )
 						haptics->ProcessHapticEvent(2,"Weapons","minigun_fire");
 
-					if (cl_muzzleflash_dlight_1st.GetBool() == true) {
+					if ( cl_muzzleflash_dlight_1st.GetBool() == true ) {
 						m_hMuzzleEffectWeapon = GetWeaponForEffect();
 
-						int iMuzzleFlashAttachment = m_hMuzzleEffectWeapon->LookupAttachment("muzzle");
-						m_hMuzzleEffectWeapon->GetAttachment(iMuzzleFlashAttachment, vecOrigin, angAngles);
+						int iMuzzleFlashAttachment = m_hMuzzleEffectWeapon->LookupAttachment( "muzzle" );
+						m_hMuzzleEffectWeapon->GetAttachment( iMuzzleFlashAttachment, vecOrigin, angAngles );
 
-						if (cl_muzzleflash_dlight_1st.GetBool() == true && IsFirstPersonView()) {
+						if ( cl_muzzleflash_dlight_1st.GetBool() == true && IsFirstPersonView() ) {
 							CLocalPlayerFilter filter;
 							TE_DynamicLight(filter, 0.0f, &vecOrigin, 255, 192, 64, 5, RandomInt(70, 140), 0.2f, 70.0f / 0.2f, LIGHT_INDEX_MUZZLEFLASH);
+						}
+					}
+					if ( cl_tf_ejectbrass.GetBool() == true ) {
+						m_hEjectBrassWeapon = GetWeaponForEffect();
+
+						int iEjectBrassAttachment = m_hEjectBrassWeapon->LookupAttachment( "eject_brass" );
+
+						if ( iEjectBrassAttachment > 0 )
+						{
+							m_hEjectBrassWeapon->GetAttachment( iEjectBrassAttachment, vecOrigin, angAngles );
+							CEffectData data;
+							data.m_nHitBox = GetWeaponID();
+							data.m_vOrigin = vecOrigin;
+							data.m_vAngles = angAngles;
+							DispatchEffect("TF_EjectBrass", data);
 						}
 					}
 				}
@@ -1132,7 +1148,7 @@ void CTFMinigun::UpdateBarrelMovement()
 		if ( 0 == m_flBarrelCurrentVelocity )
 		{	
 			// if we've stopped rotating, turn off the wind-down sound
-			WeaponSoundUpdate();
+			//WeaponSoundUpdate();
 		}
 	}
 
@@ -1229,6 +1245,7 @@ void CTFMinigun::StartBrassEffect()
 {
 	StopBrassEffect();
 
+	C_TFPlayer *pOwner = GetTFPlayerOwner();
 	m_hEjectBrassWeapon = GetWeaponForEffect();
 	if ( !m_hEjectBrassWeapon )
 		return;
@@ -1238,6 +1255,9 @@ void CTFMinigun::StartBrassEffect()
 		// Prevent effects when the ViewModel is hidden with r_drawviewmodel=0
 		return;
 	}
+	
+	if ( cl_tf_ejectbrass.GetBool() == true && ( pOwner == C_TFPlayer::GetLocalTFPlayer() ))
+		return;
 
 	// Try and setup the attachment point if it doesn't already exist.
 	// This caching will mess up if we go third person from first - we only do this in taunts and don't fire so we should

@@ -476,7 +476,7 @@ void C_ObjectSentrygun::CheckNearMiss( Vector vecStart, Vector vecEnd )
 	dist = vecPlayerPos.DistTo( vecClosestPoint );
 	if ( dist > 120 )
 	{
-		StopSound( "Building_Sentrygun.ShaftLaserPass" );
+		pLocalPlayer->StopSound( "Building_Sentrygun.ShaftLaserPass" );
 		return;
 	}
 
