@@ -6295,7 +6295,7 @@ void CTFPlayerShared::OnAddShieldCharge( void )
 
 #ifdef CLIENT_DLL
 	//MvM Versus - Robots scream with their filter!
-	bool bMvM = TFGameRules()->IsMannVsMachineMode() && m_pOuter->GetTeamNumber() == TF_TEAM_PVE_INVADERS || m_pOuter->IsRobot();
+	bool bMvM = TFGameRules()->IsMannVsMachineMode() && m_pOuter->GetTeamNumber() == TF_TEAM_PVE_INVADERS || TFGameRules()->IsMannVsMachineMode() && m_pOuter->GetTeamNumber() == TF_TEAM_PVE_DEFENDERS || m_pOuter->IsRobot();
 	if ( bMvM && TFObjectiveResource()->GetMvMEventPopfileType() != MVM_EVENT_POPFILE_HALLOWEEN )
 	{
 		m_pOuter->EmitSound( m_pOuter->IsMiniBoss() ? "Demo_MVM_M_Charge.Charging" : "Demo_MVM_Charge.Charging" );
@@ -12174,7 +12174,7 @@ void CTFPlayer::SetStepSoundTime( stepsoundtimes_t iStepSoundTime, bool bWalking
 const char *CTFPlayer::GetOverrideStepSound( const char *pszBaseStepSoundName )
 {
 
-	if( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS || IsRobot() )
+	if( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS || TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_DEFENDERS || IsRobot() )
 	{
 		if ( !IsMiniBoss() && !m_Shared.InCond( TF_COND_DISGUISED ) )
 			return "MVM.BotStep";

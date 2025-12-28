@@ -328,9 +328,7 @@ CTFBot *SpawnRedTFBot( int iClassIndex, const Vector &spot, bool bRusher = false
 	bot->SetSpawnPoint(g_internalSpawnPoint);
 
 	bot->ChangeTeam(TF_TEAM_RED, false, true);
-
 	bot->AllowInstantSpawn();
-
 	bot->HandleCommand_JoinClass(g_aRawPlayerClassNames[iClassIndex]);
 
 	bot->SetAttribute(CTFBot::BECOME_SPECTATOR_ON_DEATH);
@@ -339,6 +337,8 @@ CTFBot *SpawnRedTFBot( int iClassIndex, const Vector &spot, bool bRusher = false
 		bot->SetAttribute(CTFBot::AGGRESSIVE);
 	}
 	bot->SetDifficulty(CTFBot::NORMAL);
+	//Make them Robots
+	bot->MVM_TurnIntoRobot();
 
 
 	return bot;
@@ -490,6 +490,12 @@ void CRaidLogic::OnRoundStart( void )
 
 	for( int i=0; i<minionAreaVector.Count(); ++i )
 	{
+		CTFNavArea *area = (CTFNavArea *)minionAreaVector[i];
+
+		//Don't spawn in Blu's spawnroom
+		if ( area->HasAttributeTF( TF_NAV_NO_SPAWNING | TF_NAV_SPAWN_ROOM_BLUE ) )
+			continue;
+
 		static_cast< CTFNavArea * >( minionAreaVector[i] )->AddToWanderCount( 1 );
 		SpawnMinion( minionAreaVector[i]->GetRandomPoint() );
 	}

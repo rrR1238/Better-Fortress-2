@@ -1343,7 +1343,7 @@ void C_TFRagdoll::OnDataChanged( DataUpdateType_t type )
 					EmitSound( "TFPlayer.Decapitated" );
 
 					bool bBlood = true;
-					if ( TFGameRules() && ( TFGameRules()->UseSillyGibs() || ( TFGameRules()->IsMannVsMachineMode() && pPlayer && pPlayer->GetTeamNumber() == TF_TEAM_PVE_INVADERS ) ) || pPlayer->IsRobot() )
+					if ( TFGameRules() && ( TFGameRules()->UseSillyGibs() || ( TFGameRules()->IsPVEModeActive() && pPlayer && pPlayer->GetTeamNumber() == ( TFGameRules()->IsMannVsMachineMode() ? TF_TEAM_PVE_INVADERS : TF_TEAM_PVE_DEFENDERS ) ) ) || pPlayer->IsRobot())
 					{
 						bBlood = false;
 					}
@@ -5900,7 +5900,7 @@ bool C_TFPlayer::CanLightCigarette( void )
 	}
 
 	// don't light for MvM Spy robots
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && GetTeamNumber() == TF_TEAM_PVE_INVADERS )
+	if ( TFGameRules() && TFGameRules()->IsPVEModeActive() && GetTeamNumber() == ( TFGameRules()->IsMannVsMachineMode() ? TF_TEAM_PVE_INVADERS : TF_TEAM_PVE_DEFENDERS ) )
 		return false;
 
 	// Don't light if we are invis.
@@ -9212,8 +9212,8 @@ void C_TFPlayer::ValidateModelIndex( void )
 		bool bUseRobotModel = false;
 		
 		// Check if this is MvM Versus mode and the spy is disguised as the robot team
-		if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() && 
-			 m_Shared.GetDisguiseTeam() == TF_TEAM_PVE_INVADERS )
+		if ( TFGameRules() && TFGameRules()->IsPVEModeActive() &&
+			 m_Shared.GetDisguiseTeam() == ( TFGameRules()->IsMannVsMachineMode() ? TF_TEAM_PVE_INVADERS : TF_TEAM_PVE_DEFENDERS ) )
 		{
 			bUseRobotModel = true;
 		}
@@ -10866,17 +10866,20 @@ void C_TFPlayer::UpdateMVMEyeGlowEffect( bool bVisible )
 	
 	int usingRobotCosmetic = 0;
 	CALL_ATTRIB_HOOK_INT( usingRobotCosmetic, robotrobotrobotrobot );
-	
-	if ( TFGameRules() && TFGameRules()->IsMannVsMachineMode() )
+
+	if ( TFGameRules() && TFGameRules()->IsPVEModeActive() ) 
 	{
+		//MVM and RAID don't have the same team.
+		int iPVETeam = TFGameRules()->IsMannVsMachineMode() ? TF_TEAM_PVE_INVADERS : TF_TEAM_PVE_DEFENDERS;
+
 		// Actual robots (bots on invader team)
-		if ( GetTeamNumber() == TF_TEAM_PVE_INVADERS || usingRobotCosmetic )
+		if ( GetTeamNumber() == iPVETeam || usingRobotCosmetic )
 		{
 			bShouldHaveEyeGlow = true;
 		}
 		// Spies disguised as robots
 		else if ( IsPlayerClass( TF_CLASS_SPY ) && m_Shared.InCond( TF_COND_DISGUISED ) && 
-				  m_Shared.GetDisguiseTeam() == TF_TEAM_PVE_INVADERS )
+				  m_Shared.GetDisguiseTeam() == iPVETeam )
 		{
 			bShouldHaveEyeGlow = true;
 		}
@@ -10916,6 +10919,8 @@ void C_TFPlayer::UpdateMVMEyeGlowEffect( bool bVisible )
 	{
 		// Set color based on skill
 		Vector vColor = Vector( 255, 255, 255 );
+		// RAID - Turn Red instead
+		bool bRaidMode = TFGameRules()->IsRaidMode();
 		if( usingRobotCosmetic != 0)
 		{
 			// For disguised spies, use disguise team color instead of spy's team
@@ -10928,7 +10933,7 @@ void C_TFPlayer::UpdateMVMEyeGlowEffect( bool bVisible )
 		}
 		else
 		{
-			vColor = m_nBotSkill >= 2 ? Vector( 255, 180, 36 ) : Vector( 0, 240, 255 );
+			vColor = m_nBotSkill >= 2 ? Vector( 255, 180, 36 ) : ( bRaidMode ? Vector( 255, 0, 0 ) : Vector( 0, 240, 255 ) );
 		}
 
 		// Create the effects

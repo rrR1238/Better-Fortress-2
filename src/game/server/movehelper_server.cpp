@@ -380,7 +380,7 @@ bool CMoveHelperServer::PlayerFallingDamage( void )
 			{
 #ifdef TF_DLL
 				CTFPlayer* pPlayer = ToTFPlayer(m_pHostPlayer);
-				StartSound(pPlayer->GetAbsOrigin(),pPlayer->IsMVMRobot() ? "MVM.FallDamageBots" : "Player.FallDamage");
+				StartSound(pPlayer->GetAbsOrigin(),( pPlayer->IsPVERobot() || pPlayer->IsMVMRobot() ) ? "MVM.FallDamageBots" : "Player.FallDamage");
 #else
 				StartSound(m_pHostPlayer->GetAbsOrigin(),"Player.FallDamage");
 #endif
