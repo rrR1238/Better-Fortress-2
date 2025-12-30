@@ -884,27 +884,27 @@ const char * CTFProjectile_Arrow::GetImpactSoundSurface( CBaseEntity *pOther )
 	const char* pszSoundName = "Weapon_Arrow.ImpactMetal";
 
 	IPhysicsObject *pObject = pOther->VPhysicsGetObject();
-	if ( !pObject )
-		return false;
-
-	int material = pObject->GetMaterialIndex();
-	const surfacedata_t *psurf = physprops->GetSurfaceData( material );
-	if ( psurf )
+	if ( pObject )
 	{
-		switch ( psurf->game.material )
+		int material = pObject->GetMaterialIndex();
+		const surfacedata_t* psurf = physprops->GetSurfaceData(material);
+		if (psurf)
 		{
-		case CHAR_TEX_GRATE:
-		case CHAR_TEX_METAL:
-			pszSoundName = "Weapon_Arrow.ImpactMetal";
-			break;
+			switch (psurf->game.material)
+			{
+			case CHAR_TEX_GRATE:
+			case CHAR_TEX_METAL:
+				pszSoundName = "Weapon_Arrow.ImpactMetal";
+				break;
 
-		case CHAR_TEX_CONCRETE:
-			pszSoundName = "Weapon_Arrow.ImpactConcrete";
-			break;
+			case CHAR_TEX_CONCRETE:
+				pszSoundName = "Weapon_Arrow.ImpactConcrete";
+				break;
 
-		case CHAR_TEX_WOOD:
-			pszSoundName = "Weapon_Arrow.ImpactWood";
-			break;
+			case CHAR_TEX_WOOD:
+				pszSoundName = "Weapon_Arrow.ImpactWood";
+				break;
+			}
 		}
 	}
 	return pszSoundName;
